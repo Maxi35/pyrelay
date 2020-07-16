@@ -20,3 +20,9 @@ class TradeItem:
 
     def clone(self):
         return TradeItem(self.item, self.slotType, self.tradeable, self.included)
+
+    def __str__(self):
+        return "Item: {}, slotType: {}, tradeable: {}, included: {}".format(self.item, self.slotType, self.tradeable, self.included)
+
+    def __repr__(self):
+        return str(self)

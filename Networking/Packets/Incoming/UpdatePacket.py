@@ -1,5 +1,6 @@
 from Data.GroundTileData import *
 from Data.ObjectData import *
+import Data.CompressedInt as CompressedInt
 
 class UpdatePacket:
     def __init__(self):
@@ -9,16 +10,16 @@ class UpdatePacket:
         self.drops = []
 
     def read(self, reader):
-        tiles_len = reader.readShort()
+        tiles_len = CompressedInt.read(reader)
         for i in range(tiles_len):
             tile = GroundTileData()
             tile.read(reader)
             self.tiles.append(tile)
-        objects_len = reader.readShort()
+        objects_len = CompressedInt.read(reader)
         for i in range(objects_len):
             data = ObjectData()
             data.read(reader)
             self.newObjs.append(data)
-        drops_len = reader.readShort()
+        drops_len = CompressedInt.read(reader)
         for i in range(drops_len):
-            self.drops.append(reader.readInt32())
+            self.drops.append(CompressedInt.read(reader))

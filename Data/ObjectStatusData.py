@@ -1,5 +1,6 @@
 from .WorldPosData import *
 from .StatData import *
+import Data.CompressedInt  as CompressedInt
 
 class ObjectStatusData:
     def __init__(self, objectId=0, pos=None, stats=None):
@@ -14,9 +15,9 @@ class ObjectStatusData:
             self.stats = [stat.clone() for stat in stats]
 
     def read(self, reader):
-        self.objectId = reader.readInt32()
+        self.objectId = CompressedInt.read(reader)
         self.pos.read(reader)
-        stats_len = reader.readShort()
+        stats_len = CompressedInt.read(reader)
         for i in range(stats_len):
             stat = StatData()
             stat.read(reader)

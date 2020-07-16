@@ -1,4 +1,5 @@
 from Constants.StatTypes import *
+import Data.CompressedInt as CompressedInt
 
 types = StatTypes()
 
@@ -32,7 +33,7 @@ class StatData:
         if self.isStringStat():
             self.strStatValue = reader.readStr()
         else:
-            self.statValue = reader.readInt32()
+            self.statValue = CompressedInt.read(reader)
 
     def write(self, writer):
         writer.writeUnsignedByte(self.statType)

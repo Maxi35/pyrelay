@@ -28,7 +28,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "X34.1.0"#TODO
+        self.buildVersion = "X34.2.1"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.internalServer = {"host": Servers.nameToIp[self.server],
@@ -161,6 +161,7 @@ class Client:
         move_packet = PacketHelper.CreatePacket("MOVE")
         move_packet.tickId = packet.tickId
         move_packet.time = self.lastFrameTime
+        move_packet.serverRealTimeMS = packet.serverRealTimeMS
         move_packet.newPos = self.pos
         move_packet.records = []
         self.send(move_packet)
