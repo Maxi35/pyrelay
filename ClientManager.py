@@ -24,6 +24,15 @@ class ClientManager:
             client.hookAllPackets(self.onPacket)
             self.clients.append(client)
 
+    def removeClient(self, guid):
+        new_clients = []
+        for client in self.clients:
+            if client.guid == guid:
+                client.disconnect()
+            else:
+                new_clients.append(client)
+        self.clients = new_clients        
+
     def reconnectIfNeeded(self):
         for client in self.clients:
             if not client.isConnected():
@@ -36,32 +45,3 @@ class ClientManager:
         print("Disconnecting clients...")
         for client in self.clients:
             client.disconnect()
-
-"""
-from ClientManager import ClientManager
-from PluginLoader import loadPlugins
-import json
-import time
-
-accounts = []
-
-try:
-    with open("Accounts.json", "r") as file:
-        accounts = json.loads(file.read())
-except IOError:
-    print("Accouts.json file is missing")
-    
-
-loadPlugins()
-clientMan = ClientManager()
-
-for account in accounts:
-    clientMan.addClient(account)
-
-try:
-    while 1:
-        time.sleep(0.5)
-except (KeyboardInterrupt, SystemExit):
-    clientMan.stop()
-
-"""
