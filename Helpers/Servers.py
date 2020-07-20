@@ -19,4 +19,6 @@ def writeServers(servers):
 
     with open("Constants/Servers.py", "w") as file:
         file.write(text)
-    
+
+def update():
+    writeServers(parseServers(getXML()))

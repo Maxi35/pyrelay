@@ -1,9 +1,12 @@
 from ClientManager import ClientManager
 from PluginLoader import loadPlugins
 from Client.Client import Client
+from Helpers.Servers import update
 import json
 import time
 import threading
+
+#update()
 
 accounts = []
 try:

@@ -51,9 +51,13 @@ class Client:
 
         r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
         while "Account in use" in r.text:
-            print(self.guid, "has account in use", re.findall(r"(\d+)", r.text)[0], "until timout")
-            time.sleep(int(re.findall(r"(\d+)", r.text)[0]))
-            r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
+            print(self.guid, "has account in use")
+            try:
+                time.sleep(int(re.findall(r"(\d+)", r.text)[0]))
+                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
+            except IndexError:
+                time.sleep(600)
+                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
             return
