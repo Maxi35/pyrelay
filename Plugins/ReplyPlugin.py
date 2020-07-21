@@ -1,6 +1,7 @@
 from Networking.PacketHelper import CreatePacket
-from PluginLoader import hook
+from PluginLoader import hook, plugin
 
+@plugin(active=True)
 class ReplyPlugin:
     def __init__(self):
         self.toReply = "."
@@ -16,5 +17,3 @@ class ReplyPlugin:
     @hook("ping")
     def onPing(self, client, packet):
         print(packet.__dict__)
-
-INFO = {"name": "ReplyPlugin", "active": True}

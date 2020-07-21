@@ -28,43 +28,51 @@ class PacketHooks:
                         thread = threading.Thread(target=func, args=(cls, client, packet))
                         thread.deamon = True
                         thread.start()
-        
+
+class Plugins:
+    def __init__(self):
+        self._plugins = []
+
+    def addPlugin(self, plugin, args, options):
+        if options["active"]:
+            self._plugins.append(plugin)
+        else:
+            print("Skipping deactivated plugin", plugin.__name__)
+            
+
+    def getPlugins(self):
+        return self._plugins
+
 path = "./Plugins"
 import_start = "Plugins."
-plugins = []
-neededAttr = ["INFO"]
 packetHook = PacketHooks()
-loadedPlugins = []
+plugins = Plugins()
 
 def hook(packetType):
     def addFunc(func):
         packetHook.addHook(packetType.upper(), func)
-        #return packetHook.callHooks
+        return func
     return addFunc
+
+def plugin(*args, **kwargs):
+    def addPlugin(pluginClass):
+        plugins.addPlugin(pluginClass, args, kwargs)
+        return pluginClass
+    return addPlugin
 
 def loadPlugins():
     for file in os.listdir(path):
         if "__" not in file and file.endswith(".py"):
             to_import = import_start + file[:-3]
             plugin = importlib.import_module(to_import)
-            plugins.append(plugin)
 
-    for plugin in plugins:
+    for pluginClass in plugins.getPlugins():
         try:
-            name = plugin.INFO["name"]
-            if "active" in plugin.INFO.keys():
-                if not plugin.INFO["active"]:
-                    print("Skipping deactivated plugin", name)
-                    continue
-            if name in loadedPlugins:
-                print("Plugin", name, "is already loaded")
-                continue
-            pluginClass = getattr(plugin, name)()#Init plugin
-            packetHook.addClass(pluginClass)
-            print("Loading plugin", name) 
-            loadedPlugins.append(name)           
+            plugin = pluginClass()#Init plugin
+            packetHook.addClass(plugin)
+            print("Loading plugin", pluginClass.__name__)
         except Exception as e:
-            print("Error while loading", plugin.__name__)
+            print("Error while loading", pluginClass.__name__)
             print(e)
 
 def callHooks(client, packet):
