@@ -5,53 +5,57 @@ types = StatTypes()
 class PlayerData:
     def __init__(self):
         self.name = ""
-        self.level = -1
-        self.xp = -1
-        self.fame = -1
-        self.stars = -1
+        self.level = 0
+        self.xp = 0
+        self.fame = 0
+        self.stars = 0
         self.accountId = ""
-        self.accountFame = -1
-        self.gold = -1
-        self.characterClass = -1
+        self.accountFame = 0
+        self.gold = 0
+        self.characterClass = 0
         self.nameChosen = False
         self.guildName = ""
-        self.guildRank = -1
-        self.maxHp = -1
-        self.maxHpBoost = -1
-        self.maxMp = -1
-        self.maxMpBoost = -1
-        self.hp = -1
-        self.mp = -1
-        self.atk = -1
-        self.atkBoost = -1
-        self.defense = -1#Hmmmm
-        self.defenseBoost = -1
-        self.spd = -1
-        self.spdBoost = -1
-        self.dex = -1
-        self.dexBoost = -1
-        self.wis = -1
-        self.wisBoost = -1
-        self.vit = -1
-        self.vitBoost = -1
+        self.guildRank = 0
+        self.maxHp = 0
+        self.maxHpBoost = 0
+        self.maxMp = 0
+        self.maxMpBoost = 0
+        self.hp = 0
+        self.mp = 0
+        self.atk = 0
+        self.atkBoost = 0
+        self.defense = 0#Hmmmm
+        self.defenseBoost = 0
+        self.spd = 0
+        self.spdBoost = 0
+        self.dex = 0
+        self.dexBoost = 0
+        self.wis = 0
+        self.wisBoost = 0
+        self.vit = 0
+        self.vitBoost = 0
+        self.condition = 0
         self.hasBackpack = False
-        self.inv = [-1 for i in range(20)]
-        self.size = -1
-        self.nextLevelXp = -1
-        self.clothingDye = -1
-        self.accessoryDye = -1
-        self.nextClassQuestFame = -1
-        self.legendaryRank = -1
+        self.inv = [0 for i in range(20)]
+        self.size = 0
+        self.nextLevelXp = 0
+        self.clothingDye = 0
+        self.accessoryDye = 0
+        self.nextClassQuestFame = 0
+        self.legendaryRank = 0
         self.xpBoosted = False
-        self.xpBoostTime = -1
-        self.texture = -1
-        self.fortuneTokens = -1
-        self.projSpeedMult = -1
-        self.projLifeMule = -1
+        self.xpBoostTime = 0
+        self.texture = 0
+        self.fortuneTokens = 0
+        self.projSpeedMult = 1
+        self.projLifeMule = 1
 
     def parse(self, obj):
         self.characterClass = obj.objectType
-        for stat in obj.status.stats:
+        self.parseStats(obj.status.stats)
+
+    def parseStats(self, stats):
+        for stat in stats:
             if stat.statType == types.NAMESTAT:
                 self.name = stat.strStatValue
             elif stat.statType == types.LEVELSTAT:
@@ -148,7 +152,7 @@ class PlayerData:
                 self.inv[stat.statType-59] = stat.statValue
                 
     def __str__(self):
-        return "name: {}\nlevel: {}\nxp: {}\nfame: {}\nstars: {}\naccountId: {}\naccountFame: {}\ngold: {}\ncharacterClass: {}\nnameChosen: {}\nguildName: {}\nguildRank: {}\nmaxHp: {}\nmaxHpBoost: {}\nmaxMp: {}\nmaxMpBoost: {}\nhp: {}\nmp: {}\natk: {}\natkBoost: {}\ndefense: {}\ndefenseBoost: {}\nspd: {}\nspdBoost: {}\ndex: {}\ndexBoost: {}\nwis: {}\nwisBoost: {}\nvit: {}\nvitBoost: {}\nhasBackpack: {}\ninv: {}\nsize: {}\nnextLevelXp: {}\nclothingDye: {}\naccessoryDye: {}\nnextClassQuestFame: {}\nlegendaryRank: {}\nxpBoosted: {}\nxpBoostTime: {}\ntexture: {}\nfortuneTokens: {}\nprojSpeedMult: {}\nprojLifeMule: {}".format(self.name, \
+        return "name: {}\nlevel: {}\nxp: {}\nfame: {}\nstars: {}\naccountId: {}\naccountFame: {}\ngold: {}\ncharacterClass: {}\nnameChosen: {}\nguildName: {}\nguildRank: {}\nmaxHp: {}\nmaxHpBoost: {}\nmaxMp: {}\nmaxMpBoost: {}\nhp: {}\nmp: {}\natk: {}\natkBoost: {}\ndefense: {}\ndefenseBoost: {}\nspd: {}\nspdBoost: {}\ndex: {}\ndexBoost: {}\nwis: {}\nwisBoost: {}\nvit: {}\nvitBoost: {}\ncondition: {}\nhasBackpack: {}\ninv: {}\nsize: {}\nnextLevelXp: {}\nclothingDye: {}\naccessoryDye: {}\nnextClassQuestFame: {}\nlegendaryRank: {}\nxpBoosted: {}\nxpBoostTime: {}\ntexture: {}\nfortuneTokens: {}\nprojSpeedMult: {}\nprojLifeMule: {}".format(self.name, \
         self.level, \
         self.xp, \
         self.fame, \
@@ -178,6 +182,7 @@ class PlayerData:
         self.wisBoost, \
         self.vit, \
         self.vitBoost, \
+        self.condition, \
         self.hasBackpack, \
         self.inv, \
         self.size, \

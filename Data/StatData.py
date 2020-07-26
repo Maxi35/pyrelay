@@ -47,7 +47,7 @@ class StatData:
 
     def __str__(self):
         if self.isStringStat():
-            return "StatType: {}\nValue: {}".format(self.statType, self.strStatValue)
+            return "statType: {}\nstrStatValue: {}".format(self.statType, self.strStatValue)
         else:
-            return "StatType: {}\nValue: {}".format(self.statType, self.statValue)
+            return "statType: {}\nstatValue: {}".format(self.statType, self.statValue)
 

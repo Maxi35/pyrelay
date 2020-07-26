@@ -19,6 +19,7 @@ from .KeyInfoResponsePacket import *
 from .MapInfoPacket import *
 from .NameResultPacket import *
 from .NewAbilityPacket import *
+from .NewCharacterInformationPacket import *
 from .NewTickPacket import *
 from .NotificationPacket import *
 from .PasswordPromptPacket import *
@@ -27,6 +28,7 @@ from .PingPacket import *
 from .PlaySoundPacket import *
 from .QuestObjIdPacket import *
 from .QuestRedeemResponsePacket import *
+from .QueueInformationPacket import *
 from .RealmHeroesResponsePacket import *
 from .ReconnectPacket import *
 from .ReskinUnlockPacket import *

@@ -1,4 +1,5 @@
 import time
+import math
 import threading
 import requests
 import re
@@ -7,11 +8,16 @@ from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
 from Models.PlayerData import PlayerData
 from Models.CharData import CharData
+import Models.ConditionEffect as ConditionEffect
 import Networking.PacketHelper as PacketHelper
 import Constants.GameIds as GameId
 import Constants.Servers as Servers
 import Constants.ApiPoints as ApiPoints
+import Constants.ClassIds as Classes
 import Crypto.RSA as RSA
+
+MINSPEED = 0.004
+MAXSPEED = 0.0096
 
 class Client:
     def __init__(self, accInfo):
@@ -20,6 +26,7 @@ class Client:
         self.alias = accInfo["alias"]
         self.server = accInfo["server"]
         self.pos = None
+        self.nextPos = []
         self.objectId = -1
         self.connectedTime = int(time.time()*1000)
         self.random = Random()
@@ -28,9 +35,10 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "X34.2.1"#TODO
+        self.buildVersion = "1.0.0.0."#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
+        self.needsNewChar = False
         self.internalServer = {"host": Servers.nameToIp[self.server],
                                "name": self.server}
         self.nexusServer = {"host": Servers.nameToIp[self.server],
@@ -69,8 +77,14 @@ class Client:
             return
         self.charData.nextCharId = int(charInfo[0])
         self.charData.maxNumChars = int(charInfo[1])
-        self.charData.charIds = [int(i) for i in chars]
-        self.charData.currentCharId = int(chars[0])
+        if len(chars) > 0:
+            self.charData.charIds = [int(i) for i in chars]
+            self.charData.currentCharId = int(chars[0])
+        else:
+            self.charData.charIds = [self.charData.nextCharId]
+            self.charData.currentCharId = self.charData.nextCharId
+            self.charData.nextCharId += 1
+            self.needsNewChar = True
         
         self.connect()
 
@@ -86,9 +100,19 @@ class Client:
         self.sendHelloPacket()
 
     def changeGameId(self, gameId):
-        print("Changing gameId to", gameId)
-        self.gameId = gameId
-        self.connect()
+        print("Changing game id directly doesn't work anymore")
+        return
+##        print("Changing gameId to", gameId)
+##        self.gameId = gameId
+##        self.connect()
+
+    def getSpeed(self, time):
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.SLOWED):
+            return MINSPEED
+        speed = MINSPEED + (self.playerData.spd+self.playerData.spdBoost)/75 * (MAXSPEED-MINSPEED)
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.SPEEDY, ConditionEffect.NINJASPEEDY):
+            speed *= 1.5
+        return speed * time
     
     def nexus(self):
         packet = PacketHelper.CreatePacket("ESCAPE")
@@ -109,7 +133,8 @@ class Client:
         self.send(hello_packet)
 
     def send(self, packet):
-        self.sockMan.sendPacket(packet)
+        if self.isConnected():
+            self.sockMan.sendPacket(packet)
 
     def getTime(self):
         return int(time.time()*1000) - self.connectedTime
@@ -124,15 +149,32 @@ class Client:
     def updateFrameTime(self):
         time = self.getTime()
         delta = time - self.lastFrameTime
+        if len(self.nextPos) > 0:
+            diff = min(33, time-self.lastFrameTime)
+            self.moveTo(self.nextPos[0], diff)
         self.lastFrameTime = time
-        self.frameTimeUpdater = threading.Timer(1000/30, self.updateFrameTime)
+        self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
         self.frameTimeUpdater.deamon = True
         self.frameTimeUpdater.start()
 
+    def moveTo(self, target, time):
+        speed = self.getSpeed(time)
+        if self.pos.dist(target) > speed:
+            angle = math.atan2(target.y-self.pos.y, target.x-self.pos.x)
+            self.walkTo(self.pos + (math.cos(angle) * speed, math.sin(angle) * speed))
+        else:
+            self.walkTo(target)
+            self.nextPos.pop(0)
+
+    def walkTo(self, target):
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.PARALYZED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
+            return
+        self.pos = target.clone()
+    
     def onCreateSuccess(self, packet):
         self.objectId = packet.objectId
         self.lastFrameTime = self.getTime()
-        self.frameTimeUpdater = threading.Timer(1000/30, self.updateFrameTime)
+        self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
         self.frameTimeUpdater.deamon = True
         self.frameTimeUpdater.start()
     
@@ -144,12 +186,20 @@ class Client:
             self.pos = packet.pos.clone()
         
     def onMapInfo(self, packet):
-        self.connectionGuid = packet.connectionGuid
         print("Connected to", self.internalServer["name"], packet.name)
-        load_packet = PacketHelper.CreatePacket("LOAD")
-        load_packet.charId = self.charData.currentCharId
-        self.send(load_packet)
-        self.random.setSeed(packet.fp)        
+        if self.needsNewChar:
+            print("Creating new char")
+            create_packet = PacketHelper.CreatePacket("CREATE")
+            create_packet.classType = Classes.WIZARD
+            create_packet.skinType = 0
+            self.send(create_packet)
+            self.needsNewChar = False
+        else:
+            load_packet = PacketHelper.CreatePacket("LOAD")
+            load_packet.charId = self.charData.currentCharId
+            self.send(load_packet)
+        self.connectionGuid = packet.connectionGuid
+        self.random.setSeed(packet.fp)
 
     def onFailure(self, packet):
         print("Error:", packet.errorId, "at", packet.errorPlace)
@@ -169,6 +219,9 @@ class Client:
         move_packet.newPos = self.pos
         move_packet.records = []
         self.send(move_packet)
+        for status in packet.statuses:
+            if status.objectId == self.objectId:
+                self.playerData.parseStats(status.stats)
 
     def onUpdate(self, packet):
         updateAck_packet = PacketHelper.CreatePacket("UPDATEACK")

@@ -135,6 +135,8 @@ def CreatePacket(packet_type):
         return incoming.NameResultPacket()
     if packet_type == types.NEWABILITY:
         return incoming.NewAbilityPacket()
+    if packet_type == types.NEWCHARACTERINFORMATION:
+        return incoming.NewCharacterInformationPacket()
     if packet_type == types.NEWTICK:
         return incoming.NewTickPacket()
     if packet_type == types.NOTIFICATION:
@@ -151,6 +153,8 @@ def CreatePacket(packet_type):
         return incoming.QuestObjIdPacket()
     if packet_type == types.QUESTREDEEMRESPONSE:
         return incoming.QuestRedeemResponsePacket()
+    if packet_type == types.QUEUEINFORMATION:
+        return incoming.QueueInformationPacket()
     if packet_type == types.REALMHEROESRESPONSE:
         return incoming.RealmHeroesResponsePacket()
     if packet_type == types.RECONNECT:

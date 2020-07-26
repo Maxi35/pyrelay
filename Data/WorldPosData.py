@@ -22,5 +22,24 @@ class WorldPosData:
     def clone(self):
         return WorldPosData(self.x, self.y)
 
+    def squareDist(self, other):
+        return (self.x-other.x)**2 + (self.y-other.y)**2
+
+    def dist(self, other):
+        return self.squareDist(other)**0.5
+
     def __str__(self):
         return "{} {}".format(round(self.x, 2), round(self.y, 2))
+
+    def __add__(self, other):
+        pos = self.clone()
+        if type(other) == WorldPosData:
+            pos.x += other.x
+            pos.y += other.y
+        elif type(other) in [list, tuple]:#Should prob do some checks
+            pos.x += other[0]
+            pos.y += other[1]
+        elif type(other) == dict:
+            pos.x += other["x"]
+            pos.y += other["y"]
+        return pos
