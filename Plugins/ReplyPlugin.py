@@ -5,7 +5,7 @@ from PluginLoader import hook, plugin
 @plugin(active=True)
 class ReplyPlugin:
     def __init__(self):
-        self.toReply = "Dezimtox"
+        self.toReply = ""
 
     #To hook a packet use the hook decorator with the packet type you wish to hook
     @hook("text")
