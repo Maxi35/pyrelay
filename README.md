@@ -14,7 +14,7 @@ pip install requirements.txt
 
 ## Setup
 
-Open the file `Accounts.json` and insert the email+password for the account.
+Open the file `Accounts.json` and insert the email+password for the account(s) you want to use
 
 ### Plugins
 
