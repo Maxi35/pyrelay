@@ -112,10 +112,10 @@ class Client:
 ##        self.connect()
 
     def getSpeed(self, time):
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.SLOWED):
+        if self.hasEffect(ConditionEffect.SLOWED):
             return MINSPEED
         speed = MINSPEED + (self.playerData.spd+self.playerData.spdBoost)/75 * (MAXSPEED-MINSPEED)
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.SPEEDY, ConditionEffect.NINJASPEEDY):
+        if self.hasEffect(ConditionEffect.SPEEDY, ConditionEffect.NINJASPEEDY):
             speed *= 1.5
         return speed * time
     
@@ -172,15 +172,15 @@ class Client:
             self.nextPos.pop(0)
 
     def walkTo(self, target):
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.PARALYZED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
+        if self.hasEffect(ConditionEffect.PARALYZED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
             return
         self.pos = target.clone()
 
     def attackFreq(self):
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.DAZED):
+        if self.hasEffect(ConditionEffect.DAZED):
             return MINFREQ
         freq = MINFREQ + (self.playerData.dex+self.playerData.dexBoost)/75 * (MAXFREQ - MINFREQ)
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.BERSERK):
+        if self.hasEffect(ConditionEffect.BERSERK):
             freq *= 1.5
         return freq
 
@@ -190,7 +190,7 @@ class Client:
         return bulletId
 
     def shoot(self, angle):
-        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.STUNNED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
+        if self.hasEffect(ConditionEffect.STUNNED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
             return False
         time = self.getTime()
         attackPeriod = 1 / self.attackFreq() * (1/1)#TODO
