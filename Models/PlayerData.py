@@ -34,9 +34,9 @@ class PlayerData:
         self.wisBoost = 0
         self.vit = 0
         self.vitBoost = 0
-        self.condition = 0
+        self.condition = []
         self.hasBackpack = False
-        self.inv = [0 for i in range(20)]
+        self.inv = [-1 for i in range(20)]
         self.size = 0
         self.nextLevelXp = 0
         self.clothingDye = 0
@@ -48,7 +48,7 @@ class PlayerData:
         self.texture = 0
         self.fortuneTokens = 0
         self.projSpeedMult = 1
-        self.projLifeMule = 1
+        self.projLifeMult = 1
 
     def parse(self, obj):
         self.characterClass = obj.objectType
@@ -146,9 +146,9 @@ class PlayerData:
                 self.projSpeedMult = stat.statValue / 1000
             elif stat.statType == types.PROJECTILELIFEMULT:
                 self.projLifeMult = stat.statValue / 1000
-            elif types.INVENTORY11STAT <= stat.statType <= types.INVENTORY0STAT:
+            elif types.INVENTORY0STAT <= stat.statType <= types.INVENTORY11STAT:
                 self.inv[stat.statType-8] = stat.statValue
-            elif types.BACKPACK7STAT <= stat.statType <= types.BACKPACK0STAT:
+            elif types.BACKPACK0STAT <= stat.statType <= types.BACKPACK7STAT:
                 self.inv[stat.statType-59] = stat.statValue
                 
     def __str__(self):
@@ -196,5 +196,5 @@ class PlayerData:
         self.texture, \
         self.fortuneTokens, \
         self.projSpeedMult, \
-        self.projLifeMule)
+        self.projLifeMult)
             

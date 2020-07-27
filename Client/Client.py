@@ -19,6 +19,9 @@ import Crypto.RSA as RSA
 MINSPEED = 0.004
 MAXSPEED = 0.0096
 
+MINFREQ = 0.0015
+MAXFREQ = 0.008
+
 class Client:
     def __init__(self, accInfo):
         self.guid = accInfo["guid"]
@@ -39,6 +42,8 @@ class Client:
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
+        self.bulletId = 0
+        self.lastAttackTime = 0
         self.internalServer = {"host": Servers.nameToIp[self.server],
                                "name": self.server}
         self.nexusServer = {"host": Servers.nameToIp[self.server],
@@ -96,7 +101,7 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
-        self.sockMan.connect()      
+        self.sockMan.connect()
         self.sendHelloPacket()
 
     def changeGameId(self, gameId):
@@ -170,9 +175,48 @@ class Client:
         if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.PARALYZED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
             return
         self.pos = target.clone()
+
+    def attackFreq(self):
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.DAZED):
+            return MINFREQ
+        freq = MINFREQ + (self.playerData.dex+self.playerData.dexBoost)/75 * (MAXFREQ - MINFREQ)
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.BERSERK):
+            freq *= 1.5
+        return freq
+
+    def getBulletId(self):
+        bulletId = self.bulletId
+        self.bulletId = (self.bulletId + 1) % 128
+        return bulletId
+
+    def shoot(self, angle):
+        if ConditionEffect.hasEffect(self.playerData.condition, ConditionEffect.STUNNED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
+            return False
+        time = self.getTime()
+        attackPeriod = 1 / self.attackFreq() * (1/1)#TODO
+        if time < self.lastAttackTime + attackPeriod:
+            return False
+        self.lastAttackTime = time
+        shootPacket = PacketHelper.CreatePacket("PLAYERSHOOT")
+        shootPacket.time = time
+        shootPacket.containerType = self.playerData.inv[0]
+        shootPacket.speedMult = self.playerData.projSpeedMult
+        shootPacket.lifeMult = self.playerData.projLifeMult
+        for i in range(2):#TODO
+            shootPacket.bulletId = self.getBulletId()
+            shootPacket.pos = self.pos.clone()
+            shootPacket.pos.x += math.cos(angle) * 0.3
+            shootPacket.pos.y += math.sin(angle) * 0.3
+            shootPacket.angle = angle
+            self.send(shootPacket)
+        return True
+
+    def hasEffect(self, *effects):
+        return ConditionEffect.hasEffect(self.playerData.condition, *effects)
     
     def onCreateSuccess(self, packet):
         self.objectId = packet.objectId
+        self.lastAttackTime = 0
         self.lastFrameTime = self.getTime()
         self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
         self.frameTimeUpdater.deamon = True

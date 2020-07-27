@@ -19,7 +19,15 @@ class ReplyPlugin:
                 print("Has damaging:", ConditionEffect.hasEffect(client.playerData.condition, ConditionEffect.DAMAGING))
                 print("Has healing or damaging:", ConditionEffect.hasEffect(client.playerData.condition, ConditionEffect.DAMAGING, ConditionEffect.HEALING))
                 print()
+                import time
+                angle = 0
+                while angle < 3.14*2:
+                    if not client.isConnected():
+                        return
+                    if client.shoot(angle):
+                        angle += 0.1
+                    time.sleep(0.02)
+                
     #@hook("ping")
     def onPing(self, client, packet):
         print(packet.serial)
-                    

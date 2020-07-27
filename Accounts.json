@@ -1,14 +1,14 @@
 [
-    {
-        "alias": "0",
-        "guid": "",
-        "password": "",
-        "server": "EUEast"
-    },
-    {
-        "alias": "1",
-        "guid": "",
-        "password": "",
-        "server": "EUEast"
-    }
+	{
+		"alias": "0",
+		"guid": "",
+		"password": "",
+		"server": "EUEast"
+	},
+	{
+		"alias": "1",
+		"guid": "",
+		"password": "",
+		"server": "EUEast"
+	}
 ]
