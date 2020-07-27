@@ -2,8 +2,9 @@ import os
 import importlib
 import threading
 import inspect
+from Networking.PacketHelper import isValidPacket
 
-def findClass(func):#
+def findClass(func):
     return getattr(inspect.getmodule(func), func.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0])
 
 class PacketHooks:
@@ -12,10 +13,13 @@ class PacketHooks:
         self._classes = []
 
     def addHook(self, packetType, func):
-        if packetType in self._funcs:
-            self._funcs[packetType].append(func)
+        if isValidPacket(packetType.upper()):
+            if packetType in self._funcs:
+                self._funcs[packetType].append(func)
+            else:
+                self._funcs[packetType] = [func]
         else:
-            self._funcs[packetType] = [func]
+            print("WARNING: packet", packetType, "is not a valid packet type")
 
     def addClass(self, cls):
         self._classes.append(cls)

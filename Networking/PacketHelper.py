@@ -7,6 +7,7 @@ types = PacketTypes.PacketTypes()
 def CreatePacket(packet_type):
     if type(packet_type) != str:
         raise ValueError("Packet type have to be of type str not " + str(type(packet_type)))
+    packet_type = packet_type.upper()
     if not isValidPacket(packet_type):
         raise ValueError("Invalid Packet type: "+packet_type)
     if packet_type == types.ACCEPTTRADE:
