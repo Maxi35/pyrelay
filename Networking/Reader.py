@@ -62,7 +62,7 @@ class Reader:
             string = string.decode()
         return string
 
-    def writeBytes(self):
+    def readBytes(self):
         byteList = []
         byteListLen = self.readShort()
         for i in range(byteListLen):

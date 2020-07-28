@@ -18,4 +18,4 @@ class ReconnectPacket:
         self.gameId = reader.readInt32()
         self.keyTime = reader.readInt32()
         self.isFromArena = reader.readBool()
-        self.key = reader.readByteArray()
+        self.key = reader.readBytes()

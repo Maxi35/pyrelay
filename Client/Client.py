@@ -230,7 +230,7 @@ class Client:
             self.pos = packet.pos.clone()
         
     def onMapInfo(self, packet):
-        print("Connected to", self.internalServer["name"], packet.name)
+        print("Connected to", self.nexusServer["name"], packet.name)
         if self.needsNewChar:
             print("Creating new char")
             create_packet = PacketHelper.CreatePacket("CREATE")
