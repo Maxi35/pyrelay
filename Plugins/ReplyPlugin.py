@@ -1,7 +1,7 @@
 import time
 
 from Networking.PacketHelper import CreatePacket
-from PluginLoader import hook, plugin
+from PluginManager import hook, plugin
 
 #All plugins should have a plugin decorater
 @plugin(active=True)
