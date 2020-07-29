@@ -18,7 +18,7 @@ Open the file `Accounts.json` and insert the email+password for the account(s) y
 
 ### Plugins
 
-The folder `Plugins` is where you make the plugins the clients will use
+The folder `Plugins` is where you make the plugins the clients will use. **All plugins should be thread safe**
 
 ### Running
 

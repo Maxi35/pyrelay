@@ -2,6 +2,7 @@ from ClientManager import ClientManager
 from PluginManager import loadPlugins
 from Client.Client import Client
 from Helpers.Servers import update
+import Helpers.Equip as EquipParser
 import Constants.ApiPoints as api
 import json
 import time
@@ -46,7 +47,7 @@ if args.update or args.force_update:
         t = requests.get(api.EQUIP)
         with open(EQUIP_PATH, "w") as file:
             file.write(t.text)
-input()
+
 accounts = []
 try:
     with open("Accounts.json", "r", encoding='utf-8') as file:
@@ -54,6 +55,13 @@ try:
 except IOError:
     print("Missing Accounts.json file")
     exit(1)
+    
+if not os.path.exists(EQUIP_PATH):
+    print("The file \"equip.xml\" does not exist, to create it do \"pyrelay.py --force-update\"\nOr \"pyrelay.py -u\"")
+    print()
+    r = input("Continue anyway? Note shooting won't be possible: ")
+    if "n" in r:
+        exit(0)
 
 loadPlugins()
 clientMan = ClientManager()

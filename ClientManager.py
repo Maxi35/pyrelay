@@ -2,7 +2,7 @@ import random
 import threading
 
 from Client.Client import Client
-from PluginLoader import callHooks
+from PluginManager import callHooks
 import Constants.Servers as Servers
 
 class ClientManager:
