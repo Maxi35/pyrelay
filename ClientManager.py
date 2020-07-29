@@ -11,6 +11,9 @@ class ClientManager:
 
     def addClient(self, accInfo):
         if "guid" in accInfo.keys() and "password" in accInfo.keys():
+            if accInfo["guid"] == "" or accInfo["password"] == "":
+                print("Empty email or password, skipping account")
+                return False
             if not "alias" in accInfo.keys():
                 accInfo["alias"] = accInfo["guid"]
             if not "server" in accInfo.keys():
@@ -23,6 +26,7 @@ class ClientManager:
             client = Client(accInfo)
             client.hookAllPackets(self.onPacket)
             self.clients.append(client)
+            return True
 
     def removeClient(self, guid):
         new_clients = []

@@ -17,20 +17,23 @@ EQUIP_PATH = "Resources/equip.xml"
 parser = argparse.ArgumentParser(description="pyrelay")
 
 parser.add_argument("-s", "--servers", action="store_true", help="Update the server ips")
-parser.add_argument("-u", "--update", action="store_true", help="Checks for RotMG updates")
+parser.add_argument("--no-update", action="store_true", help="Don't checks for new a RotMG update")
 parser.add_argument("--force-update", action="store_true", help="Force update RotMG resources")
 
 args = parser.parse_args()
 if args.servers:
     update()
     print("Servers updated")
-if args.update or args.force_update:
+if not args.no_update:
     print("Checking for updates...")
     if os.path.exists(VERSION_PATH) and not args.force_update:
-        sVersion = int(open(VERSION_PATH).read())
+        try:
+            sVersion = int(open(VERSION_PATH).read())
+        except ValueError:
+            sVersion = 0
         t = requests.get(api.VERSION)
-        nVersion = int(t.text)
-        if nVersion > sVersion:
+        nVersion = t.text
+        if int(nVersion) > sVersion:
             print("Updating...")
             with open(VERSION_PATH, "w") as file:
                 file.write(nVersion)
@@ -57,7 +60,7 @@ except IOError:
     exit(1)
     
 if not os.path.exists(EQUIP_PATH):
-    print("The file \"equip.xml\" does not exist, to create it do \"pyrelay.py --force-update\"\nOr \"pyrelay.py -u\"")
+    print("The file \"equip.xml\" does not exist, to create it do \"pyrelay.py --update\"\nOr \"pyrelay.py --force-update\"")
     print()
     r = input("Continue anyway? Note shooting won't be possible: ")
     if "n" in r:
@@ -66,10 +69,20 @@ if not os.path.exists(EQUIP_PATH):
 loadPlugins()
 clientMan = ClientManager()
 
+account_threads = []
+
 for account in accounts:
-    thread = threading.Thread(target=clientMan.addClient, args=(account))
+    thread = threading.Thread(target=clientMan.addClient, args=(account,))
     thread.deamon = True
     thread.start()
+    account_threads.append(thread)
+
+for thread in account_threads:
+    thread.join()
+
+if len(clientMan.clients) == 0:
+    print("No clients connected exiting...")
+    exit(0)
 
 try:
     while 1:
