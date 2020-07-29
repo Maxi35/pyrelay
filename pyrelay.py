@@ -60,7 +60,7 @@ except IOError:
     exit(1)
     
 if not os.path.exists(EQUIP_PATH):
-    print("The file \"equip.xml\" does not exist, to create it do \"pyrelay.py --update\"\nOr \"pyrelay.py --force-update\"")
+    print("The file \"equip.xml\" does not exist, to create it run \"pyrelay.py --force-update\"")
     print()
     r = input("Continue anyway? Note shooting won't be possible: ")
     if "n" in r:
