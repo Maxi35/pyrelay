@@ -190,25 +190,42 @@ class Client:
         return bulletId
 
     def shoot(self, angle):
+        if self.clientManager.weapons is None:
+            print("Weapons not loaded")
+            return False
         if self.hasEffect(ConditionEffect.STUNNED, ConditionEffect.PAUSED, ConditionEffect.PETRIFIED):
+            return False
+        if not self.playerData.inv[0] in self.clientManager.weapons.keys():
             return False
         time = self.getTime()
         attackPeriod = 1 / self.attackFreq() * (1/1)#TODO
         if time < self.lastAttackTime + attackPeriod:
             return False
         self.lastAttackTime = time
+
         shootPacket = PacketHelper.CreatePacket("PLAYERSHOOT")
         shootPacket.time = time
         shootPacket.containerType = self.playerData.inv[0]
         shootPacket.speedMult = self.playerData.projSpeedMult
         shootPacket.lifeMult = self.playerData.projLifeMult
-        for i in range(2):#TODO
+
+        weapon = self.clientManager.weapons[shootPacket.containerType]
+        arcRads = weapon.arcGap * math.pi / 180
+        totalArc = arcRads * (weapon.numProjectiles - 1)
+        if totalArc < 0:
+            totalArc = 0
+        angle -= totalArc/2
+
+        for i in range(weapon.numProjectiles):
             shootPacket.bulletId = self.getBulletId()
             shootPacket.pos = self.pos.clone()
             shootPacket.pos.x += math.cos(angle) * 0.3
             shootPacket.pos.y += math.sin(angle) * 0.3
             shootPacket.angle = angle
+            if arcRads > 0:
+                angle += arcRads
             self.send(shootPacket)
+            
         return True
 
     def hasEffect(self, *effects):

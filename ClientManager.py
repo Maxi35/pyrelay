@@ -24,6 +24,7 @@ class ClientManager:
                 accInfo["server"] = random.choice(list(Servers.nameToIp.keys()))
                 print("Invalid server", old, "using server", accInfo["server"], "instead")
             client = Client(accInfo)
+            client.clientManager = self
             client.hookAllPackets(self.onPacket)
             self.clients.append(client)
             return True
