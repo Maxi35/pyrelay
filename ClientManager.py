@@ -39,10 +39,13 @@ class ClientManager:
         self.clients = new_clients        
 
     def reconnectIfNeeded(self):
-        for client in self.clients:
-            if not client.isConnected():
-                client.connect()
-
+        if any(client.active for client in self.clients):
+            for client in self.clients:
+                if client.active and not client.isConnected():
+                    client.connect()
+        else:
+            return True
+        
     def onPacket(self, client, packet):
         callHooks(client, packet)
 

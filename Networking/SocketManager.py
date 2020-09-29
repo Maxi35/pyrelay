@@ -26,7 +26,7 @@ class SocketManager:
 
     def hook(self, packet_type, func):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         if packet_type in self.hooks.keys():
             print("Packet type", packet_type, "is already hooked to function", self.hooks[packet_type])
@@ -38,7 +38,7 @@ class SocketManager:
 
     def startListener(self):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         if not self.connected:
             print("Socket is not connected")
@@ -49,7 +49,7 @@ class SocketManager:
 
     def connect(self, ip=None):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         if self.connected:
             print("Socket already connected to", self.ip, "disconnect it first")
@@ -67,7 +67,7 @@ class SocketManager:
 
     def disconnect(self, join=True):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         if not self.connected:
             print("Socket already disconnected")
@@ -80,7 +80,7 @@ class SocketManager:
 
     def _listen(self):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         while 1:
             recv = None
@@ -105,26 +105,28 @@ class SocketManager:
                 recv = self.sock.recv(size-len(msg))
                 msg += self.incomming_decoder.process(recv)
             try:
-                packet = PacketHelper.CreatePacket(PacketId.idToType[packet_id])
+                packet_type = PacketId.idToType[packet_id]
             except KeyError:
                 print("Unknown packet id:", packet_id);
                 continue
-            self.reader.resizeAndReset(size)
-            self.reader.buffer = msg
-            packet.read(self.reader)
-            if packet.type in self.hooks.keys():
-                deamon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))
-                deamon_thread.deamon = True
-                deamon_thread.start()
-            if "ANY" in self.hooks.keys():
-                deamon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
-                deamon_thread.deamon = True
-                deamon_thread.start()
+            if not "UNKNOWN" in packet_type:
+                packet = PacketHelper.CreatePacket(packet_type)
+                self.reader.resizeAndReset(size)
+                self.reader.buffer = msg
+                packet.read(self.reader)
+                if packet.type in self.hooks.keys():
+                    deamon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))
+                    deamon_thread.deamon = True
+                    deamon_thread.start()
+                if "ANY" in self.hooks.keys():
+                    deamon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
+                    deamon_thread.deamon = True
+                    deamon_thread.start()
                 
 
     def sendPacket(self, packet):
         if not self.active:
-            print("Socket mamager is not active")
+            print("Socket manager is not active")
             return
         if self.connected:
             if len(self.queue) == 0:

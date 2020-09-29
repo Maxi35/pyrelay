@@ -17,7 +17,7 @@ EQUIP_PATH = "Resources/equip.xml"
 parser = argparse.ArgumentParser(description="pyrelay")
 
 parser.add_argument("-s", "--servers", action="store_true", help="Update the server ips")
-parser.add_argument("--no-update", action="store_true", help="Don't checks for new a RotMG update")
+parser.add_argument("--no-update", action="store_true", help="Don't check for new a RotMG update")
 parser.add_argument("--force-update", action="store_true", help="Force update RotMG resources")
 
 args = parser.parse_args()
@@ -93,7 +93,9 @@ clientMan.weapons = weapons
 
 try:
     while 1:
-        clientMan.reconnectIfNeeded()
+        if clientMan.reconnectIfNeeded():
+            print("No clients are active - exiting")
+            break
         time.sleep(0.5)
 except (KeyboardInterrupt, SystemExit):
     clientMan.stop()

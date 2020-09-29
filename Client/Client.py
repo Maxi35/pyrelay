@@ -34,11 +34,12 @@ class Client:
         self.connectedTime = int(time.time()*1000)
         self.random = Random()
         self.frameTimeUpdater = None
+        self.active = True
         self.key = []
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.0.0.0."#TODO
+        self.buildVersion = "1.1.0.1"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -148,6 +149,7 @@ class Client:
         if self.sockMan.connected:
             self.sockMan.disconnect()
         self.sockMan.active = False
+        self.active = False
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
 
@@ -265,6 +267,9 @@ class Client:
     def onFailure(self, packet):
         print("Error:", packet.errorId, "at", packet.errorPlace)
         print(packet.errorDescription)
+        if packet.errorDescription == "server.update_client":
+            self.disconnect()
+            
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")

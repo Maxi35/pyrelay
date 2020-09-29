@@ -100,9 +100,10 @@ idToType = {0: 'FAILURE',
             108: 'NEWCHARACTERINFORMATION',
             109: 'UNLOCKINFORMATION',
             112: 'QUEUEINFORMATION',
+            114: 'UNKNOWN114',
             206: 'CHATHELLOMSG',
             207: 'CHATTOKENMSG',
-            208: 'CHARLOGOUTMSG'}
+            208: 'CHATLOGOUTMSG'}
 typeToId = {"FAILURE": 0,
             "HELLO": 1,
             "CLAIMLOGINREWARDMSG": 3,
@@ -205,6 +206,7 @@ typeToId = {"FAILURE": 0,
             'NEWCHARACTERINFORMATION': 108,
             'UNLOCKINFORMATION': 109,
             'QUEUEINFORMATION': 112,
+            'UNKNOWN114': 114,
             'CHATHELLOMSG': 206,
             'CHATTOKENMSG': 207,
-            'CHARLOGOUTMSG': 208}
+            'CHATLOGOUTMSG': 208}

@@ -26,7 +26,7 @@ class ReplyPlugin:
 
 #There can be multiple plugins in one file, be aware that all plugins
 #will be used on all clients
-@plugin(active=True)
+@plugin(active=False)
 class PortalPlugin:
     def __init__(self):
         self.vaultPortal = None
