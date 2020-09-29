@@ -124,6 +124,8 @@ class SocketManager:
                     deamon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
                     deamon_thread.deamon = True
                     deamon_thread.start()
+            else:
+                sys.stdout.write(str(msg))
                 
 
     def sendPacket(self, packet):
