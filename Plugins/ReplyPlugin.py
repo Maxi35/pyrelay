@@ -24,7 +24,7 @@ class ReplyPlugin:
                 client.nexus()
             elif packet.text.lower() == "enter vault":
                 shouldEnter = True
-                 replyPacket.text = f"/tell {packet.name} Entering vault..."
+                replyPacket.text = f"/tell {packet.name} Entering vault..."
             else:
                 replyPacket.text = f"/tell {packet.name} Unknown response"
             client.send(replyPacket)

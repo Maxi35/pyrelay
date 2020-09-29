@@ -1,6 +1,7 @@
 import socket
 import threading
 import struct
+import sys
 
 import Crypto.RC4 as RC4
 import Constants.PacketIds as PacketId
@@ -109,6 +110,7 @@ class SocketManager:
             except KeyError:
                 print("Unknown packet id:", packet_id);
                 continue
+    
             if not "UNKNOWN" in packet_type:
                 packet = PacketHelper.CreatePacket(packet_type)
                 self.reader.resizeAndReset(size)
