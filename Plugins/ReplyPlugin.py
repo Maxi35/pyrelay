@@ -14,6 +14,7 @@ class ReplyPlugin:
     #To hook a packet use the hook decorator with the packet type you wish to hook
     @hook("text")
     def onText(self, client, packet):
+        global shouldEnter
         if packet.name == self.toReply and packet.recipient == client.playerData.name:
             replyPacket = CreatePacket("PLAYERTEXT")
             if packet.text.lower() == "hello":
@@ -31,13 +32,14 @@ class ReplyPlugin:
 
 #There can be multiple plugins in one file, be aware that all plugins
 #will be used on all clients
-@plugin(active=False)
+@plugin(active=True)
 class PortalPlugin:
     def __init__(self):
         self.vaultPortal = None
 
     @hook("ping")
     def onPing(self, client, packet):
+        global shouldEnter
         if shouldEnter and not self.vaultPortal is None:
             shouldEnter = False
             self.enterVault(client)

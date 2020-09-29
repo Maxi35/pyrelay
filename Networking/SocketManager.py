@@ -123,10 +123,7 @@ class SocketManager:
                 if "ANY" in self.hooks.keys():
                     deamon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
                     deamon_thread.deamon = True
-                    deamon_thread.start()
-            else:
-                sys.stdout.write(str(msg))
-                
+                    deamon_thread.start()                
 
     def sendPacket(self, packet):
         if not self.active:
