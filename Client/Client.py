@@ -39,7 +39,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.1.0.1"#TODO
+        self.buildVersion = "1.1.0.2"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -63,7 +63,7 @@ class Client:
         self.sockMan.hook("GOTO", self.onGoto)
         self.sockMan.hook("RECONNECT", self.onReconnect)
 
-        r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
+        r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
         while "Account in use" in r.text:
             print(self.guid, "has account in use")
             try:
