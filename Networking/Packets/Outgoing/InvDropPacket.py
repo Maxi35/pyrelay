@@ -7,3 +7,6 @@ class InvDropPacket:
 
     def write(self, writer):
         self.slotObject.write(writer)
+
+    def read(self, reader):
+        self.slotObject.read(reader)

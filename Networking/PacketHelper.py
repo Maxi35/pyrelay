@@ -114,6 +114,8 @@ def CreatePacket(packet_type):
         return incoming.DeathPacket()
     if packet_type == types.ENEMYSHOOT:
         return incoming.EnemyShootPacket()
+    if packet_type == types.EXALTATIONUPDATE:
+        return incoming.ExaltationUpdatePacket()
     if packet_type == types.FAILURE:
         return incoming.FailurePacket()
     if packet_type == types.FILE:
@@ -180,6 +182,8 @@ def CreatePacket(packet_type):
         return incoming.TradeStartPacket()
     if packet_type == types.UPDATE:
         return incoming.UpdatePacket()
+    if packet_tpye == types.VAULTINFO:
+        return incoming.VaultUpdatePacket()
     if packet_type == types.VERIFYEMAIL:
         return incoming.VerifyEmailPacket()
 

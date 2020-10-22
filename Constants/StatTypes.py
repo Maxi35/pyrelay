@@ -9,9 +9,6 @@ class StatTypes:
         self.NEXTLEVELEXPSTAT = 5
         self.EXPSTAT = 6
         self.LEVELSTAT = 7
-        self.ATTACKSTAT = 20
-        self.DEFENSESTAT = 21
-        self.SPEEDSTAT = 22
         self.INVENTORY0STAT = 8
         self.INVENTORY1STAT = 9
         self.INVENTORY2STAT = 10
@@ -24,6 +21,9 @@ class StatTypes:
         self.INVENTORY9STAT = 17
         self.INVENTORY10STAT = 18
         self.INVENTORY11STAT = 19
+        self.ATTACKSTAT = 20
+        self.DEFENSESTAT = 21
+        self.SPEEDSTAT = 22
         self.VITALITYSTAT = 26
         self.WISDOMSTAT = 27
         self.DEXTERITYSTAT = 28

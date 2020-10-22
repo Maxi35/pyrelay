@@ -9,3 +9,8 @@ class ChangePetSkinPacket:
         writer.writeInt32(self.petId)
         writer.writeInt32(self.skinType)
         writer.writeInt32(self.currency)
+
+    def read(self, reader):
+        self.petId = reader.readInt32()
+        self.skinType = reader.readInt32()
+        self.currency = reader.readInt32()

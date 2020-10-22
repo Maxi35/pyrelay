@@ -39,7 +39,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.1.0.2"#TODO
+        self.buildVersion = "1.2.0.1"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -108,9 +108,6 @@ class Client:
     def changeGameId(self, gameId):
         print("Changing game id directly doesn't work anymore")
         return
-##        print("Changing gameId to", gameId)
-##        self.gameId = gameId
-##        self.connect()
 
     def getSpeed(self, time):
         if self.hasEffect(ConditionEffect.SLOWED):

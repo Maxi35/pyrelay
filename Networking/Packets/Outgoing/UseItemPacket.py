@@ -10,7 +10,13 @@ class UseItemPacket:
         self.useType = 0
 
     def write(self, writer):
-        writer.write(self.time)
+        writer.writeInt32(self.time)
         self.slotObject.write(writer)
         self.pos.write(writer)
-        writer.write(self.useType)
+        writer.writeByte(self.useType)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.slotObject.read(reader)
+        self.pos.read(reader)
+        self.useType = reader.readByte()

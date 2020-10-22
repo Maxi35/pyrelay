@@ -4,3 +4,6 @@ class UpdateAckPacket:
 
     def write(self, writer):
         return
+
+    def read(self, reader):
+        return

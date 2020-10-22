@@ -5,3 +5,6 @@ class CreateGuildPacket:
 
     def write(self, writer):
         writer.writeStr(self.name)
+
+    def read(self, reader):
+        self.name = reader.readrStr()

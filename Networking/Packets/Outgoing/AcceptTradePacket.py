@@ -11,3 +11,11 @@ class AcceptTradePacket:
         writer.writeShort(len(self.partnerOffer))
         for i in self.partnerOffer:
             writer.writeBool(i)
+
+    def read(self, reader):
+        offerLen = reader.readShort()
+        for i in range(offerLen):
+            self.clientOffer.append(reader.readBool())
+        offerLen = reader.readShort()
+        for i in range(offerLen):
+            self.partnerOffer.append(reader.readBool())

@@ -9,3 +9,8 @@ class LoadPacket:
         writer.writeInt32(self.charId)
         writer.writeBool(self.isFromArena)
         writer.writeBool(self.isChallenger)
+
+    def read(self, reader):
+        self.charId = reader.readInt32()
+        self.isFromArena = reader.readBool()
+        self.isChallenger = reader.readBool()

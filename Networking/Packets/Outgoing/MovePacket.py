@@ -18,3 +18,14 @@ class MovePacket:
         writer.writeShort(len(self.records))
         for record in self.records:
             record.write(writer)
+
+    def read(self, reader):
+        self.tickId = reader.readInt32()
+        self.time = reader.readInt32()
+        self.serverRealTimeMS = reader.readUInt32()
+        self.newPos.read(writer)
+        recordLen = reader.readShort()
+        for i in range(recordLen):
+            record = MoveRecord()
+            record.read(reader)
+            self.records.append(record)

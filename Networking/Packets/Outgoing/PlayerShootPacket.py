@@ -10,6 +10,7 @@ class PlayerShootPacket:
         self.angle = 0
         self.speedMult = 0
         self.lifeMult = 0
+        self.isBurst = False
 
     def write(self, writer):
         writer.writeInt32(self.time)
@@ -19,3 +20,14 @@ class PlayerShootPacket:
         writer.writeFloat(self.angle)
         writer.writeShort(int(self.speedMult*1000))
         writer.writeShort(int(self.lifeMult*1000))
+        writer.writeBool(self.isBurst)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.bulletId = reader.readByte()
+        self.containerType = reader.readShort()
+        self.pos.read(reader)
+        self.angle = reader.readFloat()
+        self.speedMult = int(reader.readShort()/1000)
+        self.lifeMult = int(reader.readShort()/1000)
+        self.isBurst = reader.readBool()

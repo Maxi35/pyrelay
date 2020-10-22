@@ -14,3 +14,9 @@ class InvSwapPacket:
         self.pos.write(writer)
         self.slotObject1.write(writer)
         self.slotObject2.write(writer)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.pos.read(reader)
+        self.slotObject1.read(reader)
+        self.slotObject2.read(reader)

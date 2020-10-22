@@ -53,6 +53,7 @@ class PacketTypes:
         self.DAMAGE = "DAMAGE"
         self.DEATH = "DEATH"
         self.ENEMYSHOOT = "ENEMYSHOOT"
+        self.EXALTATIONUPDATE = "EXALTATIONUPDATE"
         self.FAILURE = "FAILURE"
         self.FILE = "FILE"
         self.GLOBALNOTIFICATION = "GLOBALNOTIFICATION"
@@ -86,4 +87,5 @@ class PacketTypes:
         self.TRADEREQUESTED = "TRADEREQUESTED"
         self.TRADESTART = "TRADESTART"
         self.UPDATE = "UPDATE"
+        self.VAULTUPDATE = "VAULTUPDATE"
         self.VERIFYEMAIL = "VERIFYEMAIL"

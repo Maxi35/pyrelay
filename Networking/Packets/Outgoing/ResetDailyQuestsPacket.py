@@ -4,3 +4,6 @@ class ResetDailyQuestsPacket:
 
     def write(self, writer):
         pass
+
+    def read(self, reader):
+        pass

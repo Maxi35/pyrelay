@@ -11,3 +11,9 @@ class EnemyHitPacket:
         writer.writeByte(self.bulletId)
         writer.writeInt32(self.targetId)
         writer.writeBool(self.kill)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.bulletId = reader.readByte()
+        self.targetId = reader.readInt32()
+        self.kill = reader.readBool()

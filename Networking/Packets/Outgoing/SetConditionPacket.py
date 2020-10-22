@@ -7,3 +7,7 @@ class SetConditionPacket:
     def write(self, writer):
         writer.writeByte(self.conditionEffect)
         writer.writeFloat(self.conditionDuration)
+
+    def read(self, reader):
+        self.conditionEffect = reader.readByte()
+        self.conditionDuration = reader.readFloat()

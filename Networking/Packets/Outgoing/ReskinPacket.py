@@ -5,3 +5,6 @@ class ReskinPacket:
 
     def write(self, writer):
         writer.writeInt32(self.skinID)
+
+    def read(self, reader):
+        self.skinID = reader.readerInt32()

@@ -9,3 +9,7 @@ class PlayerHitPacket:
     def write(self, writer):
         writer.writeByte(self.bulletId)
         writer.writeInt32(self.objectId)
+
+    def read(self, reader):
+        self.bulletId = reader.readByte()
+        self.objectId = reader.readInt32()

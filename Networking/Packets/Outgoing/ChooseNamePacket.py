@@ -5,3 +5,6 @@ class ChooseNamePacket:
 
     def write(self, writer):
         writer.writeStr(self.name)
+
+    def read(self, reader):
+        self.name = reader.readStr()

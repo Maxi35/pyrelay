@@ -9,3 +9,8 @@ class CreatePacket:
         writer.writeShort(self.classType)
         writer.writeShort(self.skinType)
         writer.writeBool(self.isChallenger)
+
+    def read(self, reader):
+        self.classType = reader.readShort()
+        self.skinType = reader.readShort()
+        self.isChallenger = reader.readBool()

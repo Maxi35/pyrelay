@@ -11,3 +11,9 @@ class OtherHitPacket:
         writer.writeByte(self.bulletId)
         writer.writeInt32(self.objectId)
         writer.writeInt32(self.targetId)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.bulletId = reader.readByte()
+        self.objectId = reader.readInt32()
+        self.targetId = reader.readInt32()

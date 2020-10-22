@@ -5,3 +5,6 @@ class UsePortalPacket:
 
     def write(self, writer):
         writer.writeInt32(self.objectId)
+
+    def read(self, reader):
+        self.objectId = reader.readInt32()

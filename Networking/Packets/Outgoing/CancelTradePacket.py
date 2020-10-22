@@ -5,3 +5,6 @@ class CancelTradePacket:
 
     def write(self, writer):
         pass
+
+    def read(self, reader):
+        pass

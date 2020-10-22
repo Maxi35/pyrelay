@@ -9,3 +9,7 @@ class GroundDamagePacket:
     def write(self, writer):
         writer.writeInt32(self.time)
         self.pos.write(writer)
+
+    def read(self, reader):
+        self.time = reader.readInt32()
+        self.pos.read(reader)
