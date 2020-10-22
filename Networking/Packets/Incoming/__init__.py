@@ -8,6 +8,7 @@ from .CreateSuccessPacket import *
 from .DamagePacket import *
 from .DeathPacket import *
 from .EnemyShootPacket import *
+from .ExaltationUpdatePacket import *
 from .FailurePacket import *
 from .FilePacket import *
 from .GlobalNotificationPacket import *
@@ -41,4 +42,5 @@ from .TradeDonePacket import *
 from .TradeRequestedPacket import *
 from .TradeStartPacket import *
 from .UpdatePacket import *
+from .VaultUpdatePacket import *
 from .VerifyEmailPacket import *
