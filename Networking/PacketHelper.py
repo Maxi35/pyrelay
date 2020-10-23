@@ -182,8 +182,8 @@ def CreatePacket(packet_type):
         return incoming.TradeStartPacket()
     if packet_type == types.UPDATE:
         return incoming.UpdatePacket()
-    if packet_type == types.VAULTUPDATE:
-        return incoming.VaultUpdatePacket()
+    if packet_type == types.VAULTINFO:
+        return incoming.VaultInfoPacket()
     if packet_type == types.VERIFYEMAIL:
         return incoming.VerifyEmailPacket()
 

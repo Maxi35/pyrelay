@@ -19,7 +19,7 @@ class PacketHooks:
             else:
                 self._funcs[packetType] = [func]
         else:
-            print("WARNING: packet", packetType, "is not a valid packet type")
+            print("WARNING: hooked packet", packetType, "is not a valid packet type")
 
     def addClass(self, cls):
         self._classes.append(cls)

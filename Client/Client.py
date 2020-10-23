@@ -105,6 +105,14 @@ class Client:
         self.sockMan.connect()
         self.sendHelloPacket()
 
+    def reConnect(self, key, keyTime, gameId):
+        if self.sockMan.connected:
+            self.sockMan.disconnect()
+        if not self.frameTimeUpdater is None:
+            self.frameTimeUpdater.cancel()
+        self.sockMan.connect()
+        self.sendHelloPacket2(key, keyTime, gameId)
+
     def changeGameId(self, gameId):
         print("Changing game id directly doesn't work anymore")
         return
@@ -130,6 +138,20 @@ class Client:
         hello_packet.secret = ""
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
+        hello_packet.gameNet = "rotmg"
+        hello_packet.playPlatform = "rotmg"
+        hello_packet.previousConnectionGuid = self.connectionGuid
+        self.send(hello_packet)
+
+    def sendHelloPacket2(self, key, keyTime, gameId):
+        hello_packet = PacketHelper.CreatePacket("HELLO")
+        hello_packet.buildVersion = self.buildVersion
+        hello_packet.gameId = gameId
+        hello_packet.guid = RSA.encrypt(self.guid)
+        hello_packet.password = RSA.encrypt(self.password)
+        hello_packet.secret = ""
+        hello_packet.keyTime = keyTime
+        hello_packet.key = key
         hello_packet.gameNet = "rotmg"
         hello_packet.playPlatform = "rotmg"
         hello_packet.previousConnectionGuid = self.connectionGuid

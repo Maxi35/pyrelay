@@ -42,5 +42,5 @@ from .TradeDonePacket import *
 from .TradeRequestedPacket import *
 from .TradeStartPacket import *
 from .UpdatePacket import *
-from .VaultUpdatePacket import *
+from .VaultInfoPacket import *
 from .VerifyEmailPacket import *

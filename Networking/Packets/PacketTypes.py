@@ -87,5 +87,5 @@ class PacketTypes:
         self.TRADEREQUESTED = "TRADEREQUESTED"
         self.TRADESTART = "TRADESTART"
         self.UPDATE = "UPDATE"
-        self.VAULTUPDATE = "VAULTUPDATE"
+        self.VAULTINFO = "VAULTINFO"
         self.VERIFYEMAIL = "VERIFYEMAIL"
