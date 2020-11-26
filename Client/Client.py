@@ -28,6 +28,7 @@ class Client:
         self.password = accInfo["password"]
         self.alias = accInfo["alias"]
         self.server = accInfo["server"]
+        self.proxy = accInfo["proxy"]
         self.pos = None
         self.nextPos = []
         self.objectId = -1
@@ -39,7 +40,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.2.0.1"#TODO
+        self.buildVersion = "1.2.1.0"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -102,16 +103,8 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
-        self.sockMan.connect()
+        self.sockMan.connect(self.proxy)
         self.sendHelloPacket()
-
-    def reConnect(self, key, keyTime, gameId):
-        if self.sockMan.connected:
-            self.sockMan.disconnect()
-        if not self.frameTimeUpdater is None:
-            self.frameTimeUpdater.cancel()
-        self.sockMan.connect()
-        self.sendHelloPacket2(key, keyTime, gameId)
 
     def changeGameId(self, gameId):
         print("Changing game id directly doesn't work anymore")
@@ -138,20 +131,6 @@ class Client:
         hello_packet.secret = ""
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
-        hello_packet.gameNet = "rotmg"
-        hello_packet.playPlatform = "rotmg"
-        hello_packet.previousConnectionGuid = self.connectionGuid
-        self.send(hello_packet)
-
-    def sendHelloPacket2(self, key, keyTime, gameId):
-        hello_packet = PacketHelper.CreatePacket("HELLO")
-        hello_packet.buildVersion = self.buildVersion
-        hello_packet.gameId = gameId
-        hello_packet.guid = RSA.encrypt(self.guid)
-        hello_packet.password = RSA.encrypt(self.password)
-        hello_packet.secret = ""
-        hello_packet.keyTime = keyTime
-        hello_packet.key = key
         hello_packet.gameNet = "rotmg"
         hello_packet.playPlatform = "rotmg"
         hello_packet.previousConnectionGuid = self.connectionGuid

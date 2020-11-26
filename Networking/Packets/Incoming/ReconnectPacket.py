@@ -13,7 +13,7 @@ class ReconnectPacket:
     def read(self, reader):
         self.name = reader.readStr()
         self.host = reader.readStr()
-        self.stats = reader.readStr()
+        #self.stats = reader.readStr()
         self.port = reader.readInt32()
         self.gameId = reader.readInt32()
         self.keyTime = reader.readInt32()

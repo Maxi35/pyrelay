@@ -7,4 +7,4 @@ class RequestTradePacket:
         writer.writeStr(self.name)
 
     def read(self, reader):
-        self.name = reader.writeStr()
+        self.name = reader.readStr()

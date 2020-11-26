@@ -7,3 +7,8 @@ class ChangeTradePacket:
         writer.writeShort(len(self.offer))
         for i in self.offer:
             writer.writeBool(i)
+
+    def read(self, reader):
+        offerLen = reader.readShort()
+        for i in range(len(offerLen)):
+            self.offer.append(reader.readBool())

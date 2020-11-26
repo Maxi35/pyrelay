@@ -23,6 +23,8 @@ class ClientManager:
                 old = accInfo["server"]
                 accInfo["server"] = random.choice(list(Servers.nameToIp.keys()))
                 print("Invalid server", old, "using server", accInfo["server"], "instead")
+            if not "proxy" in accInfo.keys():
+                accInfo["proxy"] = {}
             client = Client(accInfo)
             client.clientManager = self
             client.hookAllPackets(self.onPacket)

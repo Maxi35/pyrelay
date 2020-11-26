@@ -48,7 +48,7 @@ class SocketManager:
         self.listen_thread.deamon = True
         self.listen_thread.start()        
 
-    def connect(self, ip=None):
+    def connect(self, proxy, ip=None):
         if not self.active:
             print("Socket manager is not active")
             return
@@ -62,6 +62,7 @@ class SocketManager:
         self.incomming_decoder.reset()
         self.outgoing_encoder.reset()
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.sock.setproxy(socks.PROXY_TYPE_SOCKS5, proxy)
         self.sock.connect((self.ip, PORT))
         self.connected = True
         self.startListener()
@@ -110,7 +111,6 @@ class SocketManager:
             except KeyError:
                 print("Unknown packet id:", packet_id);
                 continue
-    
             if not "UNKNOWN" in packet_type:
                 packet = PacketHelper.CreatePacket(packet_type)
                 self.reader.resizeAndReset(size)
