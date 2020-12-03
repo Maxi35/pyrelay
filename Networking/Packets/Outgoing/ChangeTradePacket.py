@@ -10,5 +10,5 @@ class ChangeTradePacket:
 
     def read(self, reader):
         offerLen = reader.readShort()
-        for i in range(len(offerLen)):
+        for i in range(offerLen):
             self.offer.append(reader.readBool())

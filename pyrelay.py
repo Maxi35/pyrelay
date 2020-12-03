@@ -100,8 +100,3 @@ try:
 except (KeyboardInterrupt, SystemExit):
     clientMan.stop()
 
-
-
-
-
-
