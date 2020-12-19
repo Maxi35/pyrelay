@@ -109,7 +109,7 @@ class SocketManager:
             try:
                 packet_type = PacketId.idToType[packet_id]
             except KeyError:
-                print("Unknown packet id:", packet_id);
+##                print("Unknown packet id:", packet_id);
                 continue
             if not "UNKNOWN" in packet_type:
                 packet = PacketHelper.CreatePacket(packet_type)
