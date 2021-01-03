@@ -60,6 +60,3 @@ class PortalPlugin:
             client.nextPos = [self.vaultPortal.status.pos]
             time.sleep(0.5)
             self.enterVault(client)
-
-
-

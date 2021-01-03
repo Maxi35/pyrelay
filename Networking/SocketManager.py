@@ -88,6 +88,8 @@ class SocketManager:
             recv = None
             try:
                 recv = self.sock.recv(HEADERSIZE)
+                while len(recv) < HEADERSIZE:
+                    recv += self.sock.recv(HEADERSIZE-len(recv))
             except ConnectionResetError:
                 print("Client forcefully disconnected from", self.ip)
                 if self.connected:
@@ -100,6 +102,7 @@ class SocketManager:
                 return
             except OSError:#Socket is closed
                 return
+            
             packet_id = recv[4]
             size = struct.unpack("!i", recv[:4])[0]
             msg = recv
@@ -109,7 +112,8 @@ class SocketManager:
             try:
                 packet_type = PacketId.idToType[packet_id]
             except KeyError:
-##                print("Unknown packet id:", packet_id);
+##                print("Unknown packet id:", packet_id)
+##                print(msg)
                 continue
             if not "UNKNOWN" in packet_type:
                 packet = PacketHelper.CreatePacket(packet_type)
@@ -156,5 +160,4 @@ class SocketManager:
             deamon_thread = threading.Thread(target=self.emptyQueue, args=())
             deamon_thread.deamon = True
             deamon_thread.start()
-            
             

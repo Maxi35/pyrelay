@@ -23,7 +23,7 @@ class MovePacket:
         self.tickId = reader.readInt32()
         self.time = reader.readInt32()
         self.serverRealTimeMS = reader.readUInt32()
-        self.newPos.read(writer)
+        self.newPos.read(reader)
         recordLen = reader.readShort()
         for i in range(recordLen):
             record = MoveRecord()
