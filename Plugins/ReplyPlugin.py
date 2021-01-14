@@ -23,6 +23,8 @@ class ReplyPlugin:
                 replyPacket.text = f"/tell {packet.name} My posision is {client.pos}"
             elif packet.text.lower() == "nexus":
                 client.nexus()
+            elif packet.text.lower().startswith("server"):
+                client.changeServer(packet.text.split()[1])
             elif packet.text.lower() == "enter vault":
                 shouldEnter = True
                 replyPacket.text = f"/tell {packet.name} Entering vault..."

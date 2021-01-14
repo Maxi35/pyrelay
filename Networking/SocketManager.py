@@ -13,9 +13,9 @@ HEADERSIZE = 5
 PORT = 2050
 
 class SocketManager:
-    def __init__(self, ip):
+    def __init__(self):
         self.hooks = {}
-        self.ip = ip
+        self.ip = None
         self.sock = None
         self.active = True
         self.connected = False
@@ -48,7 +48,7 @@ class SocketManager:
         self.listen_thread.deamon = True
         self.listen_thread.start()        
 
-    def connect(self, proxy, ip=None):
+    def connect(self, proxy, ip):
         if not self.active:
             print("Socket manager is not active")
             return
@@ -56,8 +56,7 @@ class SocketManager:
             print("Socket already connected to", self.ip, "disconnect it first")
             return
         else:
-            if not ip is None:
-                self.ip = ip
+            self.ip = ip
             print("Connecting to", self.ip)
         self.incomming_decoder.reset()
         self.outgoing_encoder.reset()

@@ -40,7 +40,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.3.0.1.0"#TODO
+        self.buildVersion = "1.3.0.2.0"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -51,7 +51,7 @@ class Client:
         self.nexusServer = {"host": Servers.nameToIp[self.server],
                             "name": self.server}
         
-        self.sockMan = SocketManager(self.internalServer["host"])
+        self.sockMan = SocketManager()
         self.sockMan.hook("ANY", self.onPacket)
         self.anyPacket = None
         
@@ -103,12 +103,19 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
-        self.sockMan.connect(self.proxy)
+        self.sockMan.connect(self.proxy, self.nexusServer["host"])
         self.sendHelloPacket()
 
-    def changeGameId(self, gameId):
-        print("Changing game id directly doesn't work anymore")
-        return
+    def changeServer(self, server):
+        if not server in Servers.nameToIp.keys():
+            print(server, "is not a valid server")
+            return
+        self.server = server
+        self.internalServer = {"host": Servers.nameToIp[self.server],
+                               "name": self.server}
+        self.nexusServer = {"host": Servers.nameToIp[self.server],
+                            "name": self.server}
+        self.connect()
 
     def getSpeed(self, time):
         if self.hasEffect(ConditionEffect.SLOWED):
@@ -128,7 +135,7 @@ class Client:
         hello_packet.gameId = self.gameId
         hello_packet.guid = RSA.encrypt(self.guid)
         hello_packet.password = RSA.encrypt(self.password)
-        hello_packet.secret = ""
+        hello_packet.secret = RSA.encrypt("")#To match what normal exalt sends
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
         hello_packet.gameNet = "rotmg"
@@ -267,7 +274,8 @@ class Client:
         print(packet.errorDescription)
         if packet.errorDescription == "server.update_client":
             self.disconnect()
-            
+        elif packet.errorDescription == "Account credentials not valid":
+            self.disconnect()
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")

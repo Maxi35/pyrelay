@@ -4,9 +4,9 @@ class VaultInfoPacket:
     def __init__(self):
         self.type = "VAULTINFO"
         self.info1 = -1
-        self.info2 = -1
-        self.info3 = -1
-        self.info4 = -1
+        self.chestObjectId = -1
+        self.giftObjectId = -1
+        self.potionObjectId = -1
         
         self.vaultContent = []
         self.giftContent = []
@@ -18,9 +18,9 @@ class VaultInfoPacket:
 
     def read(self, reader):
         self.info1 = CompressedInt.read(reader)
-        self.info2 = CompressedInt.read(reader)
-        self.info3 = CompressedInt.read(reader)
-        self.info4 = CompressedInt.read(reader)
+        self.chestObjectId = CompressedInt.read(reader)
+        self.giftObjectId = CompressedInt.read(reader)
+        self.potionObjectId = CompressedInt.read(reader)
         
         vaultCount = CompressedInt.read(reader)
         for i in range(vaultCount):

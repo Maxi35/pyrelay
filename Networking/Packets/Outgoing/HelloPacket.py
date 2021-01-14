@@ -22,7 +22,7 @@ class HelloPacket:
         self.token = "8bV53M5ysJdVjU4M97fh2g7BnPXhefnc"
         self.previousConnectionGuid = ""
 
-        self.legacyToken = "XTeP7hERdchV5jrBZEYNebAqDPU6tKU6"
+##        self.legacyToken = "XTeP7hERdchV5jrBZEYNebAqDPU6tKU6"
 
     def write(self, writer):
         writer.writeStr(self.buildVersion)
