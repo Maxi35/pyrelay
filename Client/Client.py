@@ -55,14 +55,15 @@ class Client:
         self.sockMan.hook("ANY", self.onPacket)
         self.anyPacket = None
         
-        self.sockMan.hook("MAPINFO", self.onMapInfo)
+        self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
         self.sockMan.hook("FAILURE", self.onFailure)
+        self.sockMan.hook("GOTO", self.onGoto)
+        self.sockMan.hook("MAPINFO", self.onMapInfo)
+        self.sockMan.hook("NEWTICK", self.onNewTick)
         self.sockMan.hook("PING", self.onPing)
         self.sockMan.hook("UPDATE", self.onUpdate)
-        self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
-        self.sockMan.hook("NEWTICK", self.onNewTick)
-        self.sockMan.hook("GOTO", self.onGoto)
         self.sockMan.hook("RECONNECT", self.onReconnect)
+        self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
 
         r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
         while "Account in use" in r.text:
@@ -302,6 +303,12 @@ class Client:
             if obj.status.objectId == self.objectId:
                 self.pos = obj.status.pos
                 self.playerData.parse(obj)
+
+    def onServerPlayerShoot(self, packet):
+        if packet.ownerId == self.objectId:
+            shootAck = PacketHelper.CreatePacket("SHOOTACK")
+            shootAck.time = self.lastFrameTime
+            self.send(shootAck)
 
     def onReconnect(self, packet):
         if packet.host != "":

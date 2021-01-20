@@ -4,7 +4,7 @@ from Data.WorldPosData import *
 class UseItemPacket:
     def __init__(self):
         self.type = "USEITEM"
-        self.item = 0
+        self.time = 0
         self.slotObject = SlotObjectData()
         self.pos = WorldPosData()
         self.useType = 0
