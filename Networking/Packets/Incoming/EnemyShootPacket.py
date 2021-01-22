@@ -13,7 +13,7 @@ class EnemyShootPacket:
         self.angleInc = 0
 
     def read(self, reader):
-        self.bulletId = reader.readUnsignedByte
+        self.bulletId = reader.readUnsignedByte()
         self.ownerId = reader.readInt32()
         self.bulletType = reader.readUnsignedByte()
         self.startingPos.read(reader)

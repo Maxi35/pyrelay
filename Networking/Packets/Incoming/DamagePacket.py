@@ -1,10 +1,10 @@
+
 class DamagePacket:
     def __init__(self):
         self.type = "DAMAGE"
         self.targetId = 0
         self.effects = []
         self.damageAmount = 0
-        self.kill = False
         self.armorPierce = False
         self.bulletId = 0
         self.objectId = 0
@@ -15,7 +15,6 @@ class DamagePacket:
         for i in range(effectNum):
             self.effects.append(reader.readUnsignedByte())
         self.damageAmount = reader.readUnsignedShort()
-        self.kill = reader.readBool()
         self.armorPierce = reader.readBool()
         self.bulletId = reader.readUnsignedByte()
         self.objectId = reader.readInt32()

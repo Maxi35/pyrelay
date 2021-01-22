@@ -40,7 +40,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.3.0.2.0"#TODO
+        self.buildVersion = "1.3.0.2.1"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -56,6 +56,7 @@ class Client:
         self.anyPacket = None
         
         self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
+        self.sockMan.hook("ENEMYSHOOT", self.onEnemyShoot)
         self.sockMan.hook("FAILURE", self.onFailure)
         self.sockMan.hook("GOTO", self.onGoto)
         self.sockMan.hook("MAPINFO", self.onMapInfo)
@@ -104,7 +105,7 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
-        self.sockMan.connect(self.proxy, self.nexusServer["host"])
+        self.sockMan.connect(self.proxy, self.internalServer["host"])
         self.sendHelloPacket()
 
     def changeServer(self, server):
@@ -276,7 +277,7 @@ class Client:
         if packet.errorDescription == "server.update_client":
             self.disconnect()
         elif packet.errorDescription == "Account credentials not valid":
-            self.disconnect()
+            self.disconnect()            
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")
@@ -309,6 +310,11 @@ class Client:
             shootAck = PacketHelper.CreatePacket("SHOOTACK")
             shootAck.time = self.lastFrameTime
             self.send(shootAck)
+
+    def onEnemyShoot(self, packet):
+        shootAck = PacketHelper.CreatePacket("SHOOTACK")
+        shootAck.time = self.lastFrameTime
+        self.send(shootAck)
 
     def onReconnect(self, packet):
         if packet.host != "":
