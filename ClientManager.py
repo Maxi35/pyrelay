@@ -11,7 +11,9 @@ class ClientManager:
 
     def addClient(self, accInfo):
         if "guid" in accInfo.keys() and "password" in accInfo.keys():
-            if accInfo["guid"] == "" or accInfo["password"] == "":
+            if not "secret" in accInfo.keys():
+                accInfo["secret"] = ""
+            if accInfo["guid"] == "" or (accInfo["password"] == "" and accInfo["secret"] == ""):
                 print("Empty email or password, skipping account")
                 return False
             if not "alias" in accInfo.keys():

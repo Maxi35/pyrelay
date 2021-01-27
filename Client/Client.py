@@ -26,6 +26,7 @@ class Client:
     def __init__(self, accInfo):
         self.guid = accInfo["guid"]
         self.password = accInfo["password"]
+        self.secret = accInfo["secret"]
         self.alias = accInfo["alias"]
         self.server = accInfo["server"]
         self.proxy = accInfo["proxy"]
@@ -137,7 +138,7 @@ class Client:
         hello_packet.gameId = self.gameId
         hello_packet.guid = RSA.encrypt(self.guid)
         hello_packet.password = RSA.encrypt(self.password)
-        hello_packet.secret = RSA.encrypt("")#To match what normal exalt sends
+        hello_packet.secret = RSA.encrypt(self.secret)
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
         hello_packet.gameNet = "rotmg"
