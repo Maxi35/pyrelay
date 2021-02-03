@@ -11,6 +11,7 @@ from .EnemyShootPacket import *
 from .ExaltationUpdatePacket import *
 from .FailurePacket import *
 from .FilePacket import *
+from .ForgeResponsePacket import *
 from .GlobalNotificationPacket import *
 from .GotoPacket import *
 from .GuildResultPacket import *

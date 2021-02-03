@@ -13,6 +13,7 @@ from .CreatePacket import *
 from .EditAccountListPacket import *
 from .EnemyHitPacket import *
 from .EscapePacket import *
+from .ForgeRequestPacket import *
 from .GotoAckPacket import *
 from .GoToQuestRoomPacket import *
 from .GroundDamagePacket import *

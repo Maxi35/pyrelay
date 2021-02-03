@@ -1,4 +1,4 @@
-from Daya.SlotObjectData import SlotObjectData
+from Data.SlotObjectData import SlotObjectData
 
 class ForgeRequestPacket:
     def __init__(self):
