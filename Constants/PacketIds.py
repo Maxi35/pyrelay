@@ -102,6 +102,8 @@ idToType = {0: 'FAILURE',
             112: 'QUEUEINFORMATION',
             114: 'EXALTATIONUPDATE',
             117: 'VAULTINFO',
+            118: 'FORGEREQUEST',
+            119: 'FORGERESPONSE',
             206: 'CHATHELLOMSG',
             207: 'CHATTOKENMSG',
             208: 'CHATLOGOUTMSG'}
