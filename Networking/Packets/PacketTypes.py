@@ -4,6 +4,7 @@ class PacketTypes:
         self.ACCEPTTRADE = "ACCEPTTRADE"
         self.ACTIVEPETUPDATEREQUEST = "ACTIVEPETUPDATEREQUEST"
         self.AOEACK = "AOEACK"
+        self.BLUEPRINTINFO = "BLUEPRINTINFO"
         self.BUY = "BUY"
         self.CANCELTRADE = "CANCELTRADE"
         self.CHANGEGUILDRANK = "CHANGEGUILDRANK"

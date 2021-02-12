@@ -14,7 +14,7 @@ class TextPacket:
     def read(self, reader):
         self.name = reader.readStr()
         self.objectId = reader.readInt32()
-        self.numStars = reader.readInt32()
+        self.numStars = reader.readUnsignedShort()
         self.bubbleTime = reader.readUnsignedByte()
         self.recipient = reader.readStr()
         self.text = reader.readStr()

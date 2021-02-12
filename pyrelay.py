@@ -59,12 +59,12 @@ except IOError:
     print("Missing Accounts.json file")
     exit(1)
     
-if not os.path.exists(EQUIP_PATH):
-    print("The file \"equip.xml\" does not exist, to create it run \"pyrelay.py --force-update\"")
-    print()
-    r = input("Continue anyway? Note shooting won't be possible: ")
-    if "n" in r:
-        exit(0)
+##if not os.path.exists(EQUIP_PATH):
+##    print("The file \"equip.xml\" does not exist, to create it run \"pyrelay.py --force-update\"")
+##    print()
+##    r = input("Continue anyway? Note shooting won't be possible: ")
+##    if "n" in r:
+##        exit(0)
 
 loadPlugins()
 clientMan = ClientManager()

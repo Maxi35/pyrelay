@@ -41,7 +41,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.3.1.0.0"#TODO
+        self.buildVersion = "1.3.2.1.0"#TODO
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False

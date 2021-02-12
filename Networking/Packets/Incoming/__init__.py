@@ -1,6 +1,7 @@
 from .AccountListPacket import *
 from .AllyShootPacket import *
 from .AoePacket import *
+from .BlueprintInfoPacket import *
 from .BuyResultPacket import *
 from .ClaimDailyRewardResponsePacket import *
 from .ClientStatPacket import *

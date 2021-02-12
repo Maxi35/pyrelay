@@ -6,8 +6,8 @@ class ChangeGuildRankPacket:
 
     def write(self, writer):
         writer.writeStr(self.name)
-        writer.writeInt32(self.guildRank)
+        writer.writeByte(self.guildRank)
 
     def read(self, reader):
         self.name = reader.readStr()
-        self.guildRank = reader.readInt32()
+        self.guildRank = reader.readByte()

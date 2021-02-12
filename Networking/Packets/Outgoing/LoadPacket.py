@@ -2,12 +2,12 @@ class LoadPacket:
     def __init__(self):
         self.type = "LOAD"
         self.charId = 0
-        self.isChallenger = False
+        self.isFromArena = False
 
     def write(self, writer):
         writer.writeInt32(self.charId)
-        writer.writeBool(self.isChallenger)
+        writer.writeBool(self.isFromArena)
 
     def read(self, reader):
         self.charId = reader.readInt32()
-        self.isChallenger = reader.readBool()
+        self.isFromArena = reader.readBool()

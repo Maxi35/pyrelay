@@ -102,6 +102,8 @@ def CreatePacket(packet_type):
         return incoming.AllyShootPacket()
     if packet_type == types.AOE:
         return incoming.AoePacket()
+    if packet_type == types.BLUEPRINTINFO:
+        return incoming.BlueprintInfoPacket()
     if packet_type == types.BUYRESULT:
         return incoming.BuyResultPacket()
     if packet_type == types.CLAIMDAILYREWARDRESPONSE:
