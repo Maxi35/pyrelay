@@ -3,12 +3,19 @@ from Data.SlotObjectData import SlotObjectData
 class ForgeResponsePacket:
     def __init__(self):
         self.type = "FORGERESPONSE"
-        self.slot = SlotObjectData()
+        self.success = False
+        self.slots = []
 
     def read(self, reader):
-        thing = reader.readShort()
-        if thing > 0:
-            self.slot.read(reader)
+        self.success = reader.readBool()
+        slotLen = reader.readByte()
+        for i in range(slotLen):
+            slot = SlotObjectData()
+            slot.read(reader)
+            self.slots.append(slot)
 
     def write(self, writer):
-        self.slot.write(writer)
+        writer.writeBool(self.success)
+        writer.writeByte(len(self.slots))
+        for slot in self.slots:
+            slot.write(writer)

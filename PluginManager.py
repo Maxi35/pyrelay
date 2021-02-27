@@ -41,8 +41,7 @@ class Plugins:
         if options["active"]:
             self._plugins.append(plugin)
         else:
-            print("Skipping deactivated plugin", plugin.__name__)
-            
+            print("Skipping deactivated plugin", plugin.__module__.replace("Plugins.","",1) + "." + plugin.__name__)
 
     def getPlugins(self):
         return self._plugins
