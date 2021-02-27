@@ -1,8 +1,8 @@
 from Data.SlotObjectData import SlotObjectData
 
-class ForgeRespnsePacket:
+class ForgeResponsePacket:
     def __init__(self):
-        self.type = "FORGERESPONSE"
+        self.type = "FORGE_RESULT"
         self.success = False
         self.slots = []
 
