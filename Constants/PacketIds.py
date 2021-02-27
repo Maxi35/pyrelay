@@ -96,16 +96,22 @@ idToType = {0: 'FAILURE',
             104: 'GUILDINVITE',
             105: 'ESCAPE',
             106: 'FILE',
-            107: 'RESKINUNLOCK',
-            108: 'NEWCHARACTERINFORMATION',
-            109: 'UNLOCKINFORMATION',
-            112: 'QUEUEINFORMATION',
+            107: 'RESKIN_UNLOCK',
+            108: 'NEW_CHARACTER_INFORMATION',
+            109: 'UNLOCK_INFORMATION',
+            112: 'QUEUE_INFORMATION',
+            113: 'QUEUE_CANCEL',
             114: 'EXALTATIONUPDATE',
+            115: 'EXALTATION_REDEEM',
             117: 'VAULTINFO',
-            118: 'FORGEREQUEST',
-            119: 'FORGERESPONSE',
-            120: 'BLUEPRINTINFO',
-            206: 'CHATHELLOMSG',
-            207: 'CHATTOKENMSG',
-            208: 'CHATLOGOUTMSG'}
+            118: 'FORGE_REQUEST',
+            119: 'FORGE_RESULT',
+            120: 'FORGE_BLUEPRINTS_UNLOCKED',
+            121: 'CHANGE_ALLYSHOOT',
+            122: 'UNKNOWN122', 
+            123: 'UNKNOWN123',
+            
+            206: 'CHAT_HELLO',    # unused
+            207: 'CHAT_TOKEN',    # unused
+            208: 'CHAT_LOGOUT'}   # unused
 typeToId = {idToType[i]: i for i in idToType}
