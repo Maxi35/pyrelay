@@ -1,6 +1,10 @@
-
-tutorial = -1
-nexus = -2
-randomRealm = -3
-vault = -5
-mapTest = -6
+Tutorial = -1,
+Nexus = -2,
+RandomRealm = -3,
+NexusTutorial = -4,
+Vault = -5,
+MapTest = -6,
+VaultExplanation = -8,
+NexusExplanation = -9,
+QuestRoom = -11,
+CheatersQuarantine = -13
