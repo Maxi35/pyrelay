@@ -101,15 +101,16 @@ idToType = {0: 'FAILURE',
             109: 'UNLOCK_INFORMATION',
             112: 'QUEUE_INFORMATION',
             113: 'QUEUE_CANCEL',
-            114: 'EXALTATIONUPDATE',
-            115: 'EXALTATION_REDEEM',
-            117: 'VAULTINFO',
+            114: 'EXALTATION_UPDATE',
+            115: 'EXALTATION_REDEEM_REWARDS_MSG',
+            117: 'VAULT_UPDATE',
             118: 'FORGE_REQUEST',
             119: 'FORGE_RESULT',
             120: 'FORGE_BLUEPRINTS_UNLOCKED',
             121: 'CHANGE_ALLYSHOOT',
-            122: 'UNKNOWN122', 
-            123: 'UNKNOWN123',
+            
+            122: 'UNKNOWN122',    # unused
+            123: 'UNKNOWN123',    # unused
             
             206: 'CHAT_HELLO',    # unused
             207: 'CHAT_TOKEN',    # unused
