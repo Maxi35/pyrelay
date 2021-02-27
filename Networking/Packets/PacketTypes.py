@@ -92,3 +92,8 @@ class PacketTypes:
         self.UPDATE = "UPDATE"
         self.VAULTINFO = "VAULTINFO"
         self.VERIFYEMAIL = "VERIFYEMAIL"
+        self.VAULTUPDATE = "VAULTUPDATE" 
+        self.FORGE_REQUEST = "FORGE_REQUEST",
+        self.FORGE_RESULT = "FORGE_RESULT",
+        self.FORGE_UNLOCKED_BLUEPRINTS = "FORGE_UNLOCKED_BLUEPRINTS",
+        
