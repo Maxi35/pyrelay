@@ -101,6 +101,23 @@ class StatTypes:
         self.CHALLENGERSTARBGSTAT = 100
         self.PROJECTILESPEEDMULT = 102
         self.PROJECTILELIFEMULT = 103
+        self.OPENED_AT_TIMESTAMP = 104,
+        self.EXALTED_HP = 111,
+        self.EXALTED_MP = 112,
+        self.EXALTED_ATT = 105,
+        self.EXALTED_DEF = 106,
+        self.EXALTED_SPEED = 107,
+        self.EXALTED_VIT = 108,
+        self.EXALTED_DEX = 110,
+        self.EXALTED_WIS = 109,
+        self.EXALTATION_BONUS_DAMAGE = 113,
+        self.EXALTATION_IC_REDUCTION = 114,
+        self.GRAVE_ACCOUNT_ID = 115,
+        self.POTION_ONE_TYPE = 116,
+        self.POTION_TWO_TYPE = 117,
+        self.POTION_THREE_TYPE = 118,
+        self.POTION_BELT = 119,
+        self.FORGEFIRE = 120
 
     def nameOf(self, type):
         if type in self.dict.values():
