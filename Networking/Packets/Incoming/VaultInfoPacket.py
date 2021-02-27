@@ -3,7 +3,7 @@ import Data.CompressedInt as CompressedInt
 class VaultInfoPacket:
     def __init__(self):
         self.type = "VAULTINFO"
-        self.info1 = -1
+        self.unknownBool = -1
         self.chestObjectId = -1
         self.giftObjectId = -1
         self.potionObjectId = -1
@@ -17,7 +17,7 @@ class VaultInfoPacket:
         self.nextPotionMax = -1
 
     def read(self, reader):
-        self.info1 = CompressedInt.read(reader)
+        self.unknownBool  = reader.readBoolean()
         self.chestObjectId = CompressedInt.read(reader)
         self.giftObjectId = CompressedInt.read(reader)
         self.potionObjectId = CompressedInt.read(reader)
