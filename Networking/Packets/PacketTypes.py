@@ -1,3 +1,6 @@
+##
+# These need updated badly, almost 30 packets behind
+##
 
 class PacketTypes:
     def __init__(self):
@@ -91,4 +94,7 @@ class PacketTypes:
         self.TRADESTART = "TRADESTART"
         self.UPDATE = "UPDATE"
         self.VAULTINFO = "VAULTINFO"
-        self.VERIFYEMAIL = "VERIFYEMAIL"
+        self.VAULTUPDATE = "VAULTUPDATE" 
+        self.FORGE_REQUEST = "FORGE_REQUEST",
+        self.FORGE_RESULT = "FORGE_RESULT",
+        self.FORGE_UNLOCKED_BLUEPRINTS = "FORGE_UNLOCKED_BLUEPRINTS",
