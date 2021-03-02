@@ -2,6 +2,7 @@ import time
 import math
 import threading
 import requests
+import urllib.parse
 import re
 
 from Helpers.Random import Random
@@ -37,11 +38,14 @@ class Client:
         self.random = Random()
         self.frameTimeUpdater = None
         self.active = True
+        self.isReady = False
         self.key = []
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.3.2.2.0"#TODO
+        self.buildVersion = "1.3.3.0.0"#TODO
+        self.clientToken = "9e518390c709239bd3f84ccdfc2e7920a64d5f89"#Seem to be the same always
+        self.accessToken = ""
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
@@ -67,7 +71,27 @@ class Client:
         self.sockMan.hook("RECONNECT", self.onReconnect)
         self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
 
-        r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
+        print("Getting token...")
+        #Get access token
+        r = requests.get(ApiPoints.VERIFY.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
+        pattern = r"AccessToken>(.+)</AccessToken>"
+        try:
+            self.accessToken = re.findall(pattern, r.text)[0]
+        except IndexError:#Token not working
+            print("GETTING TOKEN ERROR:", r.text)
+            self.active = False
+            return
+        
+        #Verify token
+        r = requests.get(ApiPoints.VERIFYTOKEN.format(self.clientToken, urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
+        if not "Success" in r.text:
+            print("VERIFYING TOKEN ERROR:", r.text)
+            self.active = False
+            return
+
+        #Get char data
+        r = requests.get(ApiPoints.CHAR.format(urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
+        
         while "Account in use" in r.text:
             print(self.guid, "has account in use")
             try:
@@ -78,12 +102,14 @@ class Client:
                 r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
+            self.active = False
             return
         try:
             charInfo = re.findall(r'<Chars nextCharId="(\d+)" maxNumChars="(\d+)">', r.text)[0]
             chars = re.findall(r'<Char id="(\d+)">', r.text)
         except IndexError:
             print(r.text)
+            self.active = False
             return
         self.charData.nextCharId = int(charInfo[0])
         self.charData.maxNumChars = int(charInfo[1])
@@ -95,7 +121,8 @@ class Client:
             self.charData.currentCharId = self.charData.nextCharId
             self.charData.nextCharId += 1
             self.needsNewChar = True
-        
+            
+        self.isReady = True
         self.connect()
 
     def isConnected(self):
@@ -136,14 +163,12 @@ class Client:
         hello_packet = PacketHelper.CreatePacket("HELLO")
         hello_packet.buildVersion = self.buildVersion
         hello_packet.gameId = self.gameId
-        hello_packet.guid = RSA.encrypt(self.guid)
-        hello_packet.password = RSA.encrypt(self.password)
-        hello_packet.secret = RSA.encrypt(self.secret)
+        hello_packet.accessToken = self.accessToken
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
         hello_packet.gameNet = "rotmg"
         hello_packet.playPlatform = "rotmg"
-        hello_packet.previousConnectionGuid = self.connectionGuid
+        hello_packet.userToken = self.clientToken
         self.send(hello_packet)
 
     def send(self, packet):
@@ -269,7 +294,6 @@ class Client:
             load_packet = PacketHelper.CreatePacket("LOAD")
             load_packet.charId = self.charData.currentCharId
             self.send(load_packet)
-        self.connectionGuid = packet.connectionGuid
         self.random.setSeed(packet.fp)
 
     def onFailure(self, packet):

@@ -45,7 +45,7 @@ class ClientManager:
     def reconnectIfNeeded(self):
         if any(client.active for client in self.clients):
             for client in self.clients:
-                if client.active and not client.isConnected():
+                if client.isReady and client.active and not client.isConnected():
                     client.connect()
         else:
             return True
