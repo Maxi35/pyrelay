@@ -49,6 +49,23 @@ class PlayerData:
         self.fortuneTokens = 0
         self.projSpeedMult = 1
         self.projLifeMult = 1
+        self.opendAtTimestamp = 0
+        self.exaltedHp = 0
+        self.exaltedMp = 0
+        self.exaltedAtk = 0
+        self.exaltedDefense = 0
+        self.exaltedSpd = 0
+        self.exaltedDex = 0
+        self.exaltedWis = 0
+        self.exaltedVit = 0
+        self.exaltationBonusDmg = 0
+        self.exaltationICReduction = 0
+        self.graveAccountId = -1
+        self.potionOneType = -1
+        self.potionTwoType = -1
+        self.potionThreeType = -1
+        self.potionBelt = 0
+        self.forgeFire = 0
 
     def parse(self, obj):
         self.characterClass = obj.objectType
@@ -73,9 +90,9 @@ class PlayerData:
             elif stat.statType == types.CREDITSSTAT:
                 self.gold = stat.statValue
             elif stat.statType == types.MAXHPSTAT:
-                self.maxHP = stat.statValue
+                self.maxHp = stat.statValue
             elif stat.statType == types.MAXMPSTAT:
-                self.maxMP = stat.statValue
+                self.maxMp = stat.statValue
             elif stat.statType == types.HPSTAT:
                 self.hp = stat.statValue
             elif stat.statType == types.MPSTAT:
@@ -127,9 +144,9 @@ class PlayerData:
             elif stat.statType == types.TEX2STAT:
                 self.accessoryDye = stat.statValue
             elif stat.statType == types.MAXHPBOOSTSTAT:
-                self.maxHPBoost = stat.statValue
+                self.maxHpBoost = stat.statValue
             elif stat.statType == types.MAXMPBOOSTSTAT:
-                self.maxMPBoost = stat.statValue
+                self.maxMpBoost = stat.statValue
             elif stat.statType == types.NEXTCLASSQUESTFAMESTAT:
                 self.nextClassQuestFame = stat.statValue
             elif stat.statType == types.LEGENDARYRANKSTAT:
@@ -150,51 +167,43 @@ class PlayerData:
                 self.inv[stat.statType-8] = stat.statValue
             elif types.BACKPACK0STAT <= stat.statType <= types.BACKPACK7STAT:
                 self.inv[stat.statType-59] = stat.statValue
-                
+            elif stat.statType == types.OPENEDATTIMESTAMP:
+                self.opendAtTimestamp = stat.statValue
+            elif stat.statType == types.EXALTEDHP:
+                self.exaltedHp = stat.statValue
+            elif stat.statType == types.EXALTEDMP:
+                self.exaltedMp = stat.statValue
+            elif stat.statType == types.EXALTEDATK:
+                self.exaltedAtk = stat.statValue
+            elif stat.statType == types.EXALTEDDEFENSE:
+                self.exaltedDefense = stat.statValue
+            elif stat.statType == types.EXALTEDSPD:
+                self.exaltedSpd = stat.statValue
+            elif stat.statType == types.EXALTEDDEX:
+                self.exaltedDex = stat.statValue
+            elif stat.statType == types.EXALTEDWIS:
+                self.exaltedWis = stat.statValue
+            elif stat.statType == types.EXALTEDVIT:
+                self.exaltedVit = stat.statValue
+            elif stat.statType == types.EXALTATIONBONUSDMG:
+                self.exaltationBonusDmg = stat.statValue/1000
+            elif stat.statType == types.EXALTATIONICREDUCTION:
+                self.exaltationICReduction = stat.statValue
+            elif stat.statType == types.GRAVEACCOUNTID:
+                self.graveAccountId = stat.statValue
+            elif stat.statType == types.POTIONONETYPE:
+                self.potionOneType = stat.statValue
+            elif stat.statType == types.POTIONTWOTYPE:
+                self.potionTwoType = stat.statValue
+            elif stat.statType == types.POTIONTHREETYPE:
+                self.potionThreeType = stat.statValue
+            elif stat.statType == types.POTIONBELT:
+                self.potionBelt = stat.statValue
+            elif stat.statType == types.FORGEFIRE:
+                self.forgeFire = stat.statValue
+				
     def __str__(self):
-        return "name: {}\nlevel: {}\nxp: {}\nfame: {}\nstars: {}\naccountId: {}\naccountFame: {}\ngold: {}\ncharacterClass: {}\nnameChosen: {}\nguildName: {}\nguildRank: {}\nmaxHp: {}\nmaxHpBoost: {}\nmaxMp: {}\nmaxMpBoost: {}\nhp: {}\nmp: {}\natk: {}\natkBoost: {}\ndefense: {}\ndefenseBoost: {}\nspd: {}\nspdBoost: {}\ndex: {}\ndexBoost: {}\nwis: {}\nwisBoost: {}\nvit: {}\nvitBoost: {}\ncondition: {}\nhasBackpack: {}\ninv: {}\nsize: {}\nnextLevelXp: {}\nclothingDye: {}\naccessoryDye: {}\nnextClassQuestFame: {}\nlegendaryRank: {}\nxpBoosted: {}\nxpBoostTime: {}\ntexture: {}\nfortuneTokens: {}\nprojSpeedMult: {}\nprojLifeMule: {}".format(self.name, \
-        self.level, \
-        self.xp, \
-        self.fame, \
-        self.stars, \
-        self.accountId, \
-        self.accountFame, \
-        self.gold, \
-        self.characterClass, \
-        self.nameChosen, \
-        self.guildName, \
-        self.guildRank, \
-        self.maxHp, \
-        self.maxHpBoost, \
-        self.maxMp, \
-        self.maxMpBoost, \
-        self.hp, \
-        self.mp, \
-        self.atk, \
-        self.atkBoost, \
-        self.defense, \
-        self.defenseBoost, \
-        self.spd, \
-        self.spdBoost, \
-        self.dex, \
-        self.dexBoost, \
-        self.wis, \
-        self.wisBoost, \
-        self.vit, \
-        self.vitBoost, \
-        self.condition, \
-        self.hasBackpack, \
-        self.inv, \
-        self.size, \
-        self.nextLevelXp, \
-        self.clothingDye, \
-        self.accessoryDye, \
-        self.nextClassQuestFame, \
-        self.legendaryRank, \
-        self.xpBoosted, \
-        self.xpBoostTime, \
-        self.texture, \
-        self.fortuneTokens, \
-        self.projSpeedMult, \
-        self.projLifeMult)
-            
+        out = ""
+        for key in self.__dict__:
+            out += "{}: {}\n".format(key, self.__dict__[key])
+        return out[:-1]

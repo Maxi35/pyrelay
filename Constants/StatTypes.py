@@ -101,6 +101,23 @@ class StatTypes:
         self.CHALLENGERSTARBGSTAT = 100
         self.PROJECTILESPEEDMULT = 102
         self.PROJECTILELIFEMULT = 103
+        self.OPENEDATTIMESTAMP = 104
+        self.EXALTEDATK = 105
+        self.EXALTEDDEFENSE = 106
+        self.EXALTEDSPD = 107
+        self.EXALTEDVIT = 108
+        self.EXALTEDWIS = 109
+        self.EXALTEDDEX = 110
+        self.EXALTEDHP = 111
+        self.EXALTEDMP = 112
+        self.EXALTATIONBONUSDMG = 113
+        self.EXALTATIONICREDUCTION = 114
+        self.GRAVEACCOUNTID = 115
+        self.POTIONONETYPE = 116
+        self.POTIONTWOTYPE = 117
+        self.POTIONTHREETYPE = 118
+        self.POTIONBELT = 119
+        self.FORGEFIRE = 120
 
     def nameOf(self, type):
         if type in self.dict.values():
