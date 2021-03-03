@@ -345,7 +345,6 @@ class Client:
         self.send(shootAck)
 
     def onReconnect(self, packet):
-        print(packet.__dict__)
         if packet.host != "":
             self.internalServer["host"] = packet.host
         if packet.name != "":
