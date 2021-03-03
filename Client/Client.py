@@ -44,7 +44,7 @@ class Client:
         self.connectionGuid = ""
         self.gameId = GameId.nexus
         self.buildVersion = "1.3.3.0.0"#TODO
-        self.clientToken = "9e518390c709239bd3f84ccdfc2e7920a64d5f89"#Seem to be the same always
+        self.clientToken = "dfcac55274cced4bcd41a12a45f0f775a48c5aba"
         self.accessToken = ""
         self.playerData = PlayerData()
         self.charData = CharData()
@@ -158,6 +158,9 @@ class Client:
     def nexus(self):
         packet = PacketHelper.CreatePacket("ESCAPE")
         self.send(packet)
+        self.gameId = GameId.nexus
+        self.key = []
+        self.keyTime = -1
 
     def sendHelloPacket(self):
         hello_packet = PacketHelper.CreatePacket("HELLO")
@@ -342,6 +345,7 @@ class Client:
         self.send(shootAck)
 
     def onReconnect(self, packet):
+        print(packet.__dict__)
         if packet.host != "":
             self.internalServer["host"] = packet.host
         if packet.name != "":
