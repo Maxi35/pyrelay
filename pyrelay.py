@@ -24,32 +24,32 @@ args = parser.parse_args()
 if args.servers:
     update()
     print("Servers updated")
-if not args.no_update:
-    print("Checking for updates...")
-    if os.path.exists(VERSION_PATH) and not args.force_update:
-        try:
-            sVersion = int(open(VERSION_PATH).read())
-        except ValueError:
-            sVersion = 0
-        t = requests.get(api.VERSION)
-        nVersion = t.text
-        if int(nVersion) > sVersion:
-            print("Updating...")
-            with open(VERSION_PATH, "w") as file:
-                file.write(nVersion)
-            t = requests.get(api.EQUIP)
-            with open(EQUIP_PATH, "w") as file:
-                file.write(t.text)
-        else:
-            print("Resources is up to date")
-    else:
-        print("Updating...")
-        t = requests.get(api.VERSION)
-        with open(VERSION_PATH, "w") as file:
-            file.write(t.text)
-        t = requests.get(api.EQUIP)
-        with open(EQUIP_PATH, "w") as file:
-            file.write(t.text)
+##if not args.no_update:
+##    print("Checking for updates...")
+##    if os.path.exists(VERSION_PATH) and not args.force_update:
+##        try:
+##            sVersion = int(open(VERSION_PATH).read())
+##        except ValueError:
+##            sVersion = 0
+##        t = requests.get(api.VERSION)
+##        nVersion = t.text
+##        if int(nVersion) > sVersion:
+##            print("Updating...")
+##            with open(VERSION_PATH, "w") as file:
+##                file.write(nVersion)
+##            t = requests.get(api.EQUIP)
+##            with open(EQUIP_PATH, "w") as file:
+##                file.write(t.text)
+##        else:
+##            print("Resources is up to date")
+##    else:
+##        print("Updating...")
+##        t = requests.get(api.VERSION)
+##        with open(VERSION_PATH, "w") as file:
+##            file.write(t.text)
+##        t = requests.get(api.EQUIP)
+##        with open(EQUIP_PATH, "w") as file:
+##            file.write(t.text)
 
 accounts = []
 try:

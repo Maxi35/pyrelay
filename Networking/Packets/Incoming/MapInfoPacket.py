@@ -13,6 +13,7 @@ class MapInfoPacket:
         self.showDisplays = False
         self.maxPlayers = 0
         self.gameOpenedTime = 0
+        self.buildVersion = ""
 
     def read(self, reader):
         self.width = reader.readInt32()
@@ -27,3 +28,4 @@ class MapInfoPacket:
         self.showDisplays = reader.readBool()
         self.maxPlayers = reader.readShort()
         self.gameOpenedTime = reader.readUInt32()
+        self.buildVersion = reader.readStr()

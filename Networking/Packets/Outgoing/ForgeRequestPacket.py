@@ -14,7 +14,7 @@ class ForgeRequestPacket:
 
     def read(self, reader):
         self.itemId = reader.readInt32()
-        offersLen = reader.readInt32()
+        offerLen = reader.readInt32()
         for i in range(offerLen):
             slotObject = SlotObjectData()
             slotObject.read(reader)
