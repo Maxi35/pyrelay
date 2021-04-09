@@ -6,7 +6,7 @@ class WorldPosData:
 
     def distTo(self, a, b=None):
         if isinstance(a, self):
-            return ((self.x-a.x)**2 + (self.y-a.y)**2)**0.5
+            return self.dist(a)
         elif not b is None:
             return ((self.x-a)**2 + (self.y-b)**2)**0.5
         raise ValueError("Wrong arguments for 'distTo'")
