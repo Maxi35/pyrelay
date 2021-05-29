@@ -67,13 +67,13 @@ def loadPlugins():
     for file in os.listdir(path):
         if "__" not in file and file.endswith(".py"):
             to_import = import_start + file[:-3]
-            plugin = importlib.import_module(to_import)
+            importlib.import_module(to_import)
 
     for pluginClass in plugins.getPlugins():
         try:
-            plugin = pluginClass()#Init plugin
-            packetHook.addClass(plugin)
-            print("Loading plugin", pluginClass.__name__)
+            cls = pluginClass()#Init plugin
+            packetHook.addClass(cls)
+            print("Loaded plugin", pluginClass.__module__.replace("Plugins.","",1) + "." + pluginClass.__name__)
         except Exception as e:
             print("Error while loading", pluginClass.__name__)
             print(e)
