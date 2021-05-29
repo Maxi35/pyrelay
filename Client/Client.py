@@ -43,7 +43,7 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.4.0.2.0"#TODO
+        self.buildVersion = "1.6.0.0.0"#TODO
         self.clientToken = "dfcac55274cced4bcd41a12a45f0f775a48c5aba"
         self.accessToken = ""
         self.playerData = PlayerData()
@@ -300,12 +300,12 @@ class Client:
         self.random.setSeed(packet.fp)
 
     def onFailure(self, packet):
-        print("Error:", packet.errorId, "at", packet.errorPlace)
+        print("Error:", packet.errorId)
         print(packet.errorDescription)
-        if packet.errorDescription == "server.update_client":
+        if packet.errorDescription == "s.update_client":
             self.disconnect()
         elif packet.errorDescription == "Account credentials not valid":
-            self.disconnect()            
+            self.disconnect()
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")
