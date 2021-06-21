@@ -4,6 +4,7 @@ import threading
 import requests
 import urllib.parse
 import re
+import hashlib
 
 from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
@@ -43,8 +44,9 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.6.0.0.0"#TODO
-        self.clientToken = "dfcac55274cced4bcd41a12a45f0f775a48c5aba"
+        self.buildVersion = "1.6.1.1.0"#TODO
+        accountHash = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8"))
+        self.clientToken = accountHash.hexdigest()
         self.accessToken = ""
         self.playerData = PlayerData()
         self.charData = CharData()
