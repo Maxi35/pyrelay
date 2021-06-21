@@ -3,7 +3,7 @@ import Data.CompressedInt as CompressedInt
 class VaultInfoPacket:
     def __init__(self):
         self.type = "VAULTINFO"
-        self.info1 = -1
+        self.initialData = -1
         self.chestObjectId = -1
         self.giftObjectId = -1
         self.potionObjectId = -1
@@ -17,7 +17,7 @@ class VaultInfoPacket:
         self.nextPotionMax = -1
 
     def read(self, reader):
-        self.info1 = CompressedInt.read(reader)
+        self.initialData = reader.readBool()
         self.chestObjectId = CompressedInt.read(reader)
         self.giftObjectId = CompressedInt.read(reader)
         self.potionObjectId = CompressedInt.read(reader)
@@ -34,7 +34,7 @@ class VaultInfoPacket:
         for i in range(potionCount):
             self.potionContent.append(CompressedInt.read(reader))
 
-        self.vaultUpgrageCost = reader.readShort()
-        self.potionUpgradeCose = reader.readShort()
-        self.curPotionMax = reader.readShort()
-        self.nextPotionMax = reader.readShort()
+        self.vaultUpgrageCost = CompressedInt.read(reader)
+        self.potionUpgradeCose = CompressedInt.read(reader)
+        self.curPotionMax = CompressedInt.read(reader)
+        self.nextPotionMax = CompressedInt.read(reader)
