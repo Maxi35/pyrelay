@@ -29,3 +29,4 @@ class MapInfoPacket:
         self.maxPlayers = reader.readShort()
         self.gameOpenedTime = reader.readUInt32()
         self.buildVersion = reader.readStr()
+        self.unknownString = reader.readStr32()

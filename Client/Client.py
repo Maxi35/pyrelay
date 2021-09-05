@@ -3,8 +3,8 @@ import math
 import threading
 import requests
 import urllib.parse
-import re
 import hashlib
+import re
 
 from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
@@ -44,9 +44,8 @@ class Client:
         self.keyTime = -1
         self.connectionGuid = ""
         self.gameId = GameId.nexus
-        self.buildVersion = "1.6.1.1.0"#TODO
-        accountHash = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8"))
-        self.clientToken = accountHash.hexdigest()
+        self.buildVersion = open("gameVersion.txt").read()
+        self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         self.accessToken = ""
         self.playerData = PlayerData()
         self.charData = CharData()

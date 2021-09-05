@@ -8,12 +8,12 @@ class EnemyHitPacket:
 
     def write(self, writer):
         writer.writeInt32(self.time)
-        writer.writeByte(self.bulletId)
+        writer.writeShort(self.bulletId)
         writer.writeInt32(self.targetId)
         writer.writeBool(self.kill)
 
     def read(self, reader):
         self.time = reader.readInt32()
-        self.bulletId = reader.readByte()
+        self.bulletId = reader.readShort()
         self.targetId = reader.readInt32()
         self.kill = reader.readBool()

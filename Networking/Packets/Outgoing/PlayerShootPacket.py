@@ -14,7 +14,7 @@ class PlayerShootPacket:
 
     def write(self, writer):
         writer.writeInt32(self.time)
-        writer.writeByte(self.bulletId)
+        writer.writeShort(self.bulletId)
         writer.writeShort(self.containerType)
         self.pos.write(writer)
         writer.writeFloat(self.angle)
@@ -24,7 +24,7 @@ class PlayerShootPacket:
 
     def read(self, reader):
         self.time = reader.readInt32()
-        self.bulletId = reader.readByte()
+        self.bulletId = reader.readShort()
         self.containerType = reader.readShort()
         self.pos.read(reader)
         self.angle = reader.readFloat()

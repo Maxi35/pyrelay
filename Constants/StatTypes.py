@@ -24,6 +24,7 @@ class StatTypes:
         self.ATTACKSTAT = 20
         self.DEFENSESTAT = 21
         self.SPEEDSTAT = 22
+        self.TEXTURESTAT = 25
         self.VITALITYSTAT = 26
         self.WISDOMSTAT = 27
         self.DEXTERITYSTAT = 28
@@ -78,7 +79,7 @@ class StatTypes:
         self.BACKPACK6STAT = 77
         self.BACKPACK7STAT = 78
         self.HASBACKPACKSTAT = 79
-        self.TEXTURESTAT = 80
+        self.UNKNOWN80 = 80
         self.PETINSTANCEIDSTAT = 81
         self.PETNAMESTAT = 82
         self.PETTYPESTAT = 83
@@ -118,10 +119,12 @@ class StatTypes:
         self.POTIONTHREETYPE = 118
         self.POTIONBELT = 119
         self.FORGEFIRE = 120
+        self.UNKNOWN121 = 121
+        self.UNKNOWN123 = 123
 
     def nameOf(self, type):
-        if type in self.dict.values():
-            for key in self.dict.keys():
-                if type == self.dict[key]:
+        if type in self.__dict__.values():
+            for key in self.__dict__.keys():
+                if type == self.__dict__[key]:
                     return key
         return "UNKNOWNSTAT"

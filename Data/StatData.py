@@ -4,29 +4,26 @@ import Data.CompressedInt as CompressedInt
 types = StatTypes()
 
 class StatData:
-    def __init__(self, statType=0, statValue=0, strStatValue=""):
+    def __init__(self, statType=0, statValue=0, strStatValue="", secondaryValue=0):
         self.statType = statType
         self.statValue = statValue
         self.strStatValue = strStatValue
+        self.secondartValue = secondaryValue
 
     def isStringStat(self):
-        if self.statType == types.NAMESTAT:
-            return True
-        if self.statType == types.GUILDNAMESTAT:
-            return True
-        if self.statType == types.PETNAMESTAT:
-            return True
-        if self.statType == types.ACCOUNTIDSTAT:
-            return True
-        if self.statType == types.OWNERACCOUNTIDSTAT:
-            return True
-        return False
+##        return self.statType in [31, 62, 82, 38, 54, 115, 25, 69, 122]
+        return self.statType in [types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
+                                 types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
+                                 types.UNKNOWN80, types.UNKNOWN121, types.UNKNOWN123]
+##        return self.statType in [types.NAMESTAT, types.GUILDNAMESTAT, types.PETNAMESTAT,
+##                                 types.ACCOUNTIDSTAT, types.OWNERACCOUNTIDSTAT, types.GRAVEACCOUNTID,
+##                                 types.UNKNOWN80, types.UNKNOWN121, types.UNKNOWN123]
 
     def statToName(self, type=None):
         if type is None:
             return types.nameOf(self.statType)
         else:
-            return types.nameOf(type)            
+            return types.nameOf(type)   
 
     def read(self, reader):
         self.statType = reader.readUnsignedByte()
@@ -34,6 +31,7 @@ class StatData:
             self.strStatValue = reader.readStr()
         else:
             self.statValue = CompressedInt.read(reader)
+        secondaryValue = CompressedInt.read(reader)
 
     def write(self, writer):
         writer.writeUnsignedByte(self.statType)

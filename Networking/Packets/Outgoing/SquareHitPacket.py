@@ -7,10 +7,10 @@ class SquareHitPacket:
 
     def write(self, writer):
         writer.writeInt32(self.time)
-        writer.writeByte(self.bulletId)
+        writer.writeShort(self.bulletId)
         writer.writeInt32(self.objectId)
 
     def read(self, reader):
         self.time = reader.readInt32()
-        self.bulletId = reader.readByte()
+        self.bulletId = reader.readShort()
         self.objectId = reader.readInt32()

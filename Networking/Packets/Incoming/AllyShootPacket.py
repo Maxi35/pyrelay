@@ -8,7 +8,7 @@ class AllyShootPacket:
         self.bard = False
 
     def read(self, reader):
-        self.bulletId = reader.readUnsignedByte()
+        self.bulletId = reader.readUnsignedShort()
         self.ownerId = reader.readInt32()
         self.containerType = reader.readShort()
         self.angle = reader.readFloat()

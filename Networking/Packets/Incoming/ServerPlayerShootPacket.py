@@ -11,7 +11,7 @@ class ServerPlayerShootPacket:
       self.damage = 0
 
    def read(self, reader):
-      self.bulletId = reader.readUnsignedByte()
+      self.bulletId = reader.readUnsignedShort()
       self.ownerId = reader.readInt32()
       self.containerType = reader.readInt32()
       self.startingPos.read(reader)

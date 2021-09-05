@@ -16,5 +16,5 @@ class DamagePacket:
             self.effects.append(reader.readUnsignedByte())
         self.damageAmount = reader.readUnsignedShort()
         self.armorPierce = reader.readBool()
-        self.bulletId = reader.readUnsignedByte()
+        self.bulletId = reader.readUnsignedShort()
         self.objectId = reader.readInt32()

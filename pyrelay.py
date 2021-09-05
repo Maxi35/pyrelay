@@ -84,12 +84,9 @@ if len(clientMan.clients) == 0:
     print("No clients connected exiting...")
     exit(0)
 
-weapons = None
-
 if os.path.exists(EQUIP_PATH):
     weapons = EquipParser.parseWeapons(EQUIP_PATH)
-   
-clientMan.weapons = weapons
+    clientMan.weapons = weapons
 
 try:
     while 1:
