@@ -22,8 +22,6 @@ class ObjectStatusData:
             stat = StatData()
             stat.read(reader)
             self.stats.append(stat)
-##        self.unknown = CompressedInt.read(reader)
-##            CompressedInt.read(reader)
 
     def write(self, writer):
         writer.writeInt32(self.objectId)

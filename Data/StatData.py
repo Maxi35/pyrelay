@@ -11,13 +11,9 @@ class StatData:
         self.secondartValue = secondaryValue
 
     def isStringStat(self):
-##        return self.statType in [31, 62, 82, 38, 54, 115, 25, 69, 122]
         return self.statType in [types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
                                  types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
                                  types.UNKNOWN80, types.UNKNOWN121, types.UNKNOWN123]
-##        return self.statType in [types.NAMESTAT, types.GUILDNAMESTAT, types.PETNAMESTAT,
-##                                 types.ACCOUNTIDSTAT, types.OWNERACCOUNTIDSTAT, types.GRAVEACCOUNTID,
-##                                 types.UNKNOWN80, types.UNKNOWN121, types.UNKNOWN123]
 
     def statToName(self, type=None):
         if type is None:
@@ -31,7 +27,7 @@ class StatData:
             self.strStatValue = reader.readStr()
         else:
             self.statValue = CompressedInt.read(reader)
-        secondaryValue = CompressedInt.read(reader)
+        self.secondaryValue = CompressedInt.read(reader)
 
     def write(self, writer):
         writer.writeUnsignedByte(self.statType)
