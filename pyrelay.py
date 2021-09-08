@@ -21,9 +21,6 @@ parser.add_argument("--no-update", action="store_true", help="Don't check for ne
 parser.add_argument("--force-update", action="store_true", help="Force update RotMG resources")
 
 args = parser.parse_args()
-if args.servers:
-    update()
-    print("Servers updated")
 ##if not args.no_update:
 ##    print("Checking for updates...")
 ##    if os.path.exists(VERSION_PATH) and not args.force_update:
@@ -68,6 +65,9 @@ except IOError:
 
 loadPlugins()
 clientMan = ClientManager()
+
+if args.servers:
+    clientMan.updateServers = True
 
 account_threads = []
 

@@ -3,11 +3,12 @@ import threading
 
 from Client.Client import Client
 from PluginManager import callHooks
-import Constants.Servers as Servers
+
 
 class ClientManager:
     def __init__(self):
         self.clients = []
+        self.updateServers = False
 
     def addClient(self, accInfo):
         if "guid" in accInfo.keys() and "password" in accInfo.keys():
@@ -18,6 +19,11 @@ class ClientManager:
                 return False
             if not "alias" in accInfo.keys():
                 accInfo["alias"] = accInfo["guid"]
+            client = Client()
+            client.getToken(accInfo, self.updateServers)
+
+            import Constants.Servers as Servers
+            
             if not "server" in accInfo.keys():
                 accInfo["server"] = random.choice(list(Servers.nameToIp.keys()))
                 print("Server not in account info using server", accInfo["server"], "instead")
@@ -27,7 +33,9 @@ class ClientManager:
                 print("Invalid server", old, "using server", accInfo["server"], "instead")
             if not "proxy" in accInfo.keys():
                 accInfo["proxy"] = {}
-            client = Client(accInfo)
+                
+            client.setup(accInfo)
+            
             client.clientManager = self
             client.hookAllPackets(self.onPacket)
             self.clients.append(client)

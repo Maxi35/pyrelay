@@ -10,6 +10,7 @@ from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
 from Models.PlayerData import PlayerData
 from Models.CharData import CharData
+from Helpers.Servers import update
 import Models.ConditionEffect as ConditionEffect
 import Networking.PacketHelper as PacketHelper
 import Constants.GameIds as GameId
@@ -25,17 +26,19 @@ MINFREQ = 0.0015
 MAXFREQ = 0.008
 
 class Client:
-    def __init__(self, accInfo):
-        self.guid = accInfo["guid"]
-        self.password = accInfo["password"]
-        self.secret = accInfo["secret"]
-        self.alias = accInfo["alias"]
-        self.server = accInfo["server"]
-        self.proxy = accInfo["proxy"]
+    def __init__(self):
+        self.guid = ""
+        self.password = ""
+        self.secret = ""
+        self.alias = ""
+        self.server = ""
+        self.proxy = {}
+        self.internalServer = {"host": "", "name": ""}
+        self.nexusServer = {"host": "", "name": ""}
         self.pos = None
         self.nextPos = []
         self.objectId = -1
-        self.connectedTime = int(time.time()*1000)
+        self.connectedTime = -1
         self.random = Random()
         self.frameTimeUpdater = None
         self.active = True
@@ -45,33 +48,21 @@ class Client:
         self.connectionGuid = ""
         self.gameId = GameId.nexus
         self.buildVersion = open("gameVersion.txt").read()
-        self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
+        self.clientToken = ""
         self.accessToken = ""
         self.playerData = PlayerData()
         self.charData = CharData()
         self.needsNewChar = False
         self.bulletId = 0
         self.lastAttackTime = 0
-        self.internalServer = {"host": Servers.nameToIp[self.server],
-                               "name": self.server}
-        self.nexusServer = {"host": Servers.nameToIp[self.server],
-                            "name": self.server}
-        
-        self.sockMan = SocketManager()
-        self.sockMan.hook("ANY", self.onPacket)
-        self.anyPacket = None
-        
-        self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
-        self.sockMan.hook("ENEMYSHOOT", self.onEnemyShoot)
-        self.sockMan.hook("FAILURE", self.onFailure)
-        self.sockMan.hook("GOTO", self.onGoto)
-        self.sockMan.hook("MAPINFO", self.onMapInfo)
-        self.sockMan.hook("NEWTICK", self.onNewTick)
-        self.sockMan.hook("PING", self.onPing)
-        self.sockMan.hook("UPDATE", self.onUpdate)
-        self.sockMan.hook("RECONNECT", self.onReconnect)
-        self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
 
+    def getToken(self, accInfo, updateServers=False):
+        self.guid = accInfo["guid"]
+        self.password = accInfo["password"]
+        self.secret = accInfo["secret"]
+        self.alias = accInfo["alias"]
+        
+        self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         print("Getting token...")
         #Get access token
         r = requests.get(ApiPoints.VERIFY.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
@@ -89,7 +80,7 @@ class Client:
             print("VERIFYING TOKEN ERROR:", r.text)
             self.active = False
             return
-
+        
         #Get char data
         r = requests.get(ApiPoints.CHAR.format(urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
         
@@ -97,10 +88,10 @@ class Client:
             print(self.guid, "has account in use")
             try:
                 time.sleep(int(re.findall(r"(\d+)", r.text)[0]))
-                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
+                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
             except IndexError:
                 time.sleep(600)
-                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password))
+                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
             self.active = False
@@ -124,8 +115,39 @@ class Client:
             self.needsNewChar = True
             
         self.isReady = True
-        self.connect()
+        
+        try:
+            if updateServers:
+                update(self.accessToken)
+                print("Updated servers")
+        except AttributeError:
+            print("Failed to update servers")
 
+    def setup(self, accInfo):
+        self.server = accInfo["server"]
+        self.proxy = accInfo["proxy"]
+        self.connectedTime = int(time.time()*1000)
+        
+        self.internalServer = {"host": Servers.nameToIp[self.server],
+                               "name": self.server}
+        self.nexusServer = {"host": Servers.nameToIp[self.server],
+                            "name": self.server}
+        
+        self.sockMan = SocketManager()
+        self.sockMan.hook("ANY", self.onPacket)
+        self.anyPacket = None
+        
+        self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
+        self.sockMan.hook("ENEMYSHOOT", self.onEnemyShoot)
+        self.sockMan.hook("FAILURE", self.onFailure)
+        self.sockMan.hook("GOTO", self.onGoto)
+        self.sockMan.hook("MAPINFO", self.onMapInfo)
+        self.sockMan.hook("NEWTICK", self.onNewTick)
+        self.sockMan.hook("PING", self.onPing)
+        self.sockMan.hook("UPDATE", self.onUpdate)
+        self.sockMan.hook("RECONNECT", self.onReconnect)
+        self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
+    
     def isConnected(self):
         return self.sockMan.connected
 
