@@ -65,7 +65,11 @@ class Client:
         self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         print("Getting token...")
         #Get access token
-        r = requests.post(ApiPoints.VERIFY, data=ApiPoints.exaltVerifyData.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
+        data=ApiPoints.exaltVerifyData
+        data['guid'] = self.guid
+        data['password'] = self.password
+        data['clientToken'] = self.clientToken
+        r = requests.post(ApiPoints.VERIFY, data=data, headers=ApiPoints.exaltHeaders)
         
         pattern = r"AccessToken>(.+)</AccessToken>"
         try:
@@ -76,11 +80,7 @@ class Client:
             return
         
         #Verify token
-        data=ApiPoints.exaltVerifyData
-        data['guid'] = self.guid
-        data['password'] = self.password
-        data['clientToken'] = self.clientToken
-        r = requests.post(ApiPoints.VERIFY, data=data, headers=ApiPoints.exaltHeaders)
+        r = requests.get(ApiPoints.VERIFYTOKEN.format(self.clientToken, urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
         if not "Success" in r.text:
             print("VERIFYING TOKEN ERROR:", r.text)
             self.active = False
