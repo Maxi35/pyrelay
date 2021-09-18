@@ -65,7 +65,8 @@ class Client:
         self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         print("Getting token...")
         #Get access token
-        r = requests.get(ApiPoints.VERIFY.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
+        r = requests.post(ApiPoints.VERIFY, data=ApiPoints.exaltVerifyData.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
+        
         pattern = r"AccessToken>(.+)</AccessToken>"
         try:
             self.accessToken = re.findall(pattern, r.text)[0]
