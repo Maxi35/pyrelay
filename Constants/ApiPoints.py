@@ -14,7 +14,7 @@ exaltVerifyData = {
     'game_net': 'Unity',
     'play_platform': 'Unity',
     'game_net_user_id': '',
-    'guid': {},
-    'password': {},
-    'clientToken': {}
+    'guid': '',
+    'password': '',
+    'clientToken': ''
 }
