@@ -76,7 +76,11 @@ class Client:
             return
         
         #Verify token
-        r = requests.get(ApiPoints.VERIFYTOKEN.format(self.clientToken, urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
+        data=ApiPoints.exaltVerifyData
+        data['guid'] = self.guid
+        data['password'] = self.password
+        data['clientToken'] = self.clientToken
+        r = requests.post(ApiPoints.VERIFY, data=data, headers=ApiPoints.exaltHeaders)
         if not "Success" in r.text:
             print("VERIFYING TOKEN ERROR:", r.text)
             self.active = False
