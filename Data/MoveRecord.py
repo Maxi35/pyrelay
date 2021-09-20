@@ -1,9 +1,9 @@
 
 class MoveRecord:
-    def __init__(self, time=0, x=0, y=0):
+    def __init__(self, time=0, x=0.0, y=0.0):
         self.time: int = time
-        self.x: int = x
-        self.y: int = y
+        self.x: float = x
+        self.y: float = y
 
     def read(self, reader) -> None:
         self.time = reader.readInt32()
