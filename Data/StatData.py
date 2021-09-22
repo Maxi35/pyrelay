@@ -8,7 +8,7 @@ class StatData:
         self.statType = statType
         self.statValue = statValue
         self.strStatValue = strStatValue
-        self.secondartValue = secondaryValue
+        self.secondaryValue = secondaryValue
 
     def isStringStat(self):
         return self.statType in [types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,

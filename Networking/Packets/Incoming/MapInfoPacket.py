@@ -6,7 +6,7 @@ class MapInfoPacket:
         self.name = ""
         self.displayName = ""
         self.realmName = ""
-        self.fp = 0
+        self.seed = 0
         self.background = 0
         self.difficulty = 0
         self.allowPlayerTeleport = False
@@ -21,7 +21,7 @@ class MapInfoPacket:
         self.name = reader.readStr()
         self.displayName = reader.readStr()
         self.realmName = reader.readStr()
-        self.fp = reader.readUInt32()
+        self.seed = reader.readUInt32()
         self.background = reader.readInt32()
         self.difficulty = reader.readInt32()
         self.allowPlayerTeleport = reader.readBool()

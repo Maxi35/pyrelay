@@ -9,7 +9,7 @@ class WorldPosData:
             return self.dist(a)
         elif not b is None:
             return ((self.x-a)**2 + (self.y-b)**2)**0.5
-        raise ValueError("Wrong arguments for 'distTo'")
+        raise ValueError("Wrong arguments for \"distTo\"")
 
     def read(self, reader):
         self.x = reader.readFloat()

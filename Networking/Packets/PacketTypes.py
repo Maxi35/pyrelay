@@ -40,6 +40,7 @@ class PacketTypes:
         self.RESKIN = "RESKIN"
         self.SETCONDITION = "SETCONDITION"
         self.SHOOTACK = "SHOOTACK"
+        self.SHOWALLYSHOOT = "SHOWALLYSHOOT"
         self.SQUAREHIT = "SQUAREHIT"
         self.TELEPORT = "TELEPORT"
         self.UPDATEACK = "UPDATEACK"

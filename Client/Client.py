@@ -36,6 +36,8 @@ class Client:
         self.internalServer = {"host": "", "name": ""}
         self.nexusServer = {"host": "", "name": ""}
         self.pos = None
+        self.sockMan = None
+        self.anyPacket = None
         self.nextPos = []
         self.objectId = -1
         self.connectedTime = -1
@@ -320,7 +322,11 @@ class Client:
             load_packet = PacketHelper.CreatePacket("LOAD")
             load_packet.charId = self.charData.currentCharId
             self.send(load_packet)
-        self.random.setSeed(packet.fp)
+        self.random.setSeed(packet.seed)
+
+        show_packet = PacketHelper.CreatePacket("SHOWALLYSHOOT")
+        show_packet.toggle = 1
+        self.send(show_packet)
 
     def onFailure(self, packet):
         print("Error:", packet.errorId)

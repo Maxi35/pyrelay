@@ -5,7 +5,7 @@ import inspect
 from Networking.PacketHelper import isValidPacket
 
 def findClass(func):
-    return getattr(inspect.getmodule(func), func.__qualname__.split('.<locals>', 1)[0].rsplit('.', 1)[0])
+    return getattr(inspect.getmodule(func), func.__qualname__.split(".<locals>", 1)[0].rsplit(".", 1)[0])
 
 class PacketHooks:
     def __init__(self):

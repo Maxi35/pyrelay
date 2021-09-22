@@ -50,7 +50,7 @@ args = parser.parse_args()
 
 accounts = []
 try:
-    with open("Accounts.json", "r", encoding='utf-8') as file:
+    with open("Accounts.json", "r", encoding="utf-8") as file:
         accounts = json.load(file)
 except IOError:
     print("Missing Accounts.json file")

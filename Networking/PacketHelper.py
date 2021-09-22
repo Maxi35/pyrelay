@@ -86,6 +86,8 @@ def CreatePacket(packet_type):
         return outgoing.SetConditionPacket()
     if packet_type == types.SHOOTACK:
         return outgoing.ShootAckPacket()
+    if packet_type == types.SHOWALLYSHOOT:
+        return outgoing.ShowAllyShootPacket()
     if packet_type == types.SQUAREHIT:
         return outgoing.SquareHitPacket()
     if packet_type == types.TELEPORT:

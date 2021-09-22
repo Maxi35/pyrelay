@@ -36,6 +36,7 @@ from .ResetDailyQuestsPacket import *
 from .ReskinPacket import *
 from .SetConditionPacket import *
 from .ShootAckPacket import *
+from .ShowAllyShootPacket import *
 from .SquareHitPacket import *
 from .TeleportPacket import *
 from .UpdateAckPacket import *
