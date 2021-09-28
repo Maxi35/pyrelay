@@ -1,44 +1,8 @@
-from .AcceptTradePacket import *
-from .ActivePetUpdateRequestPacket import *
-from .AoeAckPacket import *
-from .BuyPacket import *
-from .CancelTradePacket import *
-from .ChangeGuildRankPacket import *
-from .ChangePetSkinPacket import *
-from .ChangeTradePacket import *
-from .CheckCreditsPacket import *
-from .ChooseNamePacket import *
-from .CreateGuildPacket import *
-from .CreatePacket import *
-from .EditAccountListPacket import *
-from .EnemyHitPacket import *
-from .EscapePacket import *
-from .ForgeRequestPacket import *
-from .GotoAckPacket import *
-from .GoToQuestRoomPacket import *
-from .GroundDamagePacket import *
-from .GuildInvitePacket import *
-from .GuildRemove import *
-from .HelloPacket import *
-from .InvDropPacket import *
-from .InvSwapPacket import *
-from .JoinGuildPacket import *
-from .KeyInfoRequestPacket import *
-from .LoadPacket import *
-from .MovePacket import *
-from .OtherHitPacket import *
-from .PlayerHitPacket import *
-from .PlayerShootPacket import *
-from .PlayerTextPacket import *
-from .PongPacket import *
-from .RequestTradePacket import *
-from .ResetDailyQuestsPacket import *
-from .ReskinPacket import *
-from .SetConditionPacket import *
-from .ShootAckPacket import *
-from .ShowAllyShootPacket import *
-from .SquareHitPacket import *
-from .TeleportPacket import *
-from .UpdateAckPacket import *
-from .UseItemPacket import *
-from .UsePortalPacket import *
+import os
+import importlib
+
+path = __file__.replace("__init__.py", "")
+
+for file in os.listdir(path):
+    if "__" not in file:
+        globals()[file[:-3]] = getattr(importlib.import_module(__name__+"."+file[:-3]), file[:-3])

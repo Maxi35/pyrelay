@@ -1,48 +1,8 @@
-from .AccountListPacket import *
-from .AllyShootPacket import *
-from .AoePacket import *
-from .BlueprintInfoPacket import *
-from .BuyResultPacket import *
-from .ClaimDailyRewardResponsePacket import *
-from .ClientStatPacket import *
-from .CreateSuccessPacket import *
-from .DamagePacket import *
-from .DeathPacket import *
-from .EnemyShootPacket import *
-from .ExaltationUpdatePacket import *
-from .FailurePacket import *
-from .FilePacket import *
-from .ForgeResponsePacket import *
-from .GlobalNotificationPacket import *
-from .GotoPacket import *
-from .GuildResultPacket import *
-from .InvitedToGuildPacket import *
-from .InvResultPacket import *
-from .KeyInfoResponsePacket import *
-from .MapInfoPacket import *
-from .NameResultPacket import *
-from .NewAbilityPacket import *
-from .NewCharacterInformationPacket import *
-from .NewTickPacket import *
-from .NotificationPacket import *
-from .PasswordPromptPacket import *
-from .PicPacket import *
-from .PingPacket import *
-from .PlaySoundPacket import *
-from .QuestObjIdPacket import *
-from .QuestRedeemResponsePacket import *
-from .QueueInformationPacket import *
-from .RealmHeroesResponsePacket import *
-from .ReconnectPacket import *
-from .ReskinUnlockPacket import *
-from .ServerPlayerShootPacket import *
-from .ShowEffectPacket import *
-from .TextPacket import *
-from .TradeAcceptedPacket import *
-from .TradeChangedPacket import *
-from .TradeDonePacket import *
-from .TradeRequestedPacket import *
-from .TradeStartPacket import *
-from .UpdatePacket import *
-from .VaultInfoPacket import *
-from .VerifyEmailPacket import *
+import os
+import importlib
+
+path = __file__.replace("__init__.py", "")
+
+for file in os.listdir(path):
+    if "__" not in file:
+        globals()[file[:-3]] = getattr(importlib.import_module(__name__+"."+file[:-3]), file[:-3])
