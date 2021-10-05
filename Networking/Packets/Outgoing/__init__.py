@@ -10,6 +10,7 @@ from .CheckCreditsPacket import *
 from .ChooseNamePacket import *
 from .CreateGuildPacket import *
 from .CreatePacket import *
+from .CreepMoveMessagePacket import *
 from .EditAccountListPacket import *
 from .EnemyHitPacket import *
 from .EscapePacket import *

@@ -14,6 +14,7 @@ class PacketTypes:
         self.CHOOSENAME = "CHOOSENAME"
         self.CREATEGUILD = "CREATEGUILD"
         self.CREATE = "CREATE"
+        self.CREEPMOVEMESSAGE = "CREEPMOVEMESSAGE"
         self.EDITACCOUNTLIST = "EDITACCOUNTLIST"
         self.ENEMYHIT = "ENEMYHIT"
         self.ESCAPE = "ESCAPE"
