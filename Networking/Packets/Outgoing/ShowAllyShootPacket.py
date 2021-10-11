@@ -7,4 +7,4 @@ class ShowAllyShootPacket:
         writer.writeInt32(self.toggle)
 
     def read(self, reader):
-        self.toggle = reader.writeInt32()
+        self.toggle = reader.readInt32()

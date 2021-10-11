@@ -1,9 +1,10 @@
 import urllib.parse
 import Constants.ApiPoints as ApiPoints
 
-def getXML(accessToken):
+def getXML(accessToken, proxies={}):
     import requests
-    return requests.get("https://www.realmofthemadgod.com/account/servers?accessToken={}&game_net=Unity&play_playform=Unity&game_net_user_id=".format(urllib.parse.quote_plus(accessToken)), headers=ApiPoints.exaltHeaders).text
+    return requests.post(ApiPoints.SERVERS, data={"accessToken": accessToken,
+                                                  "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.exaltHeaders, proxies=proxies).text
 
 def parseServers(xml):
     from xml.etree import ElementTree

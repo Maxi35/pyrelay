@@ -16,6 +16,15 @@ pip install requirements.txt
 
 Open the file `Accounts.json` and insert the email+password for the account(s) you want to use
 
+If you want to use a proxy for that account add the following to the account in accounts.json
+"proxy": {
+	"host": "ip",
+	"port": port,
+	"type": type,
+	"username": "username",
+	"password": "password"
+}
+
 ### Plugins
 
 The folder `Plugins` is where you make the plugins the clients will use. **All plugins should be thread safe**

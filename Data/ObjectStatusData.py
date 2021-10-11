@@ -25,7 +25,7 @@ class ObjectStatusData:
 
     def write(self, writer):
         writer.writeInt32(self.objectId)
-        pos.write(writer)
+        self.pos.write(writer)
         writer.writeShort(len(self.stats))
         for stat in self.stats:
             stat.write(writer)

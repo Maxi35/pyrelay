@@ -1,3 +1,7 @@
+try:
+    import socks
+except ImportError:
+    print("Couldn't import PySocks, note that proxies won't work")
 import socket
 import threading
 import struct
@@ -48,7 +52,7 @@ class SocketManager:
         self.listen_thread.deamon = True
         self.listen_thread.start()        
 
-    def connect(self, proxy, ip):
+    def connect(self, ip, proxy):
         if not self.active:
             print("Socket manager is not active")
             return
@@ -60,8 +64,13 @@ class SocketManager:
             print("Connecting to", self.ip)
         self.incomming_decoder.reset()
         self.outgoing_encoder.reset()
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #self.sock.setproxy(socks.PROXY_TYPE_SOCKS5, proxy)
+        if proxy:
+            self.sock = socks.socksocket(socket.AF_INET, socket.SOCK_STREAM)
+            proxyVersion = socks.SOCKS5 if proxy["type"] == 5 else socks.SOCKS4
+            self.sock.set_proxy(proxyVersion, proxy["host"], proxy["port"], True, \
+                                              proxy["username"], proxy["password"])
+        else:
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((self.ip, PORT))
         self.connected = True
         self.startListener()

@@ -10,7 +10,7 @@ from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
 from Models.PlayerData import PlayerData
 from Models.CharData import CharData
-from Helpers.Servers import update
+import Helpers.Servers as Servers
 import Models.ConditionEffect as ConditionEffect
 import Networking.PacketHelper as PacketHelper
 import Constants.GameIds as GameId
@@ -63,11 +63,22 @@ class Client:
         self.password = accInfo["password"]
         self.secret = accInfo["secret"]
         self.alias = accInfo["alias"]
-        
+        self.proxy = accInfo["proxy"]
+
+        proxies = {}
+        if self.proxy != {}:
+            proxies = {
+                "https": "socks{}://".format(self.proxy["type"]) +
+                ("{}:{}@".format(self.proxy["username"], self.proxy["password"]) if self.proxy["username"] != "" else "") +
+                "{}:{}".format(self.proxy["host"], self.proxy["port"])
+                }
         self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         print("Getting token...")
         #Get access token
-        r = requests.get(ApiPoints.VERIFY.format(self.guid, self.password, self.clientToken), headers=ApiPoints.exaltHeaders)
+        r = requests.post(ApiPoints.VERIFY, data={"guid": self.guid,
+                                                  "password": self.password,
+                                                  "clientToken": self.clientToken,
+                                                  "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
         pattern = r"AccessToken>(.+)</AccessToken>"
         try:
             self.accessToken = re.findall(pattern, r.text)[0]
@@ -75,25 +86,28 @@ class Client:
             print("GETTING TOKEN ERROR:", r.text)
             self.active = False
             return
-        
         #Verify token
-        r = requests.get(ApiPoints.VERIFYTOKEN.format(self.clientToken, urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
+        r = requests.post(ApiPoints.VERIFYTOKEN, data={"clientToken": self.clientToken,
+                                                       "accessToken": self.accessToken,
+                                                       "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
         if not "Success" in r.text:
             print("VERIFYING TOKEN ERROR:", r.text)
             self.active = False
             return
-        
+            
         #Get char data
-        r = requests.get(ApiPoints.CHAR.format(urllib.parse.quote_plus(self.accessToken)), headers=ApiPoints.exaltHeaders)
-        
+        r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
+                                                "accessToken": self.accessToken,
+                                                "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.exaltHeaders, proxies=proxies)
         while "Account in use" in r.text:
             print(self.guid, "has account in use")
             try:
                 time.sleep(int(re.findall(r"(\d+)", r.text)[0]))
-                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
             except IndexError:
                 time.sleep(600)
-                r = requests.get(ApiPoints.CHAR.format(self.guid, self.password), headers=ApiPoints.exaltHeaders)
+            r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
+                                                    "accessToken": self.accessToken,
+                                                    "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.exaltHeaders, proxies=proxies)
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
             self.active = False
@@ -117,17 +131,16 @@ class Client:
             self.needsNewChar = True
             
         self.isReady = True
-        
+
         try:
             if updateServers:
-                update(self.accessToken)
+                Servers.update(self.accessToken, proxies)
                 print("Updated servers")
         except AttributeError:
             print("Failed to update servers")
 
     def setup(self, accInfo):
         self.server = accInfo["server"]
-        self.proxy = accInfo["proxy"]
         self.connectedTime = int(time.time()*1000)
         
         self.internalServer = {"host": Servers.nameToIp[self.server],
@@ -158,7 +171,7 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
-        self.sockMan.connect(self.proxy, self.internalServer["host"])
+        self.sockMan.connect(self.internalServer["host"], self.proxy)
         self.sendHelloPacket()
 
     def changeServer(self, server):

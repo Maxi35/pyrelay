@@ -19,6 +19,9 @@ class ClientManager:
                 return False
             if not "alias" in accInfo.keys():
                 accInfo["alias"] = accInfo["guid"]
+            if not "proxy" in accInfo.keys():
+                accInfo["proxy"] = {}
+                
             client = Client()
             client.getToken(accInfo, self.updateServers)
 
@@ -31,8 +34,6 @@ class ClientManager:
                 old = accInfo["server"]
                 accInfo["server"] = random.choice(list(Servers.nameToIp.keys()))
                 print("Invalid server", old, "using server", accInfo["server"], "instead")
-            if not "proxy" in accInfo.keys():
-                accInfo["proxy"] = {}
                 
             client.setup(accInfo)
             
