@@ -9,7 +9,7 @@ This project is inspired by [nrelay](https://github.com/thomas-crane/nrelay)
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the packages in requirements.txt
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Setup

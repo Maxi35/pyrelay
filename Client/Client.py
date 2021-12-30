@@ -37,6 +37,7 @@ class Client:
         self.nexusServer = {"host": "", "name": ""}
         self.pos = None
         self.sockMan = None
+        self.clientManager = None
         self.anyPacket = None
         self.nextPos = []
         self.objectId = -1
@@ -63,7 +64,7 @@ class Client:
         self.password = accInfo["password"]
         self.secret = accInfo["secret"]
         self.alias = accInfo["alias"]
-        self.proxy = accInfo["proxy"]
+        self.proxy = accInfo.get("proxy", {})
 
         proxies = {}
         if self.proxy != {}:
@@ -368,6 +369,8 @@ class Client:
                 self.playerData.parseStats(status.stats)
 
     def onUpdate(self, packet):
+        if packet.pos.x != 0.0 and packet.pos.y != 0.0:
+            self.pos = packet.pos
         updateAck_packet = PacketHelper.CreatePacket("UPDATEACK")
         self.send(updateAck_packet)
         for obj in packet.newObjs:

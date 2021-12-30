@@ -19,8 +19,11 @@ class ClientManager:
                 return False
             if not "alias" in accInfo.keys():
                 accInfo["alias"] = accInfo["guid"]
-            if not "proxy" in accInfo.keys():
-                accInfo["proxy"] = {}
+            if "proxy" in accInfo.keys():
+                if not "username" in accInfo["proxy"].keys():
+                    accInfo["proxy"]["username"] = ""
+                if not "password" in accInfo["proxy"].keys():
+                    accInfo["proxy"]["password"] = ""
                 
             client = Client()
             client.getToken(accInfo, self.updateServers)
