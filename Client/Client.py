@@ -11,6 +11,7 @@ from Networking.SocketManager import SocketManager
 from Models.PlayerData import PlayerData
 from Models.CharData import CharData
 import Helpers.Servers as Servers
+import Data.MoveRecord as MoveRecord
 import Models.ConditionEffect as ConditionEffect
 import Networking.PacketHelper as PacketHelper
 import Constants.GameIds as GameId
@@ -359,10 +360,8 @@ class Client:
     def onNewTick(self, packet):
         move_packet = PacketHelper.CreatePacket("MOVE")
         move_packet.tickId = packet.tickId
-        move_packet.time = self.lastFrameTime
-        move_packet.serverRealTimeMS = packet.serverRealTimeMS
-        move_packet.newPos = self.pos
-        move_packet.records = []
+        move_packet.time = packet.serverRealTimeMS
+        move_packet.records = [MoveRecord.MoveRecord(self.lastFrameTime, self.pos.x, self.pos.y)]
         self.send(move_packet)
         for status in packet.statuses:
             if status.objectId == self.objectId:
