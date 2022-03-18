@@ -398,7 +398,6 @@ class Client:
         self.keyTime = packet.keyTime
         self.connect()
 
-
     def hookAllPackets(self, func):
         self.anyPacket = func
 
