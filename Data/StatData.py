@@ -11,9 +11,9 @@ class StatData:
         self.secondaryValue = secondaryValue
 
     def isStringStat(self):
-        return self.statType in [types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
+        return self.statType in [types.EXPSTAT, types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
                                  types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
-                                 types.UNKNOWN80, types.UNKNOWN121, types.UNKNOWN123]
+                                 types.UNKNOWN80, types.UNKNOWN121]
 
     def statToName(self, type=None):
         if type is None:
@@ -44,4 +44,3 @@ class StatData:
             return "statType: {}\nstrStatValue: {}\nsecondaryValue: {}".format(self.statType, self.strStatValue, self.secondaryValue)
         else:
             return "statType: {}\nstatValue: {}\nsecondaryValue: {}".format(self.statType, self.statValue, self.secondaryValue)
-

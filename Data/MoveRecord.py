@@ -1,19 +1,19 @@
+from Data.WorldPosData import WorldPosData
 
 class MoveRecord:
     def __init__(self, time=0, x=0.0, y=0.0):
         self.time = time
-        self.x = x
-        self.y = y
+        self.pos = WorldPosData()
+        self.pos.x = x
+        self.pos.y = y
 
     def read(self, reader):
         self.time = reader.readInt32()
-        self.x = reader.readFloat()
-        self.y = reader.readFloat()
+        self.pos.read(reader)
 
     def write(self, writer):
         writer.writeInt32(self.time)
-        writer.writeFloat(self.y)
-        writer.writeFloat(self.y)
+        self.pos.write(writer)
 
     def clone(self):
-        return MoveRecord(self.time, self.x, self.y)
+        return MoveRecord(self.time, self.pos.x, self.pos.y)

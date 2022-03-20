@@ -7,14 +7,14 @@ class UpdatePacket:
     def __init__(self):
         self.type = "UPDATE"
         self.pos = WorldPosData()
-        self.unknown = 0
+        self.levelType = 0
         self.tiles = []
         self.newObjs = []
         self.drops = []
 
     def read(self, reader):
         self.pos.read(reader)
-        self.unknown = reader.readByte()
+        self.levelType = reader.readByte()
         tiles_len = CompressedInt.read(reader)
         for i in range(tiles_len):
             tile = GroundTileData()
@@ -28,4 +28,3 @@ class UpdatePacket:
         drops_len = CompressedInt.read(reader)
         for i in range(drops_len):
             self.drops.append(CompressedInt.read(reader))
-

@@ -1,5 +1,3 @@
-import random
-
 class HelloPacket:
     def __init__(self):
         self.type = "HELLO"
@@ -12,6 +10,7 @@ class HelloPacket:
         self.entryTag = ""
         self.gameNet = ""
         self.gameNetUserId = ""
+        self.userPlatform = ""
         self.playPlatform = ""
         self.platformToken = ""
         self.userToken = ""
@@ -27,10 +26,11 @@ class HelloPacket:
         writer.writeInt32(self.keyTime)
         writer.writeBytes(self.key)
 ##        writer.writeStr32(self.mapJSON)
-        writer.writeStr(self.entryTag)
+        #writer.writeStr(self.entryTag)
 ##        writer.writeStr(self.gameNet)
-        writer.writeStr(self.gameNetUserId)
-##        writer.writeStr(self.playPlatform)
+        #writer.writeStr(self.gameNetUserId)
+        writer.writeStr(self.userPlatform)
+        writer.writeStr(self.playPlatform)
         writer.writeStr(self.platformToken)
         writer.writeStr(self.userToken)
         writer.writeStr(self.token)
@@ -42,10 +42,11 @@ class HelloPacket:
         self.keyTime = reader.readInt32()
         self.key = reader.readBytes()
 ##        self.mapJSON = reader.readStr32()
-        self.entryTag = reader.readStr()
+        #self.entryTag = reader.readStr()
 ##        self.gameNet = reader.readStr()
-        self.gameNetUserId = reader.readStr()
-##        self.playPlatform = reader.readStr()
+        #self.gameNetUserId = reader.readStr()
+        self.userPlatform = reader.readStr()
+        self.playPlatform = reader.readStr()
         self.platformToken = reader.readStr()
         self.userToken = reader.readStr()
         self.token = reader.readStr()
