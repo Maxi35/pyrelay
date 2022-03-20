@@ -15,9 +15,6 @@ class HelloPacket:
         self.platformToken = ""
         self.userToken = ""
         self.token = "8bV53M5ysJdVjU4M97fh2g7BnPXhefnc"
-        
-##        self.previousConnectionGuid = ""
-##        self.legacyToken = "XTeP7hERdchV5jrBZEYNebAqDPU6tKU6"
 
     def write(self, writer):
         writer.writeStr(self.buildVersion)
@@ -25,10 +22,6 @@ class HelloPacket:
         writer.writeStr(self.accessToken)
         writer.writeInt32(self.keyTime)
         writer.writeBytes(self.key)
-##        writer.writeStr32(self.mapJSON)
-        #writer.writeStr(self.entryTag)
-##        writer.writeStr(self.gameNet)
-        #writer.writeStr(self.gameNetUserId)
         writer.writeStr(self.userPlatform)
         writer.writeStr(self.playPlatform)
         writer.writeStr(self.platformToken)
@@ -41,10 +34,6 @@ class HelloPacket:
         self.accessToken = reader.readStr()
         self.keyTime = reader.readInt32()
         self.key = reader.readBytes()
-##        self.mapJSON = reader.readStr32()
-        #self.entryTag = reader.readStr()
-##        self.gameNet = reader.readStr()
-        #self.gameNetUserId = reader.readStr()
         self.userPlatform = reader.readStr()
         self.playPlatform = reader.readStr()
         self.platformToken = reader.readStr()
