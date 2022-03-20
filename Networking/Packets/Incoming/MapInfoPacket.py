@@ -13,7 +13,10 @@ class MapInfoPacket:
         self.showDisplays = False
         self.maxPlayers = 0
         self.gameOpenedTime = 0
+        self.newBool = False
         self.buildVersion = ""
+        self.newInt = 0
+        self.dungeonModifiers = []
 
     def read(self, reader):
         self.width = reader.readInt32()
@@ -26,7 +29,9 @@ class MapInfoPacket:
         self.difficulty = reader.readInt32()
         self.allowPlayerTeleport = reader.readBool()
         self.showDisplays = reader.readBool()
+        self.newBool = reader.readBool()
         self.maxPlayers = reader.readShort()
         self.gameOpenedTime = reader.readUInt32()
         self.buildVersion = reader.readStr()
-        self.unknownString = reader.readStr32()
+        self.newInt = reader.readInt32()
+        self.dungeonModifiers = reader.readStr().split(";")
