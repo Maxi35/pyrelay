@@ -64,7 +64,7 @@ class Reader:
 
     def readBytes(self):
         byteList = []
-        byteListLen = self.readShort()
+        byteListLen = self.readByte()
         for i in range(byteListLen):
             byteList.append(self.readByte())
         return byteList
