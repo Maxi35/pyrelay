@@ -1,3 +1,4 @@
+from Data.WorldPosData import WorldPosData
 
 from asyncore import write
 from Data.WorldPosData import WorldPosData
@@ -6,9 +7,7 @@ from Data.WorldPosData import WorldPosData
 class MoveRecord:
     def __init__(self, time=0, x=0.0, y=0.0):
         self.time = time
-        self.pos = WorldPosData()
-        self.pos.x = x
-        self.pos.y = y
+        self.pos = WorldPosData(x, y)
 
     def read(self, reader):
         self.time = reader.readInt32()

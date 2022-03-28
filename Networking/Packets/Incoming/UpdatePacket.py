@@ -28,4 +28,3 @@ class UpdatePacket:
         drops_len = CompressedInt.read(reader)
         for i in range(drops_len):
             self.drops.append(CompressedInt.read(reader))
-
