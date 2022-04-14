@@ -331,6 +331,7 @@ class Client:
             create_packet = PacketHelper.CreatePacket("CREATE")
             create_packet.classType = Classes.WIZARD
             create_packet.skinType = 0
+            create_packet.isChallenger = 0
             self.send(create_packet)
             self.needsNewChar = False
         else:
