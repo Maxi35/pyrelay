@@ -10,7 +10,7 @@ class MovePacket:
 
     def write(self, writer):
         writer.writeInt32(self.tickId)
-        writer.writeInt32(self.time)
+        writer.writeUInt32(self.time)
         writer.writeShort(len(self.records))
         for record in self.records:
             record.write(writer)
