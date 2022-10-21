@@ -6,10 +6,6 @@ class HelloPacket:
         self.accessToken = ""
         self.keyTime = 0
         self.key = []
-        self.mapJSON = ""
-        self.entryTag = ""
-        self.gameNet = ""
-        self.gameNetUserId = ""
         self.userPlatform = ""
         self.playPlatform = ""
         self.platformToken = ""

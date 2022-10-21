@@ -98,6 +98,8 @@ def CreatePacket(packet_type):
         return outgoing.UseItemPacket()
     if packet_type == types.USEPORTAL:
         return outgoing.UsePortalPacket()
+    if packet_type == types.UNKNOWN121:
+        return outgoing.Unknown121Packet()
     if packet_type == types.ACCOUNTLIST:
         return incoming.AccountListPacket()
     if packet_type == types.ALLYSHOOT:
@@ -194,6 +196,8 @@ def CreatePacket(packet_type):
         return incoming.VaultInfoPacket()
     if packet_type == types.VERIFYEMAIL:
         return incoming.VerifyEmailPacket()
+    if packet_type == types.UNKNOWN139:
+        return incoming.Unknown139Packet()
 
 def isValidPacket(packet_type):
     return packet_type in dir(types)

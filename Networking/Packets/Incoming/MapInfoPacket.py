@@ -26,7 +26,7 @@ class MapInfoPacket:
         self.realmName = reader.readStr()
         self.seed = reader.readUInt32()
         self.background = reader.readInt32()
-        self.difficulty = reader.readInt32()
+        self.difficulty = reader.readFloat()
         self.allowPlayerTeleport = reader.readBool()
         self.showDisplays = reader.readBool()
         self.newBool = reader.readBool()
