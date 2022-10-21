@@ -19,3 +19,12 @@ class TradeStartPacket:
             item = TradeItem()
             item.read(reader)
             self.partnerItems.append(item)
+
+    def write(self, writer):
+        writer.writeShort(len(self.clientItems))
+        for i in range(len(self.clientItems)):
+            self.clientItems[i].write(writer)
+        writer.writeStr(self.partnerName)
+        writer.writeShort(len(self.partnerItems))
+        for i in range(len(self.partnerItems)):
+            self.partnerItems[i].write(writer)

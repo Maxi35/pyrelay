@@ -8,3 +8,7 @@ class QueueInformationPacket:
     def read(self, reader):
         self.curPos = reader.readUnsignedShort()
         self.maxPos = reader.readUnsignedShort()
+
+    def write(self, writer):
+        writer.writeUnsignedShort(self.curPos)
+        writer.writeUnsignedShort(self.maxPos)

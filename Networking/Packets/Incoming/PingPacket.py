@@ -5,3 +5,6 @@ class PingPacket:
 
     def read(self, reader):
         self.serial = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.serial)

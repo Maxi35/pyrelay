@@ -7,3 +7,7 @@ class NameResultPacket:
     def read(self, reader):
         self.success = reader.readBool()
         self.errorText = reader.readStr()
+
+    def write(self, writer):
+        writer.writeBool(self.success)
+        writer.writeStr(self.errorText)

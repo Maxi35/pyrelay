@@ -69,6 +69,22 @@ class Reader:
             byteList.append(self.readByte())
         return byteList
 
+    def readCompressedInt(self):
+        value = 0
+        uByte = self.readUnsignedByte()
+        isNegative = (uByte & 64) != 0
+        shift = 6
+        value = uByte & 63;
+        while uByte & 128:
+            uByte = self.readUnsignedByte()
+            value |= (uByte & 127) << shift
+            shift += 7
+        
+        if isNegative:
+            return -value
+        
+        return value
+
     def bytesAvailable(self):
         return self._length - self.index
 

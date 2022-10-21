@@ -19,3 +19,12 @@ class NewTickPacket:
             status = ObjectStatusData()
             status.read(reader)
             self.statuses.append(status)
+
+    def write(self, writer):
+        writer.writeInt32(self.tickId)
+        writer.writeInt32(self.tickTime)
+        writer.writeUInt32(self.serverRealTimeMS)
+        writer.writeUnsignedShort(self.serverLastTimeRTTMS)
+        writer.writeShort(len(self.statuses))
+        for i in range(len(self.statuses)):
+            self.statuses[i].write(writer)

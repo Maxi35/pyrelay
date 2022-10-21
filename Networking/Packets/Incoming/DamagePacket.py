@@ -18,3 +18,13 @@ class DamagePacket:
         self.armorPierce = reader.readBool()
         self.bulletId = reader.readUnsignedShort()
         self.objectId = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.targetId)
+        writer.writeUnsignedByte(len(self.effects))
+        for i in range(len(self.effects)):
+            writer.writeUnsignedByte(self.effects[i])
+        writer.writeUnsignedShort(self.damageAmount)
+        writer.writeBool(self.armorPierce)
+        writer.writeUnsignedShort(self.bulletId)
+        writer.writeInt32(self.objectId)

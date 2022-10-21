@@ -15,3 +15,10 @@ class DeathPacket:
         self.zombieType = reader.readInt32()
         self.zombieId = reader.readInt32()
         self.isZombie = self.zombieId != -1
+
+    def write(self, writer):
+        writer.writeStr(self.accountId)
+        writer.writeInt32(self.charId)
+        writer.writeStr(self.killedBy)
+        writer.writeInt32(self.zombieType)
+        writer.writeInt32(self.zombieId)

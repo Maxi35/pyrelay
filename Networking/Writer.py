@@ -56,6 +56,24 @@ class Writer:
         for byte in byteList:
             self.writeByte(byte)
 
+    def writeCompressedInt(self, value):
+        uByte = 0
+        uByte |= 64*(value<0)
+        value = abs(value)
+        uByte |= (value&63)
+
+        value >>= 6
+        uByte |= 128*(value>0)
+        
+        self.writeUnsignedByte(uByte)
+        
+        
+        while value > 0:
+            uByte = value&127
+            value >>= 7
+            uByte |= 128*(value>0)
+            self.writeUnsignedByte(uByte)
+
     def writeHeader(self, packetId):
         sizeBytes = struct.pack("!i", self.index)
         for idx, byte in enumerate(sizeBytes):

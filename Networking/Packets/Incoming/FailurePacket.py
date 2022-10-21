@@ -7,3 +7,7 @@ class FailurePacket:
     def read(self, reader):
         self.errorId = reader.readInt32()
         self.errorDescription = reader.readStr()
+
+    def write(self, writer):
+        writer.writeInt32(self.errorId)
+        writer.writeStr(self.errorDescription)

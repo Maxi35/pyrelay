@@ -5,3 +5,6 @@ class QuestObjIdPacket:
 
     def read(self, reader):
         self.objectId = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.objectId)

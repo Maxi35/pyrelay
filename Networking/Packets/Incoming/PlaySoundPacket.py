@@ -7,3 +7,7 @@ class PlaySoundPacket:
     def read(self, reader):
         self.ownerId = reader.readInt32()
         self.soundId = reader.readUnsignedByte()
+
+    def write(self, writer):
+        writer.writeInt32(self.ownerId)
+        writer.writeUnsignedByte(self.soundId)

@@ -1,5 +1,3 @@
-import Data.CompressedInt as CompressedInt
-
 class VaultInfoPacket:
     def __init__(self):
         self.type = "VAULTINFO"
@@ -17,24 +15,47 @@ class VaultInfoPacket:
         self.nextPotionMax = -1
 
     def read(self, reader):
-        self.info1 = CompressedInt.read(reader)
-        self.chestObjectId = CompressedInt.read(reader)
-        self.giftObjectId = CompressedInt.read(reader)
-        self.potionObjectId = CompressedInt.read(reader)
+        self.info1 = reader.readCompressedInt()
+        self.chestObjectId = reader.readCompressedInt()
+        self.giftObjectId = reader.readCompressedInt()
+        self.potionObjectId = reader.readCompressedInt()
         
-        vaultCount = CompressedInt.read(reader)
+        vaultCount = reader.readCompressedInt()
         for i in range(vaultCount):
-            self.vaultContent.append(CompressedInt.read(reader))
+            self.vaultContent.append(reader.readCompressedInt())
 
-        giftCount = CompressedInt.read(reader)
+        giftCount = reader.readCompressedInt()
         for i in range(giftCount):
-            self.giftContent.append(CompressedInt.read(reader))
+            self.giftContent.append(reader.readCompressedInt())
 
-        potionCount = CompressedInt.read(reader)
+        potionCount = reader.readCompressedInt()
         for i in range(potionCount):
-            self.potionContent.append(CompressedInt.read(reader))
+            self.potionContent.append(reader.readCompressedInt())
 
         self.vaultUpgrageCost = reader.readShort()
         self.potionUpgradeCose = reader.readShort()
         self.curPotionMax = reader.readShort()
         self.nextPotionMax = reader.readShort()
+
+    def write(self, writer):
+        writer.writeCompressedInt(self.info1)
+        writer.writeCompressedInt(self.chestObjectId)
+        writer.writeCompressedInt(self.giftObjectId)
+        writer.writeCompressedInt(self.potionObjectId)
+        
+        writer.writeCompressedInt(len(self.vaultContent))
+        for i in range(len(self.vaultContent)):
+            writer.writeCompressedInt(self.vaultContent[i])
+        
+        writer.writeCompressedInt(len(self.giftContent))
+        for i in range(len(self.giftContent)):
+            writer.writeCompressedInt(self.giftContent[i])
+        
+        writer.writeCompressedInt(len(self.potionContent))
+        for i in range(len(self.potionContent)):
+            writer.writeCompressedInt(self.potionContent[i])
+
+        writer.writeShort(self.vaultUpgrageCost)
+        writer.writeShort(self.potionUpgradeCose)
+        writer.writeShort(self.curPotionMax)
+        writer.writeShort(self.nextPotionMax)

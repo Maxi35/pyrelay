@@ -9,3 +9,8 @@ class PicPacket:
         self.width = reader.readInt32()
         self.height = reader.readInt32()
         self.bitmapData = reader.readBytes(self.width * self.height * 4)
+
+    def write(self, writer):
+        writer.writeInt32(self.width)
+        writer.writeInt32(self.height)
+        writer.writeBytes(self.bitmapData)

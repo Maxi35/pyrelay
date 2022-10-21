@@ -1,5 +1,4 @@
 from Constants.StatTypes import *
-import Data.CompressedInt as CompressedInt
 
 types = StatTypes()
 
@@ -26,15 +25,16 @@ class StatData:
         if self.isStringStat():
             self.strStatValue = reader.readStr()
         else:
-            self.statValue = CompressedInt.read(reader)
-        self.secondaryValue = CompressedInt.read(reader)
+            self.statValue = reader.readCompressedInt()
+        self.secondaryValue = reader.readCompressedInt()
 
     def write(self, writer):
         writer.writeUnsignedByte(self.statType)
         if self.isStringStat():
             writer.writeStr(self.strStatValue)
         else:
-            writer.writeInt32(self.statValue)
+            writer.writeCompressedInt(self.statValue)
+        writer.writeCompressedInt(self.secondaryValue)
 
     def clone(self):
         return StatData(self.statType, self.statValue, self.strStatValue)
@@ -44,3 +44,4 @@ class StatData:
             return "statType: {}\nstrStatValue: {}\nsecondaryValue: {}".format(self.statType, self.strStatValue, self.secondaryValue)
         else:
             return "statType: {}\nstatValue: {}\nsecondaryValue: {}".format(self.statType, self.statValue, self.secondaryValue)
+

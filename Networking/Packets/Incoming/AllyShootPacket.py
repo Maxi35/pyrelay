@@ -13,3 +13,10 @@ class AllyShootPacket:
         self.containerType = reader.readShort()
         self.angle = reader.readFloat()
         self.bard = reader.readBool()
+
+    def write(self, writer):
+        writer.writeUnsignedShort(self.bulletId)
+        writer.writeInt32(self.ownerId)
+        writer.writeShort(self.containerType)
+        writer.writeFloat(self.angle)
+        writer.writeBool(self.bard)

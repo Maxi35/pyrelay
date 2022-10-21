@@ -7,3 +7,7 @@ class GlobalNotificationPacket:
     def read(self, reader):
         self.notificationType = reader.readInt32()
         self.text = reader.readStr()
+
+    def write(self, writer):
+        writer.writeInt32(self.notificationType)
+        writer.writeStr(self.text)

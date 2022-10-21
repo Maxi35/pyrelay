@@ -7,3 +7,7 @@ class InvitedToGuildPacket:
     def read(self, reader):
         self.name = reader.readStr()
         self.guildName = reader.readStr()
+
+    def write(self, writer):
+        writer.writeStr(self.name)
+        writer.writeStr(self.guildName)

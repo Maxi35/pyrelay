@@ -21,3 +21,14 @@ class TextPacket:
         self.cleanText = reader.readStr()
         self.isSupporter = reader.readBool()
         self.starBg = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeStr(self.name)
+        writer.writeInt32(self.objectId)
+        writer.writeUnsignedShort(self.numStars)
+        writer.writeUnsignedByte(self.bubbleTime)
+        writer.writeStr(self.recipient)
+        writer.writeStr(self.text)
+        writer.writeStr(self.cleanText)
+        writer.writeBool(self.isSupporter)
+        writer.writeInt32(self.starBg)

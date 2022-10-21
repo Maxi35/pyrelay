@@ -5,3 +5,6 @@ class TradeRequestedPacket:
 
     def read(self, reader):
         self.name = reader.readStr()
+
+    def write(self, writer):
+        writer.writeStr(self.name)

@@ -25,3 +25,17 @@ class EnemyShootPacket:
         else:
             self.numShots = 1
             self.angleInc = 0
+
+    def writer(self, writer):
+        writer.writeUnsignedShort(self.bulletId)
+        writer.writeInt32(self.ownerId)
+        writer.writeUnsignedByte(self.bulletType)
+        self.startingPos.write(writer)
+        writer.writeFloat(self.angle)
+        writer.writeShort(self.damage)
+        if self.angleInc == 0 and self.numShots == 1:
+            writer.writeUnsignedByte(self.numShots)
+            writer.writeFloat(self.angleInc)
+        else:
+            self.numShots = 1
+            self.angleInc = 0

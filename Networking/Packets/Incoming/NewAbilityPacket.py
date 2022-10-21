@@ -5,3 +5,6 @@ class NewAbilityPacket:
 
     def read(self, reader):
         self.abilityType = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.abilityType)

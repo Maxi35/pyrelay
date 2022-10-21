@@ -7,3 +7,7 @@ class GuildResultPacket:
     def read(self, reader):
         self.success = reader.readBool()
         self.lineBuilderJSON = reader.readStr()
+
+    def write(self, writer):
+        writer.writeBool(self.success)
+        writer.writeStr(self.lineBuilderJSON)

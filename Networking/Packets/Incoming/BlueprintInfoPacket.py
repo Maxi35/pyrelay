@@ -1,5 +1,3 @@
-import Data.CompressedInt as CompressedInt
-
 class BlueprintInfoPacket:
     def __init__(self):
         self.type = "BLUEPRINTINFO"
@@ -8,4 +6,9 @@ class BlueprintInfoPacket:
     def read(self, reader):
         numBlueprints = reader.readByte()
         for i in range(numBlueprints):
-            self.blueprints.append(CompressedInt.read(reader))
+            self.blueprints.append(reader.readCompressedInt())
+            
+    def write(self, writer):
+        writer.writeByte(len(self.blueprints))
+        for i in range(len(self.blueprints)):
+            writer.writeCompressedInt(self.blueprints[i])

@@ -22,3 +22,13 @@ class AoePacket:
         self.color = reader.readInt32()
         self.armorPierce = reader.readBool()
         
+    def write(self, writer):
+        self.pos.write(writer)
+        writer.writeFloat(self.radius)
+        writer.writeUnsignedShort(self.damage)
+        writer.writeUnsignedByte(self.effect)
+        writer.writeFloat(self.duration)
+        writer.writereadUnsignedShort(self.origType)
+        writer.writeInt32(self.color)
+        writer.writeBool(self.armorPierce)
+        

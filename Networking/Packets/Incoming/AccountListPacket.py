@@ -11,3 +11,10 @@ class AccountListPacket:
         for i in range(accountIdsNum):
             self.accountIds.append(reader.readStr())
         self.lockAction = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.accountListId)
+        writer.writeShort(len(self.accountIds))
+        for i in range(len(self.accountIds)):
+            writer.writeStr(self.accountIds[i])
+        writer.writeInt32(self.lockAction)

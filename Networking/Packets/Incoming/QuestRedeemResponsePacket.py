@@ -7,3 +7,7 @@ class QuestRedeemResponsePacket:
     def read(self, reader):
         self.ok = reader.readBool()
         self.message = reader.readStr()
+
+    def write(self, writer):
+        writer.writeBool(self.ok)
+        writer.writeStr(self.message)

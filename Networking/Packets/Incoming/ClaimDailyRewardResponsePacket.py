@@ -9,3 +9,8 @@ class ClaimDailyRewardResponsePacket:
         self.itemId = reader.readInt32()
         self.quantity = reader.readInt32()
         self.gold = reader.readInt32()
+        
+    def write(self, writer):
+        writer.writeInt32(self.itemId)
+        writer.writeInt32(self.quantity)
+        writer.writeInt32(self.gold)

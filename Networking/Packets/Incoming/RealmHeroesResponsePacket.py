@@ -5,3 +5,6 @@ class RealmHeroesResponsePacket:
 
     def read(self, reader):
         self.numberOfRealmHeros = reader.readInt32()
+
+    def write(self, writer):
+        writer.writeInt32(self.numberOfRealmHeros)

@@ -1,7 +1,6 @@
 from Data.GroundTileData import *
 from Data.ObjectData import *
 from Data.WorldPosData import *
-import Data.CompressedInt as CompressedInt
 
 class UpdatePacket:
     def __init__(self):
@@ -15,16 +14,33 @@ class UpdatePacket:
     def read(self, reader):
         self.pos.read(reader)
         self.levelType = reader.readByte()
-        tiles_len = CompressedInt.read(reader)
+        tiles_len = reader.readCompressedInt()
         for i in range(tiles_len):
             tile = GroundTileData()
             tile.read(reader)
             self.tiles.append(tile)
-        objects_len = CompressedInt.read(reader)
+            
+        objects_len = reader.readCompressedInt()
         for i in range(objects_len):
             data = ObjectData()
             data.read(reader)
             self.newObjs.append(data)
-        drops_len = CompressedInt.read(reader)
+            
+        drops_len = reader.readCompressedInt()
         for i in range(drops_len):
-            self.drops.append(CompressedInt.read(reader))
+            self.drops.append(reader.readCompressedInt())
+
+    def write(self, writer):
+        self.pos.write(writer)
+        writer.writeByte(self.levelType)
+        writer.writeCompressedInt(len(self.tiles))
+        for i in range(len(self.tiles)):
+            self.tiles[i].write(writer)
+            
+        writer.writeCompressedInt(len(self.newObjs))
+        for i in range(len(self.newObjs)):
+            self.newObjs[i].write(writer)
+            
+        writer.writeCompressedInt(len(self.drops))
+        for i in range(len(self.drops)):
+            writer.writeCompressedInt(self.drops[i])

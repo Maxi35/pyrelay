@@ -30,6 +30,8 @@ def CreatePacket(packet_type):
         return outgoing.CheckCreditsPacket()
     if packet_type == types.CHOOSENAME:
         return outgoing.ChooseNamePacket()
+    if packet_type == types.CLAIMDAILYLOGINREWARD:
+        return outgoing.ClaimDailyLoginRewardPacket()
     if packet_type == types.CREATEGUILD:
         return outgoing.CreateGuildPacket()
     if packet_type == types.CREATE:

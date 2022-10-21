@@ -21,3 +21,14 @@ class ExaltationUpdatePacket:
         self.attProgress = reader.readByte()
         self.manaProgress = reader.readByte()
         self.lifeProgress = reader.readByte()
+        
+    def write(self, writer):
+        writer.writeShort(self.objType)
+        writer.writeByte(self.dexProgress)
+        writer.writeByte(self.spdProgress)
+        writer.writeByte(self.vitProgress)
+        writer.writeByte(self.wisProgress)
+        writer.writeByte(self.defProgress)
+        writer.writeByte(self.attProgress)
+        writer.writeByte(self.manaProgress)
+        writer.writeByte(self.lifeProgress)
