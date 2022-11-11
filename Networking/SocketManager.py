@@ -49,7 +49,7 @@ class SocketManager:
             print("Socket is not connected")
             return
         self.listen_thread = threading.Thread(target=self._listen, args=())
-        self.listen_thread.deamon = True
+        self.listen_thread.daemon = True
         self.listen_thread.start()        
 
     def connect(self, ip, proxy):
@@ -129,13 +129,13 @@ class SocketManager:
                 self.reader.buffer = msg
                 packet.read(self.reader)
                 if packet.type in self.hooks.keys():
-                    deamon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))
-                    deamon_thread.deamon = True
-                    deamon_thread.start()
+                    daemon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))
+                    daemon_thread.daemon = True
+                    daemon_thread.start()
                 if "ANY" in self.hooks.keys():
-                    deamon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
-                    deamon_thread.deamon = True
-                    deamon_thread.start()                
+                    daemon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
+                    daemon_thread.daemon = True
+                    daemon_thread.start()                
 
     def sendPacket(self, packet):
         if not self.active:
@@ -144,9 +144,9 @@ class SocketManager:
         if self.connected:
             if len(self.queue) == 0:
                 self.queue.append(packet)
-                deamon_thread = threading.Thread(target=self.emptyQueue, args=())
-                deamon_thread.deamon = True
-                deamon_thread.start()
+                daemon_thread = threading.Thread(target=self.emptyQueue, args=())
+                daemon_thread.daemon = True
+                daemon_thread.start()
             else:
                 self.queue.append(packet)
         else:
@@ -165,7 +165,7 @@ class SocketManager:
         self.writer.buffer = self.writer.buffer[:5] + self.outgoing_encoder.process(self.writer.buffer[5:])
         self.sock.sendall(bytes(self.writer.buffer))
         if len(self.queue) > 0:
-            deamon_thread = threading.Thread(target=self.emptyQueue, args=())
-            deamon_thread.deamon = True
-            deamon_thread.start()
+            daemon_thread = threading.Thread(target=self.emptyQueue, args=())
+            daemon_thread.daemon = True
+            daemon_thread.start()
             

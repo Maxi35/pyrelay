@@ -37,7 +37,7 @@ account_threads = []
 
 for account in accounts:
     thread = threading.Thread(target=clientMan.addClient, args=(account,))
-    thread.deamon = True
+    thread.daemon = True
     thread.start()
     account_threads.append(thread)
 

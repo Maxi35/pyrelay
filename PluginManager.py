@@ -30,7 +30,7 @@ class PacketHooks:
                 for cls in self._classes:
                     if type(cls) == findClass(func):
                         thread = threading.Thread(target=func, args=(cls, client, packet))
-                        thread.deamon = True
+                        thread.daemon = True
                         thread.start()
 
 class Plugins:
