@@ -237,7 +237,7 @@ class Client:
             self.moveTo(self.nextPos[0], diff)
         self.lastFrameTime = time
         self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
-        self.frameTimeUpdater.deamon = True
+        self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
 
     def moveTo(self, target, time):
@@ -314,7 +314,7 @@ class Client:
         self.lastAttackTime = 0
         self.lastFrameTime = self.getTime()
         self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
-        self.frameTimeUpdater.deamon = True
+        self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
     
     def onGoto(self, packet):
@@ -405,6 +405,6 @@ class Client:
     def onPacket(self, packet):
         if self.anyPacket is None:
             return
-        deamon_thread = threading.Thread(target=self.anyPacket, args=(self, packet,))
-        deamon_thread.deamon = True
-        deamon_thread.start()
+        daemon_thread = threading.Thread(target=self.anyPacket, args=(self, packet,))
+        daemon_thread.daemon = True
+        daemon_thread.start()
