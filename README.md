@@ -14,18 +14,11 @@ pip install -r requirements.txt
 
 ## Setup
 
-Open the file `Accounts.json` and insert the email+password for the account(s) you want to use
+Copy the file `Accounts_ex.json`, rename the copy to `Accounts.json` and remove the comments
 
-If you want to use a proxy for that account add the following to the account in `Accounts.json`
-```json-with-comments
-"proxy": {
-	"host": "ip",
-	"port": 1234,
-	"type": 5,
-	"username": "username",
-	"password": "password"
-}
-```
+Then in the file `Accounts.json` and insert the email+password for the account(s) you want to use
+
+Look in `Accounts_ex.json` to see how different accounts and proxies are used.
 
 ### Plugins
 

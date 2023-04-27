@@ -1,0 +1,27 @@
+[
+	{//Normal account
+		"alias": "0",
+		"guid": "",
+		"password": "",
+		"server": "EUEast",
+	},
+	{//For steam
+		"alias": "1",
+		"guid": "",
+		"secret": "",
+		"server": "EUEast"
+	},
+	{//Proxies
+		"alias": "2",
+		"guid": "",
+		"password": "",
+		"server": "EUEast",
+		"proxy": {
+			"host": "127.0.0.1",
+			"port": 8080,
+			"type": 5,
+			"userId": "username",
+			"password": "password"
+		}
+	}
+]

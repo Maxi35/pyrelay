@@ -351,6 +351,8 @@ class Client:
             self.disconnect()
         elif packet.errorDescription == "Account credentials not valid":
             self.disconnect()
+        elif packet.errorDescription == "Bad message received":
+            self.disconnect()
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")
