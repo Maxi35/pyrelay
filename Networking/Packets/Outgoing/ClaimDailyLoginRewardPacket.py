@@ -9,5 +9,5 @@ class ClaimDailyLoginRewardPacket:
         writer.writeStr(self.claimType)
 
     def read(self, reader):
-        self.claimStr = reader.readrStr()
-        self.claimType = reader.readrStr()
+        self.claimStr = reader.readStr()
+        self.claimType = reader.readStr()

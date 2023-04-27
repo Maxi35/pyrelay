@@ -7,4 +7,4 @@ class CreateGuildPacket:
         writer.writeStr(self.name)
 
     def read(self, reader):
-        self.name = reader.readrStr()
+        self.name = reader.readStr()

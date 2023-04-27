@@ -18,7 +18,7 @@ class AoePacket:
         self.damage = reader.readUnsignedShort()
         self.effect = reader.readUnsignedByte()
         self.duration = reader.readFloat()
-        self.origType = reader.readreadUnsignedShort()
+        self.origType = reader.readUnsignedShort()
         self.color = reader.readInt32()
         self.armorPierce = reader.readBool()
         

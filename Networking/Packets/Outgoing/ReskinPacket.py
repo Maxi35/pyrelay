@@ -7,4 +7,4 @@ class ReskinPacket:
         writer.writeInt32(self.skinID)
 
     def read(self, reader):
-        self.skinID = reader.readerInt32()
+        self.skinID = reader.readInt32()

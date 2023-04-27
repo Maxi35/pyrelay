@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 Copy the file `Accounts_ex.json`, rename the copy to `Accounts.json` and remove the comments
 
-Then in the file `Accounts.json` and insert the email+password for the account(s) you want to use
+Then in the file `Accounts.json` insert the email+password for the account(s) you want to use
 
 Look in `Accounts_ex.json` to see how different accounts and proxies are used.
 

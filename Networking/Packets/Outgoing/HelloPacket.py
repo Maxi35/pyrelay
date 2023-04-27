@@ -10,7 +10,7 @@ class HelloPacket:
         self.playPlatform = ""
         self.platformToken = ""
         self.userToken = ""
-        self.token = "8bV53M5ysJdVjU4M97fh2g7BnPXhefnc"
+        self.token = "2Jzc9JbAT7f82MOXVTJBUqKzwcEPZ3ZO"
 
     def write(self, writer):
         writer.writeStr(self.buildVersion)

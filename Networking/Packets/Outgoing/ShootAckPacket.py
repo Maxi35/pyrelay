@@ -7,4 +7,4 @@ class ShootAckPacket:
         writer.writeInt32(self.time)
 
     def read(self, reader):
-        self.time = reader.writeInt32()
+        self.time = reader.readInt32()

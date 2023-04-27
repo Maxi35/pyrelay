@@ -4,7 +4,7 @@ class PasswordPromptPacket:
         self.cleanPasswordStatus = 0
 
     def read(self, reader):
-        self.cleanPasswordStatus = reader.readint32()
+        self.cleanPasswordStatus = reader.readInt32()
 
     def write(self, writer):
-        writer.writeint32(self.cleanPasswordStatus)
+        writer.writeInt32(self.cleanPasswordStatus)
