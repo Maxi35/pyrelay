@@ -1,6 +1,7 @@
 class CreateSuccessPacket:
     def __init__(self):
         self.type = "CREATESUCCESS"
+        self.send = True
         self.objectId = 0
         self.charId = 0
         self.unknownStr = ""

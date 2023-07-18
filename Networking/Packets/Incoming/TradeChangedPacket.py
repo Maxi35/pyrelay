@@ -1,6 +1,7 @@
 class TradeChangedPacket:
     def __init__(self):
         self.type = "TRADECHANGED"
+        self.send = True
         self.offer = []
 
     def read(self, reader):

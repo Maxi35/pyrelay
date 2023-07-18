@@ -1,6 +1,7 @@
 class ChangeTradePacket:
     def __init__(self):
         self.type = "CHANGETRADE"
+        self.send = True
         self.offer = []
 
     def write(self, writer):

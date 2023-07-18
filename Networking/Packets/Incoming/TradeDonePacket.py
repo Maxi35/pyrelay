@@ -1,6 +1,7 @@
 class TradeDonePacket:
     def __init__(self):
         self.type = "TRADEDONE"
+        self.send = True
         self.code = 0
         self.description = ""
 

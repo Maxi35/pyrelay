@@ -1,0 +1,11 @@
+class ClaimBattlepassPacket:
+    def __init__(self):
+        self.type = "CLAIMBATTLEPASS"
+        self.send = True
+        self.item = -1#Index of item or -1 for all
+
+    def write(self, writer):
+        writer.writeByte(self.item)
+
+    def read(self, reader):
+        self.item = reader.readByte()

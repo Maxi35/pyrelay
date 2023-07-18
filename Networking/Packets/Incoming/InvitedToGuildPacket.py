@@ -1,6 +1,7 @@
 class InvitedToGuildPacket:
     def __init__(self):
         self.type = "INVITEDTOGUILD"
+        self.send = True
         self.name = ""
         self.guildName = ""
 

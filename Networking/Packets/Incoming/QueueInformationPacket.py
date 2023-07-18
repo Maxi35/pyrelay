@@ -2,6 +2,7 @@
 class QueueInformationPacket:
     def __init__(self):
         self.type = "QUEUEINFORMATION"
+        self.send = True
         self.curPos = -1
         self.maxPos = -1
 

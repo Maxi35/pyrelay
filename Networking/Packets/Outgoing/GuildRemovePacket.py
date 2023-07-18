@@ -1,6 +1,7 @@
 class GuildRemovePacket:
     def __init__(self):
         self.type = "GUILDREMOVE"
+        self.send = True
         self.name = ""
 
     def write(self, writer):

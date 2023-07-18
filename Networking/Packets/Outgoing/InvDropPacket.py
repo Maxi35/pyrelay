@@ -3,6 +3,7 @@ from Data.SlotObjectData import *
 class InvDropPacket:
     def __init__(self):
         self.type = "INVDROP"
+        self.send = True
         self.slotObject = SlotObjectData()
         self.unknownShort = -1
 

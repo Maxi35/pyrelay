@@ -1,6 +1,7 @@
 class MapInfoPacket:
     def __init__(self):
         self.type = "MAPINFO"
+        self.send = True
         self.width = 0
         self.height = 0
         self.name = ""

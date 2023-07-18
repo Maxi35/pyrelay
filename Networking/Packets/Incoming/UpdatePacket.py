@@ -5,6 +5,7 @@ from Data.WorldPosData import *
 class UpdatePacket:
     def __init__(self):
         self.type = "UPDATE"
+        self.send = True
         self.pos = WorldPosData()
         self.levelType = 0
         self.tiles = []

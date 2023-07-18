@@ -3,6 +3,7 @@ from Data.WorldPosData import *
 class PlayerShootPacket:
     def __init__(self):
         self.type = "PLAYERSHOOT"
+        self.send = True
         self.time = 0
         self.bulletId = 0
         self.containerType = 0
@@ -10,6 +11,7 @@ class PlayerShootPacket:
         self.pos = WorldPosData()
         self.angle = 0
         self.isBurst = False
+        self.unknownShort = 0
 
     def write(self, writer):
         writer.writeInt32(self.time)
@@ -19,6 +21,7 @@ class PlayerShootPacket:
         self.pos.write(writer)
         writer.writeFloat(self.angle)
         writer.writeBool(self.isBurst)
+        writer.writeShort(self.unknownShort)
 
     def read(self, reader):
         self.time = reader.readInt32()
@@ -28,3 +31,4 @@ class PlayerShootPacket:
         self.pos.read(reader)
         self.angle = reader.readFloat()
         self.isBurst = reader.readBool()
+        self.unknownShort = reader.readShort()

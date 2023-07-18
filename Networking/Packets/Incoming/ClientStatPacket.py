@@ -1,6 +1,7 @@
 class ClientStatPacket:
     def __init__(self):
         self.type = "CLIENTSTAT"
+        self.send = True
         self.name = ""
         self.value = 0
 

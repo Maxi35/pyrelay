@@ -3,6 +3,7 @@ from Data.ObjectStatusData import *
 class NewTickPacket:
     def __init__(self):
         self.type = "NEWTICK"
+        self.send = True
         self.tickId = 0
         self.tickTime = 0
         self.serverRealTimeMS = 0

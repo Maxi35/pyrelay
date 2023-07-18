@@ -1,6 +1,7 @@
 class Unknown139Packet:
     def __init__(self):
         self.type = "UNKNOWN139"
+        self.send = True
         self.unknownByte1 = 0
         self.unknownByte2 = 0
         self.unknownByte3 = 0

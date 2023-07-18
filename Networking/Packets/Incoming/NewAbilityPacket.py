@@ -1,6 +1,7 @@
 class NewAbilityPacket:
     def __init__(self):
         self.type = "NEWABILITY"
+        self.send = True
         self.abilityType = 0
 
     def read(self, reader):

@@ -1,6 +1,7 @@
 class KeyInfoResponsePacket:
     def __init__(self):
         self.type = "KEYINFORESPONSE"
+        self.send = True
         self.name = ""
         self.description = ""
         self.creator = ""

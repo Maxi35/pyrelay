@@ -1,6 +1,7 @@
 class FilePacket:
     def __init__(self):
         self.type = "FILE"
+        self.send = True
         self.fileName = ""
         self.file = ""
 

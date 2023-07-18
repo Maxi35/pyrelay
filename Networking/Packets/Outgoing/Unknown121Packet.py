@@ -1,6 +1,7 @@
 class Unknown121Packet:
     def __init__(self):
         self.type = "UNKNOWN121"#Always sent after ability?
+        self.send = True
         self.time = 0
         self.unknownShort = 0
 

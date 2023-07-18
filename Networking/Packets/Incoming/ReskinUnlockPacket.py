@@ -1,6 +1,7 @@
 class ReskinUnlockPacket:
     def __init__(self):
         self.type = "RESKINUNLOCK"
+        self.send = True
         self.skinID = 0
         self.isPetSkin = 0
 

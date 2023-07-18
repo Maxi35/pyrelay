@@ -4,6 +4,7 @@ from Data.MoveRecord import *
 class MovePacket:
     def __init__(self):
         self.type = "MOVE"
+        self.send = True
         self.tickId = 0
         self.time = 0
         self.records = []
@@ -17,7 +18,7 @@ class MovePacket:
 
     def read(self, reader):
         self.tickId = reader.readInt32()
-        self.time = reader.readInt32()
+        self.time = reader.readUInt32()
         recordLen = reader.readShort()
         for i in range(recordLen):
             record = MoveRecord()

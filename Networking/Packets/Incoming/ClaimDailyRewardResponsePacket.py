@@ -1,6 +1,7 @@
 class ClaimDailyRewardResponsePacket:
     def __init__(self):
         self.type = "CLAIMDAILYREWARDRESPONSE"
+        self.send = True
         self.itemId = 0
         self.quantity = 0
         self.gold = 0

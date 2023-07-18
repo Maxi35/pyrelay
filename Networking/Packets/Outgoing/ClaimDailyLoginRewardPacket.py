@@ -1,6 +1,7 @@
 class ClaimDailyLoginRewardPacket:
     def __init__(self):
         self.type = "CLAIMDAILYLOGINREWARD"
+        self.send = True
         self.claimStr = ""
         self.claimType = ""
 

@@ -1,6 +1,7 @@
 class AllyShootPacket:
     def __init__(self):
         self.type = "ALLYSHOOT"
+        self.send = True
         self.bulletId = 0
         self.ownerId = []
         self.containerType = 0

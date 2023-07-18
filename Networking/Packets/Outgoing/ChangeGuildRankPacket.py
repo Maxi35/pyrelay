@@ -1,6 +1,7 @@
 class ChangeGuildRankPacket:
     def __init__(self):
         self.type = "CHANGEGUILDRANK"
+        self.send = True
         self.name = ""
         self.guildRank = 0
 

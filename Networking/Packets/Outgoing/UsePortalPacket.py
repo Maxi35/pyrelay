@@ -1,6 +1,7 @@
 class UsePortalPacket:
     def __init__(self):
         self.type = "USEPORTAL"
+        self.send = True
         self.objectId = 0
 
     def write(self, writer):

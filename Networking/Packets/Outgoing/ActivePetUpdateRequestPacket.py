@@ -1,6 +1,7 @@
 class ActivePetUpdateRequestPacket:
     def __init__(self):
         self.type = "ACTIVEPETUPDATEREQUEST"
+        self.send = True
         self.commandType = 0
         self.instanceId = 0
 

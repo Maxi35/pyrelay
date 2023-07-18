@@ -1,6 +1,7 @@
 class TradeRequestedPacket:
     def __init__(self):
         self.type = "TRADEREQUESTED"
+        self.send = True
         self.name = ""
 
     def read(self, reader):

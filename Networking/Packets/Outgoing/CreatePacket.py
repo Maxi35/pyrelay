@@ -1,6 +1,7 @@
 class CreatePacket:
     def __init__(self):
         self.type = "CREATE"
+        self.send = True
         self.classType = 0
         self.skinType = 0
         self.isChallenger = 0

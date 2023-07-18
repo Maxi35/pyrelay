@@ -1,6 +1,7 @@
 class PlaySoundPacket:
     def __init__(self):
         self.type = "PLAYSOUND"
+        self.send = True
         self.ownerId = 0
         self.soundId = 0 
 

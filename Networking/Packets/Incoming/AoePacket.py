@@ -3,6 +3,7 @@ from Data.WorldPosData import *
 class AoePacket:
     def __init__(self):
         self.type = "AOE"
+        self.send = True
         self.pos = WorldPosData()
         self.radius = 0
         self.damage = 0
@@ -28,7 +29,7 @@ class AoePacket:
         writer.writeUnsignedShort(self.damage)
         writer.writeUnsignedByte(self.effect)
         writer.writeFloat(self.duration)
-        writer.writereadUnsignedShort(self.origType)
+        writer.writeUnsignedShort(self.origType)
         writer.writeInt32(self.color)
         writer.writeBool(self.armorPierce)
         

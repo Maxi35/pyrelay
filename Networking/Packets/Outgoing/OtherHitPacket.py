@@ -1,6 +1,7 @@
 class OtherHitPacket:
     def __init__(self):
         self.type = "OTHERHIT"
+        self.send = True
         self.time = 0
         self.bulletId = 0
         self.objectId = 0

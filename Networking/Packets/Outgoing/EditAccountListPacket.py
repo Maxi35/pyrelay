@@ -1,6 +1,7 @@
 class EditAccountListPacket:
     def __init__(self):
         self.type = "EDITACCOUNTLIST"
+        self.send = True
         self.accountListId = 0
         self.add = False
         self.objectId = 0

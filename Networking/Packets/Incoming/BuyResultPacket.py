@@ -1,6 +1,7 @@
 class BuyResultPacket:
     def __init__(self):
         self.type = "BUYRESULT"
+        self.send = True
         self.result = 0
         self.resultString = ""
 

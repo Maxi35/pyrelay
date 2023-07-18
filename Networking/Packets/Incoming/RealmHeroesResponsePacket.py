@@ -1,6 +1,7 @@
 class RealmHeroesResponsePacket:
     def __init__(self):
         self.type = "REALMHEROESRESPONSE"
+        self.send = True
         self.numberOfRealmHeros = 0
 
     def read(self, reader):

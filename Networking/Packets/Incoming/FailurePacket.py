@@ -1,6 +1,7 @@
 class FailurePacket:
     def __init__(self):
         self.type = "FAILURE"
+        self.send = True
         self.errorId = 0
         self.errorDescription = ""
 

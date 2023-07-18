@@ -3,6 +3,7 @@ from Data.WorldPosData import *
 class PlayerHitPacket:
     def __init__(self):
         self.type = "PLAYERHIT"
+        self.send = True
         self.bulletId = 0
         self.objectId = 0
 

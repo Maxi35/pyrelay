@@ -1,6 +1,7 @@
 class NameResultPacket:
     def __init__(self):
         self.type = "NAMERESULT"
+        self.send = True
         self.success = False
         self.errorText = ""
 

@@ -4,6 +4,7 @@ from Data.SlotObjectData import *
 class InvSwapPacket:
     def __init__(self):
         self.type = "INVSWAP"
+        self.send = True
         self.time = 0
         self.pos = WorldPosData()
         self.slotObject1 = SlotObjectData()

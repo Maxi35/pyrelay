@@ -1,6 +1,7 @@
 class QuestRedeemResponsePacket:
     def __init__(self):
         self.type = "QUESTREDEEMRESPONSE"
+        self.send = True
         self.ok = False
         self.message = ""
 

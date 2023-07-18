@@ -1,6 +1,7 @@
 class DeathPacket:
     def __init__(self):
         self.type = "DEATH"
+        self.send = True
         self.accountId = ""
         self.charId = 0
         self.killedBy = ""

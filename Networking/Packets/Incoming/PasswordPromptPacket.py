@@ -1,6 +1,7 @@
 class PasswordPromptPacket:
     def __init__(self):
         self.type = "PASSWORDPROMPT"
+        self.send = True
         self.cleanPasswordStatus = 0
 
     def read(self, reader):

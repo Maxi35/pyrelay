@@ -1,6 +1,7 @@
 class ReskinPacket:
     def __init__(self):
         self.type = "RESKIN"
+        self.send = True
         self.skinID = 0
 
     def write(self, writer):

@@ -1,6 +1,7 @@
 class ExaltationUpdatePacket:
     def __init__(self):
         self.type = "EXALTATIONUPDATE"
+        self.send = True
         self.objType = -1
         self.dexProgress = -1
         self.spdProgress = -1
@@ -13,22 +14,22 @@ class ExaltationUpdatePacket:
 
     def read(self, reader):
         self.objType = reader.readShort()
-        self.dexProgress = reader.readByte()
-        self.spdProgress = reader.readByte()
-        self.vitProgress = reader.readByte()
-        self.wisProgress = reader.readByte()
-        self.defProgress = reader.readByte()
-        self.attProgress = reader.readByte()
-        self.manaProgress = reader.readByte()
-        self.lifeProgress = reader.readByte()
+        self.dexProgress = reader.readCompressedInt()
+        self.spdProgress = reader.readCompressedInt()
+        self.vitProgress = reader.readCompressedInt()
+        self.wisProgress = reader.readCompressedInt()
+        self.defProgress = reader.readCompressedInt()
+        self.attProgress = reader.readCompressedInt()
+        self.manaProgress = reader.readCompressedInt()
+        self.lifeProgress = reader.readCompressedInt()
         
     def write(self, writer):
         writer.writeShort(self.objType)
-        writer.writeByte(self.dexProgress)
-        writer.writeByte(self.spdProgress)
-        writer.writeByte(self.vitProgress)
-        writer.writeByte(self.wisProgress)
-        writer.writeByte(self.defProgress)
-        writer.writeByte(self.attProgress)
-        writer.writeByte(self.manaProgress)
-        writer.writeByte(self.lifeProgress)
+        writer.writeCompressedInt(self.dexProgress)
+        writer.writeCompressedInt(self.spdProgress)
+        writer.writeCompressedInt(self.vitProgress)
+        writer.writeCompressedInt(self.wisProgress)
+        writer.writeCompressedInt(self.defProgress)
+        writer.writeCompressedInt(self.attProgress)
+        writer.writeCompressedInt(self.manaProgress)
+        writer.writeCompressedInt(self.lifeProgress)

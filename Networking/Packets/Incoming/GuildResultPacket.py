@@ -1,6 +1,7 @@
 class GuildResultPacket:
     def __init__(self):
         self.type = "GUILDRESULT"
+        self.send = True
         self.success = False
         self.lineBuilderJSON = ""
 

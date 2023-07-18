@@ -3,6 +3,7 @@ from Data.WorldPosData import *
 class ShowEffectPacket:
     def __init__(self):
         self.type = "SHOWEFFECT"
+        self.send = True
         self.effectType = 0
         self.ignore = 0
         self.targetObjectId = 0

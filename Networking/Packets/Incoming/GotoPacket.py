@@ -3,6 +3,7 @@ from Data.WorldPosData import *
 class GotoPacket:
     def __init__(self):
         self.type = "GOTO"
+        self.send = True
         self.objectId = 0
         self.position = WorldPosData()
         self.unknownInt = 0

@@ -1,6 +1,7 @@
 class TradeAcceptedPacket:
     def __init__(self):
         self.type = "TRADEACCEPTED"
+        self.send = True
         self.clientOffer = []
         self.partnerOffer = []
 

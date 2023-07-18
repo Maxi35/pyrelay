@@ -1,6 +1,7 @@
 class CheckCreditsPacket:
     def __init__(self):
         self.type = "CHECKCREDITS"
+        self.send = True
 
     def write(self, writer):
         pass

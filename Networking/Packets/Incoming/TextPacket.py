@@ -1,6 +1,7 @@
 class TextPacket:
     def __init__(self):
         self.type = "TEXT"
+        self.send = True
         self.name = ""
         self.objectId = 0
         self.numStars = 0

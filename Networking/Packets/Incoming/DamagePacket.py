@@ -2,10 +2,11 @@
 class DamagePacket:
     def __init__(self):
         self.type = "DAMAGE"
+        self.send = True
         self.targetId = 0
         self.effects = []
         self.damageAmount = 0
-        self.armorPierce = False
+        self.info = 0
         self.bulletId = 0
         self.objectId = 0
 
@@ -15,7 +16,7 @@ class DamagePacket:
         for i in range(effectNum):
             self.effects.append(reader.readUnsignedByte())
         self.damageAmount = reader.readUnsignedShort()
-        self.armorPierce = reader.readBool()
+        self.info = reader.readByte()
         self.bulletId = reader.readUnsignedShort()
         self.objectId = reader.readInt32()
 
@@ -25,6 +26,6 @@ class DamagePacket:
         for i in range(len(self.effects)):
             writer.writeUnsignedByte(self.effects[i])
         writer.writeUnsignedShort(self.damageAmount)
-        writer.writeBool(self.armorPierce)
+        writer.writeByte(self.info)
         writer.writeUnsignedShort(self.bulletId)
         writer.writeInt32(self.objectId)

@@ -1,6 +1,7 @@
 class NotificationPacket:
     def __init__(self):
         self.type = "NOTIFICATION"
+        self.send = True
         self.effect = 0
         self.extra = 0
         self.message = ""
@@ -42,7 +43,7 @@ class NotificationPacket:
         if self.effect == 10:#DungeonCall
             self.message = reader.readStr()
             self.unknown1 = reader.readInt32()
-            self.unknown2 = reader.readByte()
+            self.unknown2 = reader.readShort()
 
     def write(self, writer):
         writer.writeByte(self.effect)
@@ -75,4 +76,4 @@ class NotificationPacket:
         if self.effect == 10:#DungeonCall
             writer.writeStr(self.message)
             writer.writeInt32(self.unknown1)
-            writer.writeByte(self.unknown2)
+            writer.writeShort(self.unknown2)

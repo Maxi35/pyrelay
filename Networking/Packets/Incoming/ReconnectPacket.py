@@ -1,6 +1,7 @@
 class ReconnectPacket:
     def __init__(self):
         self.type = "RECONNECT"
+        self.send = True
         self.name = ""
         self.host = ""
         self.port = 0

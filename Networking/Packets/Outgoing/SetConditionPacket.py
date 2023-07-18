@@ -1,6 +1,7 @@
 class SetConditionPacket:
     def __init__(self):
         self.type = "SETCONDITION"
+        self.send = True
         self.conditionEffect = 0
         self.conditionDuration = 0
 

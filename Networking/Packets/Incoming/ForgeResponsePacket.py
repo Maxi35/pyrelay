@@ -3,6 +3,7 @@ from Data.SlotObjectData import SlotObjectData
 class ForgeResponsePacket:
     def __init__(self):
         self.type = "FORGERESPONSE"
+        self.send = True
         self.success = False
         self.slots = []
 

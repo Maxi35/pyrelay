@@ -1,6 +1,7 @@
 class HelloPacket:
     def __init__(self):
         self.type = "HELLO"
+        self.send = True
         self.buildVersion = ""
         self.gameId = 0
         self.accessToken = ""

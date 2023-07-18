@@ -1,6 +1,7 @@
 class PingPacket:
     def __init__(self):
         self.type = "PING"
+        self.send = True
         self.serial = 0
 
     def read(self, reader):

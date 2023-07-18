@@ -1,7 +1,9 @@
 class VaultInfoPacket:
     def __init__(self):
         self.type = "VAULTINFO"
-        self.info1 = -1
+        self.send = True
+        self.unknownBool = False
+        self.info = -1
         self.chestObjectId = -1
         self.giftObjectId = -1
         self.potionObjectId = -1
@@ -14,8 +16,11 @@ class VaultInfoPacket:
         self.curPotionMax = -1
         self.nextPotionMax = -1
 
+        self.unknownBytes = []
+
     def read(self, reader):
-        self.info1 = reader.readCompressedInt()
+        self.unknownBool = reader.readBool()
+        self.info = reader.readCompressedInt()
         self.chestObjectId = reader.readCompressedInt()
         self.giftObjectId = reader.readCompressedInt()
         self.potionObjectId = reader.readCompressedInt()
@@ -37,8 +42,12 @@ class VaultInfoPacket:
         self.curPotionMax = reader.readShort()
         self.nextPotionMax = reader.readShort()
 
+        for i in range(reader.bytesAvailable()):
+            self.unknownBytes.append(reader.readByte())
+
     def write(self, writer):
-        writer.writeCompressedInt(self.info1)
+        writer.writeBool(self.unknownBool)
+        writer.writeCompressedInt(self.info)
         writer.writeCompressedInt(self.chestObjectId)
         writer.writeCompressedInt(self.giftObjectId)
         writer.writeCompressedInt(self.potionObjectId)
@@ -59,3 +68,6 @@ class VaultInfoPacket:
         writer.writeShort(self.potionUpgradeCose)
         writer.writeShort(self.curPotionMax)
         writer.writeShort(self.nextPotionMax)
+
+        for byte in self.unknownBytes:
+            writer.writeByte(byte)

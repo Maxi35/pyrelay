@@ -30,6 +30,8 @@ def CreatePacket(packet_type):
         return outgoing.CheckCreditsPacket()
     if packet_type == types.CHOOSENAME:
         return outgoing.ChooseNamePacket()
+    if packet_type == types.CLAIMBATTLEPASS:
+        return outgoing.ClaimBattlepassPacket()
     if packet_type == types.CLAIMDAILYLOGINREWARD:
         return outgoing.ClaimDailyLoginRewardPacket()
     if packet_type == types.CREATEGUILD:
@@ -112,6 +114,8 @@ def CreatePacket(packet_type):
         return incoming.BlueprintInfoPacket()
     if packet_type == types.BUYRESULT:
         return incoming.BuyResultPacket()
+    if packet_type == types.CLAIMBATTLEPASSRESPONSE:
+        return incoming.ClaimBattlepassResponsePacket()
     if packet_type == types.CLAIMDAILYREWARDRESPONSE:
         return incoming.ClaimDailyRewardResponsePacket()
     if packet_type == types.CLIENTSTAT:

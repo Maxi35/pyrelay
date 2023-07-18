@@ -121,6 +121,7 @@ class StatTypes:
         self.FORGEFIRE = 120
         self.UNKNOWN121 = 121
         self.UNKNOWN123 = 123
+        self.ENCHANTMENT = 127
 
     def nameOf(self, type):
         if type in self.__dict__.values():

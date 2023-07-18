@@ -3,6 +3,7 @@ from Data.SlotObjectData import *
 class InvResultPacket:
     def __init__(self):
         self.type = "INVRESULT"
+        self.send = True
         self.unknownBool = False#Prob success bool
         self.unknownByte = 0
         self.fromSlot = SlotObjectData()

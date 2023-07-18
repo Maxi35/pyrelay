@@ -12,7 +12,7 @@ class StatData:
     def isStringStat(self):
         return self.statType in [types.EXPSTAT, types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
                                  types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
-                                 types.UNKNOWN80, types.UNKNOWN121]
+                                 types.UNKNOWN80, types.UNKNOWN121, types.ENCHANTMENT]
 
     def statToName(self, type=None):
         if type is None:
@@ -37,7 +37,7 @@ class StatData:
         writer.writeCompressedInt(self.secondaryValue)
 
     def clone(self):
-        return StatData(self.statType, self.statValue, self.strStatValue)
+        return StatData(self.statType, self.statValue, self.strStatValue, self.secondaryValue)
 
     def __str__(self):
         if self.isStringStat():
