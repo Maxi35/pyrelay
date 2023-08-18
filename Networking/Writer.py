@@ -38,9 +38,9 @@ class Writer:
         self.buffer.extend(struct.pack("!?", value))
     
     def writeStr(self, string):
-        self.writeShort(len(string))
         if isinstance(string, str):
             string = string.encode()
+        self.writeShort(len(string))
         self.index += len(string)
         self.buffer.extend(struct.pack("!{}s".format(len(string)), string))
 

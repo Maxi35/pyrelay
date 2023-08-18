@@ -1,3 +1,5 @@
+from Data.FameData import *
+
 class DeathPacket:
     def __init__(self):
         self.type = "DEATH"
@@ -5,21 +7,32 @@ class DeathPacket:
         self.accountId = ""
         self.charId = 0
         self.killedBy = ""
-        self.zombieType = 0
-        self.zombieId = 0
-        self.isZombie = False
+        self.unknownInt = 0
+        self.fameEarned = 0
+        self.fameBonuses = []
+        self.PCStats = ""
 
     def read(self, reader):
         self.accountId = reader.readStr()
-        self.charId = reader.readInt32()
+        self.charId = reader.readCompressedInt()
         self.killedBy = reader.readStr()
-        self.zombieType = reader.readInt32()
-        self.zombieId = reader.readInt32()
-        self.isZombie = self.zombieId != -1
+        self.unknownInt = reader.readInt32()
+        self.fameEarned = reader.readCompressedInt()
+        fameBonuses = reader.readCompressedInt()
+        for i in range(fameBonuses):
+            fameData = FameData()
+            fameData.read(reader)
+            self.fameBonuses.append(fameData)
+        self.PCStats = reader.readStr()
+        
 
     def write(self, writer):
         writer.writeStr(self.accountId)
-        writer.writeInt32(self.charId)
+        writer.writeCompressedInt(self.charId)
         writer.writeStr(self.killedBy)
-        writer.writeInt32(self.zombieType)
-        writer.writeInt32(self.zombieId)
+        writer.writeInt32(self.unknownInt)
+        writer.writeCompressedInt(self.fameEarned)
+        writer.writeCompressedInt(len(self.fameBonuses))
+        for fameData in self.fameBonuses:
+            fameData.write(writer)
+        writer.writeStr(self.PCStats)

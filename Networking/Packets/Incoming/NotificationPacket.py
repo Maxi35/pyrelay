@@ -11,6 +11,7 @@ class NotificationPacket:
         self.queuePos = 0
         self.color = 0
         self.pictureType = 0
+        self.emoteId = 0
 
     def read(self, reader):
         self.effect = reader.readByte()
@@ -44,6 +45,9 @@ class NotificationPacket:
             self.message = reader.readStr()
             self.unknown1 = reader.readInt32()
             self.unknown2 = reader.readShort()
+        if self.effect == 13:#Emote
+            self.objectId = reader.readInt32()
+            self.emoteId = reader.readInt32()
 
     def write(self, writer):
         writer.writeByte(self.effect)
@@ -77,3 +81,7 @@ class NotificationPacket:
             writer.writeStr(self.message)
             writer.writeInt32(self.unknown1)
             writer.writeShort(self.unknown2)
+        if self.effect == 13:#Emote
+            writer.writeInt32(self.objectId)
+            writer.writeInt32(self.emoteId)
+            

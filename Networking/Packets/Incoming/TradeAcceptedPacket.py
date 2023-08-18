@@ -13,7 +13,7 @@ class TradeAcceptedPacket:
         for i in range(partnerOffer_len):
             self.partnerOffer.append(reader.readBool())
         
-    def writer(self, writer):
+    def write(self, writer):
         writer.writeShort(len(self.clientOffer))
         for i in range(len(self.clientOffer)):
             writer.writeBool(self.clientOffer[i])

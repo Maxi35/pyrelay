@@ -4,14 +4,17 @@ class CreatePacket:
         self.send = True
         self.classType = 0
         self.skinType = 0
-        self.isChallenger = 0
+        self.isChallenger = False
+        self.isSeasonal = False
 
     def write(self, writer):
         writer.writeShort(self.classType)
         writer.writeShort(self.skinType)
         writer.writeBool(self.isChallenger)
+        writer.writeBool(self.isSeasonal)
 
     def read(self, reader):
         self.classType = reader.readShort()
         self.skinType = reader.readShort()
         self.isChallenger = reader.readBool()
+        self.isSeasonal = reader.readBool()

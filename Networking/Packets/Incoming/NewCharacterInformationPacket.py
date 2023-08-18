@@ -8,4 +8,4 @@ class NewCharacterInformationPacket:
         self.charXML = reader.readStr()
 
     def write(self, writer):
-        write.writeStr(self.charXML)
+        writer.writeStr(self.charXML)

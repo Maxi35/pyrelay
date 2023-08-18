@@ -4,14 +4,14 @@ class CreateSuccessPacket:
         self.send = True
         self.objectId = 0
         self.charId = 0
-        self.unknownStr = ""
+        self.PCStats = ""
 
     def read(self, reader):
         self.objectId = reader.readInt32()
         self.charId = reader.readInt32()
-        self.unknownStr = reader.readStr()
+        self.PCStats = reader.readStr()
 
     def write(self, writer):
         writer.writeInt32(self.objectId)
         writer.writeInt32(self.charId)
-        writer.writeStr(self.unknownStr)
+        writer.writeStr(self.PCStats)

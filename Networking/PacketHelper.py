@@ -42,6 +42,8 @@ def CreatePacket(packet_type):
         return outgoing.EditAccountListPacket()
     if packet_type == types.ENEMYHIT:
         return outgoing.EnemyHitPacket()
+    if packet_type == types.ENEMYSHOOTACK:
+        return outgoing.EnemyShootAckPacket()
     if packet_type == types.ESCAPE:
         return outgoing.EscapePacket()
     if packet_type == types.FORGEREQUEST:
@@ -86,6 +88,8 @@ def CreatePacket(packet_type):
         return outgoing.ResetDailyQuestsPacket()
     if packet_type == types.RESKIN:
         return outgoing.ReskinPacket()
+    if packet_type == types.SENDEMOTE:
+        return outgoing.SendEmotePacket()
     if packet_type == types.SETCONDITION:
         return outgoing.SetConditionPacket()
     if packet_type == types.SHOOTACK:
@@ -102,8 +106,6 @@ def CreatePacket(packet_type):
         return outgoing.UseItemPacket()
     if packet_type == types.USEPORTAL:
         return outgoing.UsePortalPacket()
-    if packet_type == types.UNKNOWN121:
-        return outgoing.Unknown121Packet()
     if packet_type == types.ACCOUNTLIST:
         return incoming.AccountListPacket()
     if packet_type == types.ALLYSHOOT:
@@ -196,14 +198,16 @@ def CreatePacket(packet_type):
         return incoming.TradeRequestedPacket()
     if packet_type == types.TRADESTART:
         return incoming.TradeStartPacket()
+    if packet_type == types.UNKNOWN139:
+        return incoming.Unknown139Packet()
+    if packet_type == types.UNKNOWN165:
+        return incoming.Unknown165Packet()
     if packet_type == types.UPDATE:
         return incoming.UpdatePacket()
     if packet_type == types.VAULTINFO:
         return incoming.VaultInfoPacket()
     if packet_type == types.VERIFYEMAIL:
         return incoming.VerifyEmailPacket()
-    if packet_type == types.UNKNOWN139:
-        return incoming.Unknown139Packet()
 
 def isValidPacket(packet_type):
     return packet_type in dir(types)

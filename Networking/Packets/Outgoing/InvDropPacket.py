@@ -5,11 +5,12 @@ class InvDropPacket:
         self.type = "INVDROP"
         self.send = True
         self.slotObject = SlotObjectData()
-        self.unknownShort = -1
+        self.unknownByte = -1
 
     def write(self, writer):
         self.slotObject.write(writer)
+        writer.writeByte(self.unknownByte)
 
     def read(self, reader):
         self.slotObject.read(reader)
-        self.unknownShort = reader.readShort()
+        self.unknownByte = reader.readByte()
