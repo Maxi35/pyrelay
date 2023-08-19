@@ -21,3 +21,4 @@ class InvSwapPacket:
         self.pos.read(reader)
         self.slotObject1.read(reader)
         self.slotObject2.read(reader)
+ 

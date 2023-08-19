@@ -3,10 +3,10 @@ class VaultInfoPacket:
         self.type = "VAULTINFO"
         self.send = True
         self.unknownBool = False
-        self.info = -1
         self.chestObjectId = -1
         self.giftObjectId = -1
         self.potionObjectId = -1
+        self.info = -1
         
         self.vaultContent = []
         self.giftContent = []
@@ -20,10 +20,10 @@ class VaultInfoPacket:
 
     def read(self, reader):
         self.unknownBool = reader.readBool()
-        self.info = reader.readCompressedInt()
         self.chestObjectId = reader.readCompressedInt()
         self.giftObjectId = reader.readCompressedInt()
         self.potionObjectId = reader.readCompressedInt()
+        self.info = reader.readCompressedInt()
         
         vaultCount = reader.readCompressedInt()
         for i in range(vaultCount):
