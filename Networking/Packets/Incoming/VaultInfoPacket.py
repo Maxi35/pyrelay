@@ -47,10 +47,10 @@ class VaultInfoPacket:
 
     def write(self, writer):
         writer.writeBool(self.unknownBool)
-        writer.writeCompressedInt(self.info)
         writer.writeCompressedInt(self.chestObjectId)
         writer.writeCompressedInt(self.giftObjectId)
         writer.writeCompressedInt(self.potionObjectId)
+        writer.writeCompressedInt(self.info)
         
         writer.writeCompressedInt(len(self.vaultContent))
         for i in range(len(self.vaultContent)):
