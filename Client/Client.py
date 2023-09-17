@@ -10,7 +10,7 @@ from Helpers.Random import Random
 from Networking.SocketManager import SocketManager
 from Models.PlayerData import PlayerData
 from Models.CharData import CharData
-import Helpers.Servers as Servers
+import Helpers.Servers as ServersHelper
 import Data.MoveRecord as MoveRecord
 import Models.ConditionEffect as ConditionEffect
 import Networking.PacketHelper as PacketHelper
@@ -136,10 +136,13 @@ class Client:
 
         try:
             if updateServers:
-                Servers.update(self.accessToken, proxies)
+                ServersHelper.update(self.accessToken, proxies)
                 print("Updated servers")
-        except AttributeError:
+        except AttributeError as e:
             print("Failed to update servers")
+            print(e)
+            self.active = False
+            self.isReady = False
 
     def setup(self, accInfo):
         self.server = accInfo["server"]

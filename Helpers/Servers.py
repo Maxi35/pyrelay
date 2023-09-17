@@ -23,5 +23,5 @@ def writeServers(servers):
     with open("Constants/Servers.py", "w") as file:
         file.write(text)
 
-def update(accessToken):
-    writeServers(parseServers(getXML(accessToken)))
+def update(accessToken, proxies={}):
+    writeServers(parseServers(getXML(accessToken, proxies={})))
