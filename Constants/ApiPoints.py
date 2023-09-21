@@ -7,11 +7,11 @@ CHAR = "https://www.realmofthemadgod.com/char/list"
 SERVERS = "https://www.realmofthemadgod.com/account/servers"
 
 launcherHeaders = {
-    "User-Agent": "UnityPlayer/2019.3.14f1 (UnityWebRequest/1.0, libcurl/7.52.0-DEV)",
-    "X-Unity-Version": "2019.3.14f1"
+    "User-Agent": "UnityPlayer/2021.3.16f1 (UnityWebRequest/1.0, libcurl/7.84.0-DEV)",
+    "X-Unity-Version": "2021.3.16f1"
     }
 
 exaltHeaders = {
-    "User-Agent": "UnityPlayer/2019.4.2f1 (UnityWebRequest/1.0, libcurl/7.52.0-DEV)",
-    "X-Unity-Version": "2019.4.2f1"
+    "User-Agent": "UnityPlayer/2021.3.16f1 (UnityWebRequest/1.0, libcurl/7.84.0-DEV)",
+    "X-Unity-Version": "2021.3.16f1"
     }

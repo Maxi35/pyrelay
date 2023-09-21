@@ -100,7 +100,7 @@ class Client:
         #Get char data
         r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
                                                 "accessToken": self.accessToken,
-                                                "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.exaltHeaders, proxies=proxies)
+                                                "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
         while "Account in use" in r.text:
             print(self.guid, "has account in use")
             try:
@@ -109,7 +109,7 @@ class Client:
                 time.sleep(600)
             r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
                                                     "accessToken": self.accessToken,
-                                                    "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.exaltHeaders, proxies=proxies)
+                                                    "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
             self.active = False
@@ -172,6 +172,8 @@ class Client:
         return self.sockMan.connected
 
     def connect(self):
+        if not self.active:
+            return
         if self.sockMan.connected:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
@@ -225,10 +227,10 @@ class Client:
         return int(time.time()*1000) - self.connectedTime
 
     def disconnect(self):
+        self.active = False
         if self.sockMan.connected:
             self.sockMan.disconnect()
         self.sockMan.active = False
-        self.active = False
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
 

@@ -16,7 +16,7 @@ class ClientManager:
                 accInfo["secret"] = ""
             if accInfo["guid"] == "" or (accInfo["password"] == "" and accInfo["secret"] == ""):
                 print("Empty email or password, skipping account")
-                return False
+                return None
             if not "alias" in accInfo.keys():
                 accInfo["alias"] = accInfo["guid"]
             if "proxy" in accInfo.keys():
@@ -24,7 +24,11 @@ class ClientManager:
                     accInfo["proxy"]["username"] = ""
                 if not "password" in accInfo["proxy"].keys():
                     accInfo["proxy"]["password"] = ""
-                
+                    
+            for client in self.clients:
+                if client.guid == accInfo["guid"]:
+                    print("Account already added")
+                    return None
             client = Client()
             client.getToken(accInfo, self.updateServers)
 
@@ -43,7 +47,7 @@ class ClientManager:
             client.clientManager = self
             client.hookAllPackets(self.onPacket)
             self.clients.append(client)
-            return True
+            return client
 
     def removeClient(self, guid):
         new_clients = []
