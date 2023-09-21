@@ -59,6 +59,7 @@ class Client:
         self.needsNewChar = False
         self.bulletId = 0
         self.lastAttackTime = 0
+        self.records = []
 
     def getToken(self, accInfo, updateServers=False):
         self.guid = accInfo["guid"]
@@ -238,10 +239,11 @@ class Client:
         time = self.getTime()
         delta = time - self.lastFrameTime
         if len(self.nextPos) > 0:
-            diff = min(33, time-self.lastFrameTime)
+            diff = min(100, time-self.lastFrameTime)
             self.moveTo(self.nextPos[0], diff)
+        self.records.append(MoveRecord.MoveRecord(time, self.pos.x, self.pos.y))
         self.lastFrameTime = time
-        self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
+        self.frameTimeUpdater = threading.Timer(1/10, self.updateFrameTime)
         self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
 
@@ -318,7 +320,7 @@ class Client:
         self.objectId = packet.objectId
         self.lastAttackTime = 0
         self.lastFrameTime = self.getTime()
-        self.frameTimeUpdater = threading.Timer(1/30, self.updateFrameTime)
+        self.frameTimeUpdater = threading.Timer(1/10, self.updateFrameTime)
         self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
     
@@ -352,6 +354,9 @@ class Client:
     def onFailure(self, packet):
         print("Error:", packet.errorId)
         print(packet.errorDescription)
+        self.keyTime = -1
+        self.key = []
+        self.gameId = -2
         if packet.errorDescription == "s.update_client":
             self.disconnect()
         elif packet.errorDescription == "Account credentials not valid":
@@ -369,7 +374,9 @@ class Client:
         move_packet = PacketHelper.CreatePacket("MOVE")
         move_packet.tickId = packet.tickId
         move_packet.time = packet.serverRealTimeMS
-        move_packet.records = [MoveRecord.MoveRecord(self.lastFrameTime, self.pos.x, self.pos.y)]
+        move_packet.records = self.records
+        self.records = []
+##        move_packet.records = [MoveRecord.MoveRecord(self.lastFrameTime, self.pos.x, self.pos.y)]
         self.send(move_packet)
         for status in packet.statuses:
             if status.objectId == self.objectId:
