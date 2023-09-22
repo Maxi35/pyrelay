@@ -323,6 +323,7 @@ class Client:
         self.frameTimeUpdater = threading.Timer(1/10, self.updateFrameTime)
         self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
+        self.records = []
     
     def onGoto(self, packet):
         gotoAck_packet = PacketHelper.CreatePacket("GOTOACK")
