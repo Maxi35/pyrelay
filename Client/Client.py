@@ -376,15 +376,16 @@ class Client:
         move_packet.tickId = packet.tickId
         move_packet.time = packet.serverRealTimeMS
         move_packet.records = self.records
+        if len(move_packet.records) == 0:#Causes dc otherwise
+            move_packet.records = [MoveRecord.MoveRecord(self.lastFrameTime, self.pos.x, self.pos.y)]
         self.records = []
-##        move_packet.records = [MoveRecord.MoveRecord(self.lastFrameTime, self.pos.x, self.pos.y)]
         self.send(move_packet)
         for status in packet.statuses:
             if status.objectId == self.objectId:
                 self.playerData.parseStats(status.stats)
 
     def onUpdate(self, packet):
-        if packet.pos.x != 0.0 and packet.pos.y != 0.0:
+        if self.pos is None:
             self.pos = packet.pos
         updateAck_packet = PacketHelper.CreatePacket("UPDATEACK")
         self.send(updateAck_packet)
