@@ -82,6 +82,8 @@ def CreatePacket(packet_type):
         return outgoing.PlayerTextPacket()
     if packet_type == types.PONG:
         return outgoing.PongPacket()
+    if packet_type == types.QUESTFETCHASK:
+        return outgoing.QuestFetchAskPacket()
     if packet_type == types.REQUESTTRADE:
         return outgoing.RequestTradePacket()
     if packet_type == types.RESETDAILYQUESTS:
@@ -170,6 +172,8 @@ def CreatePacket(packet_type):
         return incoming.PingPacket()
     if packet_type == types.PLAYSOUND:
         return incoming.PlaySoundPacket()
+    if packet_type == types.QUESTFETCHRESPONSE:
+        return incoming.QuestFetchResponsePacket()
     if packet_type == types.QUESTOBJID:
         return incoming.QuestObjIdPacket()
     if packet_type == types.QUESTREDEEMRESPONSE:

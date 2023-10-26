@@ -1,4 +1,4 @@
-from Data.TradeItem import*
+from Data.TradeItem import *
 
 class TradeStartPacket:
     def __init__(self):
