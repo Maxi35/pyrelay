@@ -122,6 +122,7 @@ class Client:
             print(r.text)
             self.active = False
             return
+        
         self.charData.nextCharId = int(charInfo[0])
         self.charData.maxNumChars = int(charInfo[1])
         if len(chars) > 0:
@@ -132,6 +133,9 @@ class Client:
             self.charData.currentCharId = self.charData.nextCharId
             self.charData.nextCharId += 1
             self.needsNewChar = True
+        
+        if not "TDone" in r.text:
+            self.gameId = GameId.tutorial
             
         self.isReady = True
 
@@ -215,7 +219,7 @@ class Client:
         hello_packet.accessToken = self.accessToken
         hello_packet.keyTime = self.keyTime
         hello_packet.key = self.key
-        hello_packet.gameNet = "rotmg"
+        hello_packet.userPlatform = "rotmg"
         hello_packet.playPlatform = "rotmg"
         hello_packet.userToken = self.clientToken
         self.send(hello_packet)
@@ -324,6 +328,10 @@ class Client:
         self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
         self.records = []
+
+        show_packet = PacketHelper.CreatePacket("SHOWALLYSHOOT")
+        show_packet.toggle = 1
+        self.send(show_packet)
     
     def onGoto(self, packet):
         gotoAck_packet = PacketHelper.CreatePacket("GOTOACK")
@@ -348,16 +356,12 @@ class Client:
             self.send(load_packet)
         self.random.setSeed(packet.seed)
 
-        show_packet = PacketHelper.CreatePacket("SHOWALLYSHOOT")
-        show_packet.toggle = 1
-        self.send(show_packet)
-
     def onFailure(self, packet):
         print("Error:", packet.errorId)
         print(packet.errorDescription)
         self.keyTime = -1
         self.key = []
-        self.gameId = -2
+        self.gameId = GameId.nexus
         if packet.errorDescription == "s.update_client":
             self.disconnect()
         elif packet.errorDescription == "Account credentials not valid":
