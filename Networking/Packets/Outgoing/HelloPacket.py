@@ -2,8 +2,8 @@ class HelloPacket:
     def __init__(self):
         self.type = "HELLO"
         self.send = True
-        self.buildVersion = ""
         self.gameId = 0
+        self.buildVersion = ""
         self.accessToken = ""
         self.keyTime = 0
         self.key = []
@@ -14,8 +14,8 @@ class HelloPacket:
         self.token = "fRT6i7Zqv6e1GyCRb6EMAT58a6YI1MWc"
 
     def write(self, writer):
-        writer.writeStr(self.buildVersion)
         writer.writeInt32(self.gameId)
+        writer.writeStr(self.buildVersion)
         writer.writeStr(self.accessToken)
         writer.writeInt32(self.keyTime)
         writer.writeBytes(self.key)
@@ -26,8 +26,8 @@ class HelloPacket:
         writer.writeStr(self.token)
 
     def read(self, reader):
-        self.buildVersion = reader.readStr()
         self.gameId = reader.readInt32()
+        self.buildVersion = reader.readStr()
         self.accessToken = reader.readStr()
         self.keyTime = reader.readInt32()
         self.key = reader.readBytes()
