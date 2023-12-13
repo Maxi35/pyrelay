@@ -123,6 +123,7 @@ class StatTypes:
         self.UNKNOWN123 = 123
         self.ENCHANTMENT = 127
         self.UNKNOWN128 = 128
+        self.UNKNOWN147 = 147
 
     def nameOf(self, type):
         if type in self.__dict__.values():

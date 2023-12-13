@@ -12,7 +12,8 @@ class StatData:
     def isStringStat(self):
         return self.statType in [types.EXPSTAT, types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
                                  types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
-                                 types.UNKNOWN80, types.UNKNOWN121, types.ENCHANTMENT, types.UNKNOWN128]
+                                 types.UNKNOWN80, types.UNKNOWN121, types.ENCHANTMENT, types.UNKNOWN128,
+                                 types.UNKNOWN147]
 
     def statToName(self, type=None):
         if type is None:
