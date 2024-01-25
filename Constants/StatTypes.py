@@ -70,16 +70,10 @@ class StatTypes:
         self.LTTIMERSTAT = 68
         self.HEALTHPOTIONSTACKSTAT = 69
         self.MAGICPOTIONSTACKSTAT = 70
-        self.BACKPACK0STAT = 71
-        self.BACKPACK1STAT = 72
-        self.BACKPACK2STAT = 73
-        self.BACKPACK3STAT = 74
-        self.BACKPACK4STAT = 75
-        self.BACKPACK5STAT = 76
-        self.BACKPACK6STAT = 77
-        self.BACKPACK7STAT = 78
+        self.DUSTAMOUNT = 71
+        self.DUSTLIMIT = 72
         self.HASBACKPACKSTAT = 79
-        self.UNKNOWN80 = 80
+        self.ENCHANTMENTS = 80
         self.PETINSTANCEIDSTAT = 81
         self.PETNAMESTAT = 82
         self.PETTYPESTAT = 83
@@ -121,8 +115,16 @@ class StatTypes:
         self.FORGEFIRE = 120
         self.UNKNOWN121 = 121
         self.UNKNOWN123 = 123
-        self.ENCHANTMENT = 127
+        self.UNKNOWN127 = 127
         self.UNKNOWN128 = 128
+        self.BACKPACK0STAT = 131
+        self.BACKPACK1STAT = 132
+        self.BACKPACK2STAT = 133
+        self.BACKPACK3STAT = 134
+        self.BACKPACK4STAT = 135
+        self.BACKPACK5STAT = 136
+        self.BACKPACK6STAT = 137
+        self.BACKPACK7STAT = 138
         self.UNKNOWN147 = 147
 
     def nameOf(self, type):

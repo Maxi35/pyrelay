@@ -15,3 +15,9 @@ class MoveRecord:
 
     def clone(self):
         return MoveRecord(self.time, self.pos.x, self.pos.y)
+
+    def __str__(self):
+        return f"time: {self.time}, pos: {self.pos}"
+
+    def __repr__(self):
+        return str(self)

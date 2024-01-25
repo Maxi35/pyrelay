@@ -164,9 +164,9 @@ class PlayerData:
             elif stat.statType == types.PROJECTILELIFEMULT:
                 self.projLifeMult = stat.statValue / 1000
             elif types.INVENTORY0STAT <= stat.statType <= types.INVENTORY11STAT:
-                self.inv[stat.statType-8] = stat.statValue
+                self.inv[stat.statType-types.INVENTORY0STAT] = stat.statValue
             elif types.BACKPACK0STAT <= stat.statType <= types.BACKPACK7STAT:
-                self.inv[stat.statType-59] = stat.statValue
+                self.inv[stat.statType-types.BACKPACK0STAT+12] = stat.statValue
             elif stat.statType == types.OPENEDATTIMESTAMP:
                 self.opendAtTimestamp = stat.statValue
             elif stat.statType == types.EXALTEDHP:
