@@ -20,7 +20,7 @@
 			"host": "127.0.0.1",
 			"port": 8080,
 			"type": 5,
-			"userId": "username",
+			"username": "username",
 			"password": "password"
 		}
 	}
