@@ -19,6 +19,7 @@ import Constants.Servers as Servers
 import Constants.ApiPoints as ApiPoints
 import Constants.ClassIds as Classes
 import Crypto.RSA as RSA
+from PluginManager import callHooks
 
 MINSPEED = 0.004
 MAXSPEED = 0.0096
@@ -160,8 +161,7 @@ class Client:
         
         self.sockMan = SocketManager()
         self.sockMan.hook("ANY", self.onPacket)
-        self.anyPacket = None
-        
+
         self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
         self.sockMan.hook("ENEMYSHOOT", self.onEnemyShoot)
         self.sockMan.hook("FAILURE", self.onFailure)
@@ -419,12 +419,7 @@ class Client:
         self.keyTime = packet.keyTime
         self.connect()
 
-    def hookAllPackets(self, func):
-        self.anyPacket = func
-
     def onPacket(self, packet):
-        if self.anyPacket is None:
-            return
-        daemon_thread = threading.Thread(target=self.anyPacket, args=(self, packet,))
+        daemon_thread = threading.Thread(target=callHooks, args=(self, packet))
         daemon_thread.daemon = True
         daemon_thread.start()

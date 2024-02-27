@@ -45,7 +45,6 @@ class ClientManager:
             client.setup(accInfo)
             
             client.clientManager = self
-            client.hookAllPackets(self.onPacket)
             self.clients.append(client)
             return client
 
@@ -65,9 +64,6 @@ class ClientManager:
                     client.connect()
         else:
             return True
-        
-    def onPacket(self, client, packet):
-        callHooks(client, packet)
 
     def stop(self):
         print("Disconnecting clients...")
