@@ -1,9 +1,5 @@
 import random
-import threading
-
 from Client.Client import Client
-from PluginManager import callHooks
-
 
 class ClientManager:
     def __init__(self):
