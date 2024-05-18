@@ -29,7 +29,7 @@ class NotificationPacket:
             self.uiExtra = reader.readShort()
         if self.effect == 5:#Queue
             self.message = reader.readStr()
-            self.objectId = reader.readInt32()
+            self.objectId = reader.readShort()
             self.queuePos = reader.readShort()
         if self.effect == 6:#ObjectText/json
             self.message = reader.readStr()
@@ -65,7 +65,7 @@ class NotificationPacket:
             writer.writeShort(self.uiExtra)
         if self.effect == 5:#Queue
             writer.writeStr(self.message)
-            writer.writeInt32(self.objectId)
+            writer.writeShort(self.objectId)
             writer.writeShort(self.queuePos)
         if self.effect == 6:#ObjectText/json
             writer.writeStr(self.message)

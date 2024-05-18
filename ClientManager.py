@@ -48,7 +48,7 @@ class ClientManager:
         new_clients = []
         for client in self.clients:
             if client.guid == guid:
-                client.disconnect()
+                client.stop()
             else:
                 new_clients.append(client)
         self.clients = new_clients        
@@ -64,4 +64,4 @@ class ClientManager:
     def stop(self):
         print("Disconnecting clients...")
         for client in self.clients:
-            client.disconnect()
+            client.stop()

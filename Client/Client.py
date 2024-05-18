@@ -61,6 +61,7 @@ class Client:
         self.bulletId = 0
         self.lastAttackTime = 0
         self.records = []
+        self.connectCooldown = 0
 
     def getToken(self, accInfo, updateServers=False):
         self.guid = accInfo["guid"]
@@ -172,12 +173,15 @@ class Client:
         self.sockMan.hook("UPDATE", self.onUpdate)
         self.sockMan.hook("RECONNECT", self.onReconnect)
         self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
+        self.sockMan.hook("QUEUEINFORMATION", self.onQueueInformation)
     
     def isConnected(self):
         return self.sockMan.connected
 
     def connect(self):
         if not self.active:
+            return
+        if self.connectCooldown > self.getTime():
             return
         if self.sockMan.connected:
             self.sockMan.disconnect()
@@ -232,6 +236,12 @@ class Client:
         return int(time.time()*1000) - self.connectedTime
 
     def disconnect(self):
+        if self.sockMan.connected:
+            self.sockMan.disconnect()
+        if not self.frameTimeUpdater is None:
+            self.frameTimeUpdater.cancel()
+
+    def stop(self):
         self.active = False
         if self.sockMan.connected:
             self.sockMan.disconnect()
@@ -355,19 +365,26 @@ class Client:
             load_packet.charId = self.charData.currentCharId
             self.send(load_packet)
         self.random.setSeed(packet.seed)
+        
+    def onQueueInformation(self, packet):
+        print("Client", self.alias, f"in queue at position: {packet.curPos}/{packet.maxPos}")
+        self.connectCooldown = self.getTime() + 10*1000
 
     def onFailure(self, packet):
+        if packet.errorId == 15:
+            self.disconnect()
+            return
         print("Error:", packet.errorId)
         print(packet.errorDescription)
         self.keyTime = -1
         self.key = []
         self.gameId = GameId.nexus
         if packet.errorDescription == "s.update_client":
-            self.disconnect()
+            self.stop()
         elif packet.errorDescription == "Account credentials not valid":
-            self.disconnect()
+            self.stop()
         elif packet.errorDescription == "Bad message received":
-            self.disconnect()
+            self.stop()
         
     def onPing(self, packet):
         pong_packet = PacketHelper.CreatePacket("PONG")
