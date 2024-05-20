@@ -1,7 +1,8 @@
-class TradeChangedPacket:
+from Networking.Packets.Packet import Packet
+
+class TradeChangedPacket(Packet):
     def __init__(self):
         self.type = "TRADECHANGED"
-        self.send = True
         self.offer = []
 
     def read(self, reader):

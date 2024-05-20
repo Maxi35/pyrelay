@@ -1,7 +1,8 @@
-class BuyPacket:
+from Networking.Packets.Packet import Packet
+
+class BuyPacket(Packet):
     def __init__(self):
         self.type = "BUY"
-        self.send = True
         self.objectId = 0
         self.quantity = 0
 

@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 
-class GroundDamagePacket:
+class GroundDamagePacket(Packet):
     def __init__(self):
         self.type = "GROUNDDAMAGE"
-        self.send = True
         self.time = 0
         self.pos = WorldPosData()
 

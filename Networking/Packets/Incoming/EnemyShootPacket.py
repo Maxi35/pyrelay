@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 
-class EnemyShootPacket:
+class EnemyShootPacket(Packet):
     def __init__(self):
         self.type = "ENEMYSHOOT"
-        self.send = True
         self.bulletId = 0
         self.ownerId = 0
         self.bulletType = 0

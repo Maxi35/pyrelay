@@ -1,7 +1,8 @@
-class SquareHitPacket:
+from Networking.Packets.Packet import Packet
+
+class SquareHitPacket(Packet):
     def __init__(self):
         self.type = "SQUAREHIT"
-        self.send = True
         self.time = 0
         self.bulletId = 0
         self.objectId = 0

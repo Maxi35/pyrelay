@@ -1,10 +1,10 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 from Data.SlotObjectData import *
 
-class InvSwapPacket:
+class InvSwapPacket(Packet):
     def __init__(self):
         self.type = "INVSWAP"
-        self.send = True
         self.time = 0
         self.pos = WorldPosData()
         self.slotObject1 = SlotObjectData()

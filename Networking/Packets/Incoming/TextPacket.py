@@ -1,7 +1,8 @@
-class TextPacket:
+from Networking.Packets.Packet import Packet
+
+class TextPacket(Packet):
     def __init__(self):
         self.type = "TEXT"
-        self.send = True
         self.name = ""
         self.objectId = 0
         self.numStars = 0

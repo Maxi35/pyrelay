@@ -1,7 +1,8 @@
-class ClientStatPacket:
+from Networking.Packets.Packet import Packet
+
+class ClientStatPacket(Packet):
     def __init__(self):
         self.type = "CLIENTSTAT"
-        self.send = True
         self.name = ""
         self.value = 0
 

@@ -1,7 +1,8 @@
-class MapInfoPacket:
+from Networking.Packets.Packet import Packet
+
+class MapInfoPacket(Packet):
     def __init__(self):
         self.type = "MAPINFO"
-        self.send = True
         self.width = 0
         self.height = 0
         self.name = ""
@@ -18,6 +19,9 @@ class MapInfoPacket:
         self.buildVersion = ""
         self.newInt = 0
         self.dungeonModifiers = []
+        self.unknownShort = 0
+        self.maxRealmScore = 0
+        self.curRealmScore = 0        
 
     def read(self, reader):
         self.width = reader.readInt32()
@@ -36,6 +40,10 @@ class MapInfoPacket:
         self.buildVersion = reader.readStr()
         self.newInt = reader.readInt32()
         self.dungeonModifiers = reader.readStr().split(";")
+        self.unknownShort = reader.readShort()#Always 0?
+        if reader.bytesAvailable() > 0:
+            self.maxRealmScore = reader.readInt32()
+            self.curRealmScore = reader.readInt32()
 
     def write(self, writer):
         writer.writeInt32(self.width)
@@ -54,3 +62,8 @@ class MapInfoPacket:
         writer.writeStr(self.buildVersion)
         writer.writeInt32(self.newInt)
         writer.writeStr(";".join(self.dungeonModifiers))
+        writer.writeShort(self.unknownShort)
+        if self.maxRealmScore != 0 and self.curRealmScore != 0:
+            writer.writeInt32(self.maxRealmScore)
+            writer.writeInt32(self.curRealmScore)
+            

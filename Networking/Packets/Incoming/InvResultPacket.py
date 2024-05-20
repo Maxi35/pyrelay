@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.SlotObjectData import *
 
-class InvResultPacket:
+class InvResultPacket(Packet):
     def __init__(self):
         self.type = "INVRESULT"
-        self.send = True
         self.unknownBool = False#Prob success bool
         self.unknownByte = 0
         self.fromSlot = SlotObjectData()

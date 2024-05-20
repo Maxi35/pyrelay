@@ -1,7 +1,8 @@
-class ClaimDailyLoginRewardPacket:
+from Networking.Packets.Packet import Packet
+
+class ClaimDailyLoginRewardPacket(Packet):
     def __init__(self):
         self.type = "CLAIMDAILYLOGINREWARD"
-        self.send = True
         self.claimStr = ""
         self.claimType = ""
 

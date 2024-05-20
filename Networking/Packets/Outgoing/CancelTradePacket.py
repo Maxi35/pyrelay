@@ -1,7 +1,8 @@
-class CancelTradePacket:
+from Networking.Packets.Packet import Packet
+
+class CancelTradePacket(Packet):
     def __init__(self):
         self.type = "CANCELTRADE"
-        self.send = True
         self.objectId = 0
 
     def write(self, writer):

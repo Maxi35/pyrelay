@@ -3,11 +3,15 @@ import Networking.Packets.Outgoing as Outgoing
 
 class PacketTypes:
     def __init__(self):
+        self.packet_dict = {}
         for file in dir(Incoming):
             if "Packet" in file:
-                file = file.replace("Packet", "")
-                self.__dict__[file.upper()] = file.upper()
+                packet = getattr(Incoming, file)                
+                packetName = file.replace("Packet", "")
+                self.packet_dict[packetName.upper()] = packet
+                
         for file in dir(Outgoing):
             if "Packet" in file:
-                file = file.replace("Packet", "")
-                self.__dict__[file.upper()] = file.upper()
+                packet = getattr(Outgoing, file)
+                packetName = file.replace("Packet", "")
+                self.packet_dict[packetName.upper()] = packet

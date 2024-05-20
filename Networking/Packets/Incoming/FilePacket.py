@@ -1,7 +1,8 @@
-class FilePacket:
+from Networking.Packets.Packet import Packet
+
+class FilePacket(Packet):
     def __init__(self):
         self.type = "FILE"
-        self.send = True
         self.fileName = ""
         self.file = ""
 

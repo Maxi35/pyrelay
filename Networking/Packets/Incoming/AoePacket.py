@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 
-class AoePacket:
+class AoePacket(Packet):
     def __init__(self):
         self.type = "AOE"
-        self.send = True
         self.pos = WorldPosData()
         self.radius = 0
         self.damage = 0

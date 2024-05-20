@@ -1,10 +1,10 @@
+from Networking.Packets.Packet import Packet
 from Data.SlotObjectData import *
 from Data.WorldPosData import *
 
-class UseItemPacket:
+class UseItemPacket(Packet):
     def __init__(self):
         self.type = "USEITEM"
-        self.send = True
         self.time = 0
         self.slotObject = SlotObjectData()
         self.pos = WorldPosData()

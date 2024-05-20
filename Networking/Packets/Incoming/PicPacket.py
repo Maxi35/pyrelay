@@ -1,7 +1,8 @@
-class PicPacket:
+from Networking.Packets.Packet import Packet
+
+class PicPacket(Packet):
     def __init__(self):
         self.type = "PIC"
-        self.send = True
         self.width = 0
         self.height = 0
         self.bitmapData = []

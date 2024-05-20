@@ -1,7 +1,8 @@
-class EnemyHitPacket:
+from Networking.Packets.Packet import Packet
+
+class EnemyHitPacket(Packet):
     def __init__(self):
         self.type = "ENEMYHIT"
-        self.send = True
         self.time = 0
         self.bulletId = 0
         self.id1 = 0

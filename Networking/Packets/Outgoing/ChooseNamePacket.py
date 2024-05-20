@@ -1,7 +1,8 @@
-class ChooseNamePacket:
+from Networking.Packets.Packet import Packet
+
+class ChooseNamePacket(Packet):
     def __init__(self):
         self.type = "CHOOSENAME"
-        self.send = True
         self.name = ""
 
     def write(self, writer):

@@ -1,7 +1,8 @@
-class GlobalNotificationPacket:
+from Networking.Packets.Packet import Packet
+
+class GlobalNotificationPacket(Packet):
     def __init__(self):
         self.type = "GLOBALNOTIFICATION"
-        self.send = True
         self.notificationType = 0
         self.text = ""
 

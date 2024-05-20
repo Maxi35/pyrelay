@@ -1,7 +1,8 @@
-class LoadPacket:
+from Networking.Packets.Packet import Packet
+
+class LoadPacket(Packet):
     def __init__(self):
         self.type = "LOAD"
-        self.send = True
         self.charId = 0
         self.isFromArena = False
 

@@ -1,7 +1,8 @@
-class Unknown165Packet:
+from Networking.Packets.Packet import Packet
+
+class Unknown165Packet(Packet):
     def __init__(self):
         self.type = "UNKNOWN165"
-        self.send = True
         self.unknownStr = ""
 
     def read(self, reader):

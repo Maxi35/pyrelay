@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.QuestData import *
 
-class QuestFetchResponsePacket:
+class QuestFetchResponsePacket(Packet):
     def __init__(self):
         self.type = "QUESTFETCHRESPONSE"
-        self.send = True
         self.quests = []
         self.nextRefreshPrice = 0
 

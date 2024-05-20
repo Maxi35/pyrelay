@@ -1,7 +1,8 @@
-class InvitedToGuildPacket:
+from Networking.Packets.Packet import Packet
+
+class InvitedToGuildPacket(Packet):
     def __init__(self):
         self.type = "INVITEDTOGUILD"
-        self.send = True
         self.name = ""
         self.guildName = ""
 

@@ -1,7 +1,8 @@
-class ActivePetUpdateRequestPacket:
+from Networking.Packets.Packet import Packet
+
+class ActivePetUpdateRequestPacket(Packet):
     def __init__(self):
         self.type = "ACTIVEPETUPDATEREQUEST"
-        self.send = True
         self.commandType = 0
         self.instanceId = 0
 

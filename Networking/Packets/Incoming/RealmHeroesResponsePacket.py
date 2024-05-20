@@ -1,7 +1,8 @@
-class RealmHeroesResponsePacket:
+from Networking.Packets.Packet import Packet
+
+class RealmHeroesResponsePacket(Packet):
     def __init__(self):
         self.type = "REALMHEROESRESPONSE"
-        self.send = True
         self.numberOfRealmHeros = 0
 
     def read(self, reader):

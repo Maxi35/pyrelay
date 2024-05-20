@@ -1,7 +1,8 @@
-class BlueprintInfoPacket:
+from Networking.Packets.Packet import Packet
+
+class BlueprintInfoPacket(Packet):
     def __init__(self):
         self.type = "BLUEPRINTINFO"
-        self.send = True
         self.unknownByte = -1
         self.blueprints = []
 

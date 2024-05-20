@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.TradeItem import *
 
-class TradeStartPacket:
+class TradeStartPacket(Packet):
     def __init__(self):
         self.type = "TRADESTART"
-        self.send = True
         self.clientItems = []
         self.partnerName = ""
         self.partnerItems = []

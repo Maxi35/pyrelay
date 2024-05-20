@@ -1,8 +1,9 @@
+from Networking.Packets.Packet import Packet
 
-class DamagePacket:
+
+class DamagePacket(Packet):
     def __init__(self):
         self.type = "DAMAGE"
-        self.send = True
         self.targetId = 0
         self.effects = []
         self.damageAmount = 0

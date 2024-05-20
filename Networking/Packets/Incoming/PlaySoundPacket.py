@@ -1,7 +1,8 @@
-class PlaySoundPacket:
+from Networking.Packets.Packet import Packet
+
+class PlaySoundPacket(Packet):
     def __init__(self):
         self.type = "PLAYSOUND"
-        self.send = True
         self.ownerId = 0
         self.soundId = 0 
 

@@ -1,7 +1,8 @@
-class CheckCreditsPacket:
+from Networking.Packets.Packet import Packet
+
+class CheckCreditsPacket(Packet):
     def __init__(self):
         self.type = "CHECKCREDITS"
-        self.send = True
 
     def write(self, writer):
         pass

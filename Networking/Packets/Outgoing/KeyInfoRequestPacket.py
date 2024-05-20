@@ -1,7 +1,8 @@
-class KeyInfoRequestPacket:
+from Networking.Packets.Packet import Packet
+
+class KeyInfoRequestPacket(Packet):
     def __init__(self):
         self.type = "KEYINFOREQUEST"
-        self.send = True
         self.itemType = 0
 
     def write(self, writer):

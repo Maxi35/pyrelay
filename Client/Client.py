@@ -210,14 +210,14 @@ class Client:
         return speed * time
     
     def nexus(self):
-        packet = PacketHelper.CreatePacket("ESCAPE")
+        packet = PacketHelper.createPacket("ESCAPE")
         self.send(packet)
         self.gameId = GameId.nexus
         self.key = []
         self.keyTime = -1
 
     def sendHelloPacket(self):
-        hello_packet = PacketHelper.CreatePacket("HELLO")
+        hello_packet = PacketHelper.createPacket("HELLO")
         hello_packet.buildVersion = self.buildVersion
         hello_packet.gameId = self.gameId
         hello_packet.accessToken = self.accessToken
@@ -302,7 +302,7 @@ class Client:
             return False
         self.lastAttackTime = time
 
-        shootPacket = PacketHelper.CreatePacket("PLAYERSHOOT")
+        shootPacket = PacketHelper.createPacket("PLAYERSHOOT")
         shootPacket.time = time
         shootPacket.containerType = self.playerData.inv[0]
         shootPacket.speedMult = self.playerData.projSpeedMult
@@ -339,12 +339,12 @@ class Client:
         self.frameTimeUpdater.start()
         self.records = []
 
-        show_packet = PacketHelper.CreatePacket("SHOWALLYSHOOT")
+        show_packet = PacketHelper.createPacket("SHOWALLYSHOOT")
         show_packet.toggle = 1
         self.send(show_packet)
     
     def onGoto(self, packet):
-        gotoAck_packet = PacketHelper.CreatePacket("GOTOACK")
+        gotoAck_packet = PacketHelper.createPacket("GOTOACK")
         gotoAck_packet.time = self.lastFrameTime
         self.send(gotoAck_packet)
         if packet.objectId == self.objectId:
@@ -354,14 +354,14 @@ class Client:
         print("Connected to", self.nexusServer["name"], packet.name)
         if self.needsNewChar:
             print("Creating new char")
-            create_packet = PacketHelper.CreatePacket("CREATE")
+            create_packet = PacketHelper.createPacket("CREATE")
             create_packet.classType = Classes.WIZARD
             create_packet.skinType = 0
             create_packet.isChallenger = 0
             self.send(create_packet)
             self.needsNewChar = False
         else:
-            load_packet = PacketHelper.CreatePacket("LOAD")
+            load_packet = PacketHelper.createPacket("LOAD")
             load_packet.charId = self.charData.currentCharId
             self.send(load_packet)
         self.random.setSeed(packet.seed)
@@ -387,13 +387,13 @@ class Client:
             self.stop()
         
     def onPing(self, packet):
-        pong_packet = PacketHelper.CreatePacket("PONG")
+        pong_packet = PacketHelper.createPacket("PONG")
         pong_packet.serial = packet.serial
         pong_packet.time = self.getTime()
         self.send(pong_packet)
 
     def onNewTick(self, packet):
-        move_packet = PacketHelper.CreatePacket("MOVE")
+        move_packet = PacketHelper.createPacket("MOVE")
         move_packet.tickId = packet.tickId
         move_packet.time = packet.serverRealTimeMS
         move_packet.records = self.records
@@ -408,7 +408,7 @@ class Client:
     def onUpdate(self, packet):
         if self.pos is None:
             self.pos = packet.pos
-        updateAck_packet = PacketHelper.CreatePacket("UPDATEACK")
+        updateAck_packet = PacketHelper.createPacket("UPDATEACK")
         self.send(updateAck_packet)
         for obj in packet.newObjs:
             if obj.status.objectId == self.objectId:
@@ -417,12 +417,12 @@ class Client:
 
     def onServerPlayerShoot(self, packet):
         if packet.ownerId == self.objectId:
-            shootAck = PacketHelper.CreatePacket("SHOOTACK")
+            shootAck = PacketHelper.createPacket("SHOOTACK")
             shootAck.time = self.lastFrameTime
             self.send(shootAck)
 
     def onEnemyShoot(self, packet):
-        shootAck = PacketHelper.CreatePacket("SHOOTACK")
+        shootAck = PacketHelper.createPacket("SHOOTACK")
         shootAck.time = self.lastFrameTime
         self.send(shootAck)
 

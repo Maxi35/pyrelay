@@ -1,7 +1,8 @@
-class SetConditionPacket:
+from Networking.Packets.Packet import Packet
+
+class SetConditionPacket(Packet):
     def __init__(self):
         self.type = "SETCONDITION"
-        self.send = True
         self.conditionEffect = 0
         self.conditionDuration = 0
 

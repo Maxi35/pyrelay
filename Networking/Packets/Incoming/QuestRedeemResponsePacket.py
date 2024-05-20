@@ -1,7 +1,8 @@
-class QuestRedeemResponsePacket:
+from Networking.Packets.Packet import Packet
+
+class QuestRedeemResponsePacket(Packet):
     def __init__(self):
         self.type = "QUESTREDEEMRESPONSE"
-        self.send = True
         self.ok = False
         self.message = ""
 

@@ -1,7 +1,8 @@
-class ExaltationUpdatePacket:
+from Networking.Packets.Packet import Packet
+
+class ExaltationUpdatePacket(Packet):
     def __init__(self):
         self.type = "EXALTATIONUPDATE"
-        self.send = True
         self.objType = -1
         self.dexProgress = -1
         self.spdProgress = -1

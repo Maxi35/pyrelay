@@ -1,7 +1,8 @@
-class ReconnectPacket:
+from Networking.Packets.Packet import Packet
+
+class ReconnectPacket(Packet):
     def __init__(self):
         self.type = "RECONNECT"
-        self.send = True
         self.name = ""
         self.host = ""
         self.port = 0

@@ -1,7 +1,8 @@
-class ShootAckPacket:
+from Networking.Packets.Packet import Packet
+
+class ShootAckPacket(Packet):
     def __init__(self):
         self.type = "SHOOTACK"
-        self.send = True
         self.time = 0
 
     def write(self, writer):

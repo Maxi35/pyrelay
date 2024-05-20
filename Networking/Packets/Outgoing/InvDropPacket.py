@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.SlotObjectData import *
 
-class InvDropPacket:
+class InvDropPacket(Packet):
     def __init__(self):
         self.type = "INVDROP"
-        self.send = True
         self.slotObject = SlotObjectData()
         self.unknownByte = -1
 

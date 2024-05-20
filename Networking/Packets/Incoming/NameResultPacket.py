@@ -1,7 +1,8 @@
-class NameResultPacket:
+from Networking.Packets.Packet import Packet
+
+class NameResultPacket(Packet):
     def __init__(self):
         self.type = "NAMERESULT"
-        self.send = True
         self.success = False
         self.errorText = ""
 

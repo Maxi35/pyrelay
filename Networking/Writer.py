@@ -45,9 +45,9 @@ class Writer:
         self.buffer.extend(struct.pack("!{}s".format(len(string)), string))
 
     def writeStr32(self, string32):
-        self.writeInt32(len(string32))
         if isinstance(string32, str):
             string32 = string32.encode()
+        self.writeInt32(len(string32))
         self.index += len(string32)
         self.buffer.extend(struct.pack("!{}s".format(len(string32)), string32))
 
@@ -66,7 +66,6 @@ class Writer:
         uByte |= 128*(value>0)
         
         self.writeUnsignedByte(uByte)
-        
         
         while value > 0:
             uByte = value&127

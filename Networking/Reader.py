@@ -4,7 +4,7 @@ class Reader:
     def __init__(self):
         self.index = 5#Skip the first 5 header bytes
         self.buffer = bytearray()
-        self._length = 8
+        self._length = 0
 
     def readByte(self):
         value = struct.unpack("!b", self.buffer[self.index:self.index+1])[0]
@@ -88,8 +88,8 @@ class Reader:
     def bytesAvailable(self):
         return self._length - self.index
 
-    def resizeAndReset(self, size):
+    def reset(self, buffer):
         self.index = 5
-        self.buffer = bytearray()
-        self._length = size
+        self.buffer = buffer
+        self._length = len(buffer)
         

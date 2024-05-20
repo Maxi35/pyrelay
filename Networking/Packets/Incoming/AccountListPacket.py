@@ -1,7 +1,8 @@
-class AccountListPacket:
+from Networking.Packets.Packet import Packet
+
+class AccountListPacket(Packet):
     def __init__(self):
         self.type = "ACCOUNTLIST"
-        self.send = True
         self.accountListId = 0
         self.accountIds = []
         self.lockAction = 0

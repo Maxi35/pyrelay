@@ -1,7 +1,8 @@
-class ClaimBattlepassResponsePacket:
+from Networking.Packets.Packet import Packet
+
+class ClaimBattlepassResponsePacket(Packet):
     def __init__(self):
         self.type = "CLAIMBATTLEPASSRESPONSE"
-        self.send = True
         self.success = False
 
     def write(self, writer):

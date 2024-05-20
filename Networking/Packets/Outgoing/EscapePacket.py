@@ -1,7 +1,8 @@
-class EscapePacket:
+from Networking.Packets.Packet import Packet
+
+class EscapePacket(Packet):
     def __init__(self):
         self.type = "ESCAPE"
-        self.send = True
 
     def write(self, writer):
         pass

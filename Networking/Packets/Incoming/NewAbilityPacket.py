@@ -1,7 +1,8 @@
-class NewAbilityPacket:
+from Networking.Packets.Packet import Packet
+
+class NewAbilityPacket(Packet):
     def __init__(self):
         self.type = "NEWABILITY"
-        self.send = True
         self.abilityType = 0
 
     def read(self, reader):

@@ -1,7 +1,8 @@
-class CreateSuccessPacket:
+from Networking.Packets.Packet import Packet
+
+class CreateSuccessPacket(Packet):
     def __init__(self):
         self.type = "CREATESUCCESS"
-        self.send = True
         self.objectId = 0
         self.charId = 0
         self.PCStats = ""

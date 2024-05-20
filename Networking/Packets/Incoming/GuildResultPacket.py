@@ -1,7 +1,8 @@
-class GuildResultPacket:
+from Networking.Packets.Packet import Packet
+
+class GuildResultPacket(Packet):
     def __init__(self):
         self.type = "GUILDRESULT"
-        self.send = True
         self.success = False
         self.lineBuilderJSON = ""
 

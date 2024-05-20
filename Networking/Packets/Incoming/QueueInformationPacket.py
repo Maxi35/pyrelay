@@ -1,8 +1,9 @@
+from Networking.Packets.Packet import Packet
 
-class QueueInformationPacket:
+
+class QueueInformationPacket(Packet):
     def __init__(self):
         self.type = "QUEUEINFORMATION"
-        self.send = True
         self.curPos = -1
         self.maxPos = -1
 

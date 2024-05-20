@@ -1,7 +1,8 @@
-class TradeAcceptedPacket:
+from Networking.Packets.Packet import Packet
+
+class TradeAcceptedPacket(Packet):
     def __init__(self):
         self.type = "TRADEACCEPTED"
-        self.send = True
         self.clientOffer = []
         self.partnerOffer = []
 

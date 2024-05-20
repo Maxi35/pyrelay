@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.ObjectStatusData import *
 
-class NewTickPacket:
+class NewTickPacket(Packet):
     def __init__(self):
         self.type = "NEWTICK"
-        self.send = True
         self.tickId = 0
         self.tickTime = 0
         self.serverRealTimeMS = 0

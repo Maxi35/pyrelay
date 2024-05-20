@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.FameData import *
 
-class DeathPacket:
+class DeathPacket(Packet):
     def __init__(self):
         self.type = "DEATH"
-        self.send = True
         self.accountId = ""
         self.charId = 0
         self.killedBy = ""

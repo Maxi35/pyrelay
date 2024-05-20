@@ -1,7 +1,8 @@
-class VaultInfoPacket:
+from Networking.Packets.Packet import Packet
+
+class VaultInfoPacket(Packet):
     def __init__(self):
         self.type = "VAULTINFO"
-        self.send = True
         self.unknownBool = False
         self.chestObjectId = -1
         self.materialObjectId = -1

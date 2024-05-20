@@ -1,7 +1,8 @@
-class FailurePacket:
+from Networking.Packets.Packet import Packet
+
+class FailurePacket(Packet):
     def __init__(self):
         self.type = "FAILURE"
-        self.send = True
         self.errorId = 0
         self.errorDescription = ""
 

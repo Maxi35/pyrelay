@@ -1,7 +1,8 @@
-class ChangePetSkinPacket:
+from Networking.Packets.Packet import Packet
+
+class ChangePetSkinPacket(Packet):
     def __init__(self):
         self.type = "CHANGEPETSKIN"
-        self.send = True
         self.petId = 0
         self.skinType = 0
         self.currency = 0

@@ -1,7 +1,8 @@
-class ReskinPacket:
+from Networking.Packets.Packet import Packet
+
+class ReskinPacket(Packet):
     def __init__(self):
         self.type = "RESKIN"
-        self.send = True
         self.skinID = 0
 
     def write(self, writer):

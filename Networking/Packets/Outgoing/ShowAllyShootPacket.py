@@ -1,7 +1,8 @@
-class ShowAllyShootPacket:
+from Networking.Packets.Packet import Packet
+
+class ShowAllyShootPacket(Packet):
     def __init__(self):
         self.type = "SHOWALLYSHOOT"
-        self.send = True
         self.toggle = 0
 
     def write(self, writer):

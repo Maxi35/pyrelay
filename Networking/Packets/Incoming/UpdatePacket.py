@@ -1,11 +1,11 @@
+from Networking.Packets.Packet import Packet
 from Data.GroundTileData import *
 from Data.ObjectData import *
 from Data.WorldPosData import *
 
-class UpdatePacket:
+class UpdatePacket(Packet):
     def __init__(self):
         self.type = "UPDATE"
-        self.send = True
         self.pos = WorldPosData()
         self.levelType = 0
         self.tiles = []

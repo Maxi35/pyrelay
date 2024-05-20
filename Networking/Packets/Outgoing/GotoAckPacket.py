@@ -1,7 +1,8 @@
-class GotoAckPacket:
+from Networking.Packets.Packet import Packet
+
+class GotoAckPacket(Packet):
     def __init__(self):
         self.type = "GOTOACK"
-        self.send = True
         self.time = 0
         self.unknownByte = 0
 

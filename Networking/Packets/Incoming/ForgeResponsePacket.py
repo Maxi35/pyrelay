@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.SlotObjectData import SlotObjectData
 
-class ForgeResponsePacket:
+class ForgeResponsePacket(Packet):
     def __init__(self):
         self.type = "FORGERESPONSE"
-        self.send = True
         self.success = False
         self.slots = []
 

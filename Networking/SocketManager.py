@@ -124,9 +124,8 @@ class SocketManager:
 ##                print(msg)
                 continue
             if not "UNKNOWN" in packet_type:
-                packet = PacketHelper.CreatePacket(packet_type)
-                self.reader.resizeAndReset(size)
-                self.reader.buffer = msg
+                packet = PacketHelper.createPacket(packet_type)
+                self.reader.reset(msg)
                 packet.read(self.reader)
                 if packet.type in self.hooks.keys():
                     daemon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))

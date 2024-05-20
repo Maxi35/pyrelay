@@ -1,7 +1,8 @@
-class GuildRemovePacket:
+from Networking.Packets.Packet import Packet
+
+class GuildRemovePacket(Packet):
     def __init__(self):
         self.type = "GUILDREMOVE"
-        self.send = True
         self.name = ""
 
     def write(self, writer):

@@ -1,7 +1,8 @@
-class GoToQuestRoomPacket:
+from Networking.Packets.Packet import Packet
+
+class GoToQuestRoomPacket(Packet):
     def __init__(self):
         self.type = "GOTOQUESTROOM"
-        self.send = True
 
     def write(self, writer):
         pass

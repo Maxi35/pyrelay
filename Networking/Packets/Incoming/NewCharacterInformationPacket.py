@@ -1,7 +1,8 @@
-class NewCharacterInformationPacket:
+from Networking.Packets.Packet import Packet
+
+class NewCharacterInformationPacket(Packet):
     def __init__(self):
         self.type = "NEWCHARACTERINFORMATION"
-        self.send = True
         self.charXML = ""
 
     def read(self, reader):

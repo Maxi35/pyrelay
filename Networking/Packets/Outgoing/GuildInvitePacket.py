@@ -1,7 +1,8 @@
-class GuildInvitePacket:
+from Networking.Packets.Packet import Packet
+
+class GuildInvitePacket(Packet):
     def __init__(self):
         self.type = "GUILDINVITE"
-        self.send = True
         self.name = ""
 
     def write(self, writer):

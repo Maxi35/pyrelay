@@ -1,7 +1,8 @@
-class NotificationPacket:
+from Networking.Packets.Packet import Packet
+
+class NotificationPacket(Packet):
     def __init__(self):
         self.type = "NOTIFICATION"
-        self.send = True
         self.effect = 0
         self.extra = 0
         self.message = ""
@@ -28,8 +29,7 @@ class NotificationPacket:
             self.message = reader.readStr()
             self.uiExtra = reader.readShort()
         if self.effect == 5:#Queue
-            self.message = reader.readStr()
-            self.objectId = reader.readShort()
+            self.objectId = reader.readInt32()
             self.queuePos = reader.readShort()
         if self.effect == 6:#ObjectText/json
             self.message = reader.readStr()
@@ -64,8 +64,7 @@ class NotificationPacket:
             writer.writeStr(self.message)
             writer.writeShort(self.uiExtra)
         if self.effect == 5:#Queue
-            writer.writeStr(self.message)
-            writer.writeShort(self.objectId)
+            writer.writeInt32(self.objectId)
             writer.writeShort(self.queuePos)
         if self.effect == 6:#ObjectText/json
             writer.writeStr(self.message)

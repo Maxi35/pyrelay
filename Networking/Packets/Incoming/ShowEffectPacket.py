@@ -1,9 +1,9 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 
-class ShowEffectPacket:
+class ShowEffectPacket(Packet):
     def __init__(self):
         self.type = "SHOWEFFECT"
-        self.send = True
         self.effectType = 0
         self.ignore = 0
         self.targetObjectId = 0

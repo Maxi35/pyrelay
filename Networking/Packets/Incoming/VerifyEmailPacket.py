@@ -1,7 +1,8 @@
-class VerifyEmailPacket:
+from Networking.Packets.Packet import Packet
+
+class VerifyEmailPacket(Packet):
     def __init__(self):
         self.type = "VERIFYEMAIL"
-        self.send = True
 
     def read(self, reader):
         pass

@@ -1,7 +1,8 @@
-class HelloPacket:
+from Networking.Packets.Packet import Packet
+
+class HelloPacket(Packet):
     def __init__(self):
         self.type = "HELLO"
-        self.send = True
         self.gameId = 0
         self.buildVersion = ""
         self.accessToken = ""

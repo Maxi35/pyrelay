@@ -1,7 +1,8 @@
-class KeyInfoResponsePacket:
+from Networking.Packets.Packet import Packet
+
+class KeyInfoResponsePacket(Packet):
     def __init__(self):
         self.type = "KEYINFORESPONSE"
-        self.send = True
         self.name = ""
         self.description = ""
         self.creator = ""

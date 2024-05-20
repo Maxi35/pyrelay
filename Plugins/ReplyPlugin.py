@@ -1,6 +1,6 @@
 import time
 
-from Networking.PacketHelper import CreatePacket
+from Networking.PacketHelper import createPacket
 from PluginManager import hook, plugin
 
 shouldEnter = False
@@ -16,7 +16,7 @@ class ReplyPlugin:
     def onText(self, client, packet):
         global shouldEnter
         if packet.name == self.toReply and packet.recipient == client.playerData.name:
-            replyPacket = CreatePacket("PLAYERTEXT")
+            replyPacket = createPacket("PLAYERTEXT")
             if packet.text.lower() == "hello":
                 replyPacket.text = f"/tell {packet.name} Hey!"
             elif packet.text.lower() == "pos":
@@ -55,7 +55,7 @@ class PortalPlugin:
 
     def enterVault(self, client):
         if client.pos.dist(self.vaultPortal.status.pos) < 0.5:
-            usePortal = CreatePacket("USEPORTAL")
+            usePortal = createPacket("USEPORTAL")
             usePortal.objectId = self.vaultPortal.status.objectId
             client.send(usePortal)
         else:

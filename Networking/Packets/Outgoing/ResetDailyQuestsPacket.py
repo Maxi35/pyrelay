@@ -1,7 +1,8 @@
-class ResetDailyQuestsPacket:
+from Networking.Packets.Packet import Packet
+
+class ResetDailyQuestsPacket(Packet):
     def __init__(self):
         self.type = "RESETDAILYQUESTS"
-        self.send = True
 
     def write(self, writer):
         pass

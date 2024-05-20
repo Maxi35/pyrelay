@@ -1,7 +1,8 @@
-class SendEmotePacket:
+from Networking.Packets.Packet import Packet
+
+class SendEmotePacket(Packet):
     def __init__(self):
         self.type = "SENDEMOTE"
-        self.send = True
         self.emoteId = -1
         self.time = -1
         self.unknownByte = -1

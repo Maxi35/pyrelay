@@ -1,7 +1,8 @@
-class ChangeGuildRankPacket:
+from Networking.Packets.Packet import Packet
+
+class ChangeGuildRankPacket(Packet):
     def __init__(self):
         self.type = "CHANGEGUILDRANK"
-        self.send = True
         self.name = ""
         self.guildRank = 0
 

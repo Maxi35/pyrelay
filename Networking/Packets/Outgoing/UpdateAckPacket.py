@@ -1,7 +1,8 @@
-class UpdateAckPacket:
+from Networking.Packets.Packet import Packet
+
+class UpdateAckPacket(Packet):
     def __init__(self):
         self.type = "UPDATEACK"
-        self.send = True
 
     def write(self, writer):
         return

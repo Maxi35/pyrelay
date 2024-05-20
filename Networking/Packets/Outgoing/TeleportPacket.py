@@ -1,7 +1,8 @@
-class TeleportPacket:
+from Networking.Packets.Packet import Packet
+
+class TeleportPacket(Packet):
     def __init__(self):
         self.type = "TELEPORT"
-        self.send = True
         self.objectId = 0
         self.playerName = ""
 

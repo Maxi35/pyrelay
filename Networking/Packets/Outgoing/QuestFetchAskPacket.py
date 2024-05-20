@@ -1,7 +1,8 @@
-class QuestFetchAskPacket:
+from Networking.Packets.Packet import Packet
+
+class QuestFetchAskPacket(Packet):
     def __init__(self):
         self.type = "QUESTFETCHASK"
-        self.send = True
 
     def write(self, writer):
         pass

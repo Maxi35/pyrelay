@@ -1,7 +1,8 @@
-class QuestObjIdPacket:
+from Networking.Packets.Packet import Packet
+
+class QuestObjIdPacket(Packet):
     def __init__(self):
         self.type = "QUESTOBJID"
-        self.send = True
         self.objectId = 0
         self.unknownBytes = []
 

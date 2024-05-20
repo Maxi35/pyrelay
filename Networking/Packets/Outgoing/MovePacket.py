@@ -1,10 +1,10 @@
+from Networking.Packets.Packet import Packet
 from Data.WorldPosData import *
 from Data.MoveRecord import *
 
-class MovePacket:
+class MovePacket(Packet):
     def __init__(self):
         self.type = "MOVE"
-        self.send = True
         self.tickId = 0
         self.time = 0
         self.records = []
