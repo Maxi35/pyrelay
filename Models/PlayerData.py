@@ -1,7 +1,5 @@
 from Constants.StatTypes import StatTypes
 
-types = StatTypes()
-
 class PlayerData:
     def __init__(self):
         self.name = ""
@@ -24,7 +22,7 @@ class PlayerData:
         self.mp = 0
         self.atk = 0
         self.atkBoost = 0
-        self.defense = 0#Hmmmm
+        self.defense = 0
         self.defenseBoost = 0
         self.spd = 0
         self.spdBoost = 0
@@ -66,140 +64,145 @@ class PlayerData:
         self.potionThreeType = -1
         self.potionBelt = 0
         self.forgeFire = 0
+        self.characterClass = 0
+        self.pos = None
+        self.objectId = 0
 
     def parse(self, obj):
         self.characterClass = obj.objectType
+        self.pos = obj.status.pos
+        self.objectId = obj.status.objectId
         self.parseStats(obj.status.stats)
 
     def parseStats(self, stats):
         for stat in stats:
-            if stat.statType == types.NAMESTAT:
+            if stat.statType == StatTypes.NAMESTAT:
                 self.name = stat.strStatValue
-            elif stat.statType == types.LEVELSTAT:
+            elif stat.statType == StatTypes.LEVELSTAT:
                 self.level = stat.statValue
-            elif stat.statType == types.EXPSTAT:
+            elif stat.statType == StatTypes.EXPSTAT:
                 self.xp = stat.statValue
-            elif stat.statType == types.CURRFAMESTAT:
+            elif stat.statType == StatTypes.CURRFAMESTAT:
                 self.fame = stat.statValue
-            elif stat.statType == types.NUMSTARSSTAT:
+            elif stat.statType == StatTypes.NUMSTARSSTAT:
                 self.stars = stat.statValue
-            elif stat.statType == types.ACCOUNTIDSTAT:
+            elif stat.statType == StatTypes.ACCOUNTIDSTAT:
                 self.accountId = stat.strStatValue
-            elif stat.statType == types.FAMESTAT:
+            elif stat.statType == StatTypes.FAMESTAT:
                 self.accountFame = stat.statValue
-            elif stat.statType == types.CREDITSSTAT:
+            elif stat.statType == StatTypes.CREDITSSTAT:
                 self.gold = stat.statValue
-            elif stat.statType == types.MAXHPSTAT:
+            elif stat.statType == StatTypes.MAXHPSTAT:
                 self.maxHp = stat.statValue
-            elif stat.statType == types.MAXMPSTAT:
+            elif stat.statType == StatTypes.MAXMPSTAT:
                 self.maxMp = stat.statValue
-            elif stat.statType == types.HPSTAT:
+            elif stat.statType == StatTypes.HPSTAT:
                 self.hp = stat.statValue
-            elif stat.statType == types.MPSTAT:
+            elif stat.statType == StatTypes.MPSTAT:
                 self.mp = stat.statValue
-            elif stat.statType == types.ATTACKSTAT:
+            elif stat.statType == StatTypes.ATTACKSTAT:
                 self.atk = stat.statValue
-            elif stat.statType == types.ATTACKBOOSTSTAT:
+            elif stat.statType == StatTypes.ATTACKBOOSTSTAT:
                 self.atkBoost = stat.statValue
-            elif stat.statType == types.DEFENSESTAT:
+            elif stat.statType == StatTypes.DEFENSESTAT:
                 self.defense = stat.statValue
-            elif stat.statType == types.DEFENSEBOOSTSTAT:
+            elif stat.statType == StatTypes.DEFENSEBOOSTSTAT:
                 self.defenseBoost = stat.statValue
-            elif stat.statType == types.SPEEDSTAT:
+            elif stat.statType == StatTypes.SPEEDSTAT:
                 self.spd = stat.statValue
-            elif stat.statType == types.SPEEDBOOSTSTAT:
+            elif stat.statType == StatTypes.SPEEDBOOSTSTAT:
                 self.spdBoost = stat.statValue
-            elif stat.statType == types.DEXTERITYSTAT:
+            elif stat.statType == StatTypes.DEXTERITYSTAT:
                 self.dex = stat.statValue
-            elif stat.statType == types.DEXTERITYBOOSTSTAT:
+            elif stat.statType == StatTypes.DEXTERITYBOOSTSTAT:
                 self.dexBoost = stat.statValue
-            elif stat.statType == types.VITALITYSTAT:
+            elif stat.statType == StatTypes.VITALITYSTAT:
                 self.vit = stat.statValue
-            elif stat.statType == types.VITALITYBOOSTSTAT:
+            elif stat.statType == StatTypes.VITALITYBOOSTSTAT:
                 self.vitBoost = stat.statValue
-            elif stat.statType == types.CONDITIONSTAT:
+            elif stat.statType == StatTypes.CONDITIONSTAT:
                 self.condition = stat.statValue
-            elif stat.statType == types.WISDOMSTAT:
+            elif stat.statType == StatTypes.WISDOMSTAT:
                 self.wis = stat.statValue
-            elif stat.statType == types.WISDOMBOOSTSTAT:
+            elif stat.statType == StatTypes.WISDOMBOOSTSTAT:
                 self.wisBoost = stat.statValue
-            elif stat.statType == types.HEALTHPOTIONSTACKSTAT:
+            elif stat.statType == StatTypes.HEALTHPOTIONSTACKSTAT:
                 self.hpPots = stat.statValue
-            elif stat.statType == types.MAGICPOTIONSTACKSTAT:
+            elif stat.statType == StatTypes.MAGICPOTIONSTACKSTAT:
                 self.mpPots = stat.statValue
-            elif stat.statType == types.HASBACKPACKSTAT:
+            elif stat.statType == StatTypes.HASBACKPACKSTAT:
                 self.hasBackpack = stat.statValue == 1
-            elif stat.statType == types.NAMECHOSENSTAT:
+            elif stat.statType == StatTypes.NAMECHOSENSTAT:
                 self.nameChosen = stat.statValue != 0
-            elif stat.statType == types.GUILDNAMESTAT:
+            elif stat.statType == StatTypes.GUILDNAMESTAT:
                 self.guildName = stat.strStatValue
-            elif stat.statType == types.GUILDRANKSTAT:
+            elif stat.statType == StatTypes.GUILDRANKSTAT:
                 self.guildRank = stat.statValue
-            elif stat.statType == types.SIZESTAT:
+            elif stat.statType == StatTypes.SIZESTAT:
                 self.size = stat.statValue
-            elif stat.statType == types.NEXTLEVELEXPSTAT:
+            elif stat.statType == StatTypes.NEXTLEVELEXPSTAT:
                 self.nextLevelXp = stat.statValue
-            elif stat.statType == types.TEX1STAT:
+            elif stat.statType == StatTypes.TEX1STAT:
                 self.clothingDye = stat.statValue
-            elif stat.statType == types.TEX2STAT:
+            elif stat.statType == StatTypes.TEX2STAT:
                 self.accessoryDye = stat.statValue
-            elif stat.statType == types.MAXHPBOOSTSTAT:
+            elif stat.statType == StatTypes.MAXHPBOOSTSTAT:
                 self.maxHpBoost = stat.statValue
-            elif stat.statType == types.MAXMPBOOSTSTAT:
+            elif stat.statType == StatTypes.MAXMPBOOSTSTAT:
                 self.maxMpBoost = stat.statValue
-            elif stat.statType == types.NEXTCLASSQUESTFAMESTAT:
+            elif stat.statType == StatTypes.NEXTCLASSQUESTFAMESTAT:
                 self.nextClassQuestFame = stat.statValue
-            elif stat.statType == types.LEGENDARYRANKSTAT:
+            elif stat.statType == StatTypes.LEGENDARYRANKSTAT:
                 self.legendaryRank = stat.statValue
-            elif stat.statType == types.XPBOOSTEDSTAT:
+            elif stat.statType == StatTypes.XPBOOSTEDSTAT:
                 self.xpBoosted = stat.statValue == 1
-            elif stat.statType == types.XPTIMERSTAT:
+            elif stat.statType == StatTypes.XPTIMERSTAT:
                 self.xpBoostTime = stat.statValue
-            elif stat.statType == types.TEXTURESTAT:
+            elif stat.statType == StatTypes.TEXTURESTAT:
                 self.texture = stat.statValue
-            elif stat.statType == types.FORTUNETOKENSTAT:
+            elif stat.statType == StatTypes.FORTUNETOKENSTAT:
                 self.fortuneTokens = stat.statValue
-            elif stat.statType == types.PROJECTILESPEEDMULT:
+            elif stat.statType == StatTypes.PROJECTILESPEEDMULT:
                 self.projSpeedMult = stat.statValue / 1000
-            elif stat.statType == types.PROJECTILELIFEMULT:
+            elif stat.statType == StatTypes.PROJECTILELIFEMULT:
                 self.projLifeMult = stat.statValue / 1000
-            elif types.INVENTORY0STAT <= stat.statType <= types.INVENTORY11STAT:
-                self.inv[stat.statType-types.INVENTORY0STAT] = stat.statValue
-            elif types.BACKPACK0STAT <= stat.statType <= types.BACKPACK7STAT:
-                self.inv[stat.statType-types.BACKPACK0STAT+12] = stat.statValue
-            elif stat.statType == types.OPENEDATTIMESTAMP:
+            elif StatTypes.INVENTORY0STAT <= stat.statType <= StatTypes.INVENTORY11STAT:
+                self.inv[stat.statType-StatTypes.INVENTORY0STAT] = stat.statValue
+            elif StatTypes.BACKPACK0STAT <= stat.statType <= StatTypes.BACKPACK7STAT:
+                self.inv[stat.statType-StatTypes.BACKPACK0STAT+12] = stat.statValue
+            elif stat.statType == StatTypes.OPENEDATTIMESTAMP:
                 self.opendAtTimestamp = stat.statValue
-            elif stat.statType == types.EXALTEDHP:
+            elif stat.statType == StatTypes.EXALTEDHP:
                 self.exaltedHp = stat.statValue
-            elif stat.statType == types.EXALTEDMP:
+            elif stat.statType == StatTypes.EXALTEDMP:
                 self.exaltedMp = stat.statValue
-            elif stat.statType == types.EXALTEDATK:
+            elif stat.statType == StatTypes.EXALTEDATK:
                 self.exaltedAtk = stat.statValue
-            elif stat.statType == types.EXALTEDDEFENSE:
+            elif stat.statType == StatTypes.EXALTEDDEFENSE:
                 self.exaltedDefense = stat.statValue
-            elif stat.statType == types.EXALTEDSPD:
+            elif stat.statType == StatTypes.EXALTEDSPD:
                 self.exaltedSpd = stat.statValue
-            elif stat.statType == types.EXALTEDDEX:
+            elif stat.statType == StatTypes.EXALTEDDEX:
                 self.exaltedDex = stat.statValue
-            elif stat.statType == types.EXALTEDWIS:
+            elif stat.statType == StatTypes.EXALTEDWIS:
                 self.exaltedWis = stat.statValue
-            elif stat.statType == types.EXALTEDVIT:
+            elif stat.statType == StatTypes.EXALTEDVIT:
                 self.exaltedVit = stat.statValue
-            elif stat.statType == types.EXALTATIONBONUSDMG:
+            elif stat.statType == StatTypes.EXALTATIONBONUSDMG:
                 self.exaltationBonusDmg = stat.statValue/1000
-            elif stat.statType == types.EXALTATIONICREDUCTION:
+            elif stat.statType == StatTypes.EXALTATIONICREDUCTION:
                 self.exaltationICReduction = stat.statValue
-            elif stat.statType == types.GRAVEACCOUNTID:
+            elif stat.statType == StatTypes.GRAVEACCOUNTID:
                 self.graveAccountId = stat.statValue
-            elif stat.statType == types.POTIONONETYPE:
+            elif stat.statType == StatTypes.POTIONONETYPE:
                 self.potionOneType = stat.statValue
-            elif stat.statType == types.POTIONTWOTYPE:
+            elif stat.statType == StatTypes.POTIONTWOTYPE:
                 self.potionTwoType = stat.statValue
-            elif stat.statType == types.POTIONTHREETYPE:
+            elif stat.statType == StatTypes.POTIONTHREETYPE:
                 self.potionThreeType = stat.statValue
-            elif stat.statType == types.POTIONBELT:
+            elif stat.statType == StatTypes.POTIONBELT:
                 self.potionBelt = stat.statValue
-            elif stat.statType == types.FORGEFIRE:
+            elif stat.statType == StatTypes.FORGEFIRE:
                 self.forgeFire = stat.statValue
 				
     def __str__(self):

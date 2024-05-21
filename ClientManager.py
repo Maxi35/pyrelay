@@ -1,4 +1,5 @@
 import random
+from hashlib import md5
 from Client.Client import Client
 
 class ClientManager:
@@ -25,8 +26,24 @@ class ClientManager:
                 if client.guid == accInfo["guid"]:
                     print("Account already added")
                     return None
+                
+            proxy  = accInfo.get("proxy", {})
+            proxies = {}
+            if proxy != {}:
+                proxies = {
+                        "https": "socks{}://".format(proxy["type"]) +
+                        ("{}:{}@".format(proxy["username"], proxy["password"]) if proxy["username"] != "" else "") +
+                        "{}:{}".format(proxy["host"], proxy["port"])
+                        }
+                
             client = Client()
-            client.getToken(accInfo, self.updateServers)
+            
+            client.clientToken = md5(accInfo["guid"].encode("utf-8") + accInfo["password"].encode("utf-8")).hexdigest()
+            client.proxies = proxies
+            
+            client.getToken(accInfo)
+            
+            client.checkInfo(accInfo, self.updateServers)
 
             import Constants.Servers as Servers
             
@@ -41,7 +58,10 @@ class ClientManager:
             client.setup(accInfo)
             
             client.clientManager = self
+            client.connect()
+            
             self.clients.append(client)
+            
             return client
 
     def removeClient(self, guid):
@@ -57,7 +77,9 @@ class ClientManager:
         if any(client.active for client in self.clients):
             for client in self.clients:
                 if client.isReady and client.active and not client.isConnected():
-                    client.connect()
+                    #Has client been disconnected for more than 2.5 secs?
+                    if client.lastPacketTime + 2500 < client.getTime():
+                        client.connect()
         else:
             return True
 

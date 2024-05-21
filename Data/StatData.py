@@ -1,6 +1,4 @@
-from Constants.StatTypes import *
-
-types = StatTypes()
+from Constants.StatTypes import StatTypes, nameOf
 
 class StatData:
     def __init__(self, statType=0, statValue=0, strStatValue="", secondaryValue=0):
@@ -10,16 +8,16 @@ class StatData:
         self.secondaryValue = secondaryValue
 
     def isStringStat(self):
-        return self.statType in [types.EXPSTAT, types.NAMESTAT, types.ACCOUNTIDSTAT, types.GUILDNAMESTAT,
-                                 types.PETNAMESTAT, types.GRAVEACCOUNTID, types.OWNERACCOUNTIDSTAT,
-                                 types.ENCHANTMENTS, types.UNKNOWN121, types.UNKNOWN127, types.UNKNOWN128,
-                                 types.UNKNOWN147, types.DUSTAMOUNT, types.DUSTLIMIT]
+        return self.statType in [StatTypes.EXPSTAT, StatTypes.NAMESTAT, StatTypes.ACCOUNTIDSTAT, StatTypes.GUILDNAMESTAT,
+                                 StatTypes.PETNAMESTAT, StatTypes.GRAVEACCOUNTID, StatTypes.OWNERACCOUNTIDSTAT,
+                                 StatTypes.ENCHANTMENTS, StatTypes.UNKNOWN121, StatTypes.UNKNOWN127, StatTypes.UNKNOWN128,
+                                 StatTypes.UNKNOWN147, StatTypes.DUSTAMOUNT, StatTypes.DUSTLIMIT]
 
-    def statToName(self, type=None):
-        if type is None:
-            return types.nameOf(self.statType)
+    def statToName(self, statType=None):
+        if statType is None:
+            return nameOf(self.statType)
         else:
-            return types.nameOf(type)   
+            return nameOf(statType)   
 
     def read(self, reader):
         self.statType = reader.readUnsignedByte()

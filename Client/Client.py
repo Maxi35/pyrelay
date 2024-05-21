@@ -1,9 +1,6 @@
 import time
 import math
-import threading
 import requests
-import urllib.parse
-import hashlib
 import re
 
 from Helpers.Random import Random
@@ -18,8 +15,14 @@ import Constants.GameIds as GameId
 import Constants.Servers as Servers
 import Constants.ApiPoints as ApiPoints
 import Constants.ClassIds as Classes
-import Crypto.RSA as RSA
-from PluginManager import callHooks
+from PluginManager import callHooks, hook, client
+
+from threading import Timer
+
+class RepeatTimer(Timer):
+    def run(self):
+        while not self.finished.wait(self.interval):
+            self.function(*self.args, **self.kwargs)
 
 MINSPEED = 0.004
 MAXSPEED = 0.0096
@@ -27,6 +30,7 @@ MAXSPEED = 0.0096
 MINFREQ = 0.0015
 MAXFREQ = 0.008
 
+@client()
 class Client:
     def __init__(self):
         self.guid = ""
@@ -35,12 +39,12 @@ class Client:
         self.alias = ""
         self.server = ""
         self.proxy = {}
+        self.proxies = {}
         self.internalServer = {"host": "", "name": ""}
         self.nexusServer = {"host": "", "name": ""}
         self.pos = None
         self.sockMan = None
         self.clientManager = None
-        self.anyPacket = None
         self.nextPos = []
         self.objectId = -1
         self.connectedTime = -1
@@ -62,28 +66,21 @@ class Client:
         self.lastAttackTime = 0
         self.records = []
         self.connectCooldown = 0
+        self.lastPacketTime = 0
 
-    def getToken(self, accInfo, updateServers=False):
+    def getToken(self, accInfo):
         self.guid = accInfo["guid"]
         self.password = accInfo["password"]
         self.secret = accInfo["secret"]
         self.alias = accInfo["alias"]
         self.proxy = accInfo.get("proxy", {})
 
-        proxies = {}
-        if self.proxy != {}:
-            proxies = {
-                "https": "socks{}://".format(self.proxy["type"]) +
-                ("{}:{}@".format(self.proxy["username"], self.proxy["password"]) if self.proxy["username"] != "" else "") +
-                "{}:{}".format(self.proxy["host"], self.proxy["port"])
-                }
-        self.clientToken = hashlib.md5(self.guid.encode("utf-8") + self.password.encode("utf-8")).hexdigest()
         print("Getting token...")
         #Get access token
         r = requests.post(ApiPoints.VERIFY, data={"guid": self.guid,
                                                   "password": self.password,
                                                   "clientToken": self.clientToken,
-                                                  "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
+                                                  "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=self.proxies)
         pattern = r"AccessToken>(.+)</AccessToken>"
         try:
             self.accessToken = re.findall(pattern, r.text)[0]
@@ -94,16 +91,26 @@ class Client:
         #Verify token
         r = requests.post(ApiPoints.VERIFYTOKEN, data={"clientToken": self.clientToken,
                                                        "accessToken": self.accessToken,
-                                                       "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
+                                                       "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=self.proxies)
         if not "Success" in r.text:
             print("VERIFYING TOKEN ERROR:", r.text)
             self.active = False
             return
-            
+
+    def checkInfo(self, accInfo, updateServers=False):
+        if not self.active:
+            return
+
+        self.guid = accInfo["guid"]
+        self.password = accInfo["password"]
+        self.secret = accInfo["secret"]
+        self.alias = accInfo["alias"]
+        self.proxy = accInfo.get("proxy", {})
+
         #Get char data
         r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
                                                 "accessToken": self.accessToken,
-                                                "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
+                                                "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=self.proxies)
         while "Account in use" in r.text:
             print(self.guid, "has account in use")
             try:
@@ -112,7 +119,7 @@ class Client:
                 time.sleep(600)
             r = requests.post(ApiPoints.CHAR, data={"do_login": "true",
                                                     "accessToken": self.accessToken,
-                                                    "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=proxies)
+                                                    "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=self.proxies)
         if "Account credentials not valid" in r.text:
             print(self.guid, "got invalid credentials")
             self.active = False
@@ -143,7 +150,7 @@ class Client:
 
         try:
             if updateServers:
-                ServersHelper.update(self.accessToken, proxies)
+                ServersHelper.update(self.accessToken, self.proxies)
                 print("Updated servers")
         except AttributeError as e:
             print("Failed to update servers")
@@ -161,19 +168,7 @@ class Client:
                             "name": self.server}
         
         self.sockMan = SocketManager()
-        self.sockMan.hook("ANY", self.onPacket)
-
-        self.sockMan.hook("CREATESUCCESS", self.onCreateSuccess)
-        self.sockMan.hook("ENEMYSHOOT", self.onEnemyShoot)
-        self.sockMan.hook("FAILURE", self.onFailure)
-        self.sockMan.hook("GOTO", self.onGoto)
-        self.sockMan.hook("MAPINFO", self.onMapInfo)
-        self.sockMan.hook("NEWTICK", self.onNewTick)
-        self.sockMan.hook("PING", self.onPing)
-        self.sockMan.hook("UPDATE", self.onUpdate)
-        self.sockMan.hook("RECONNECT", self.onReconnect)
-        self.sockMan.hook("SERVERPLAYERSHOOT", self.onServerPlayerShoot)
-        self.sockMan.hook("QUEUEINFORMATION", self.onQueueInformation)
+        self.sockMan.clientHook = self.onPacket
     
     def isConnected(self):
         return self.sockMan.connected
@@ -240,6 +235,8 @@ class Client:
             self.sockMan.disconnect()
         if not self.frameTimeUpdater is None:
             self.frameTimeUpdater.cancel()
+        #Wait half a sec to have less chance of getting a failure packet
+        self.connectCooldown = self.getTime() + 500
 
     def stop(self):
         self.active = False
@@ -250,16 +247,14 @@ class Client:
             self.frameTimeUpdater.cancel()
 
     def updateFrameTime(self):
+        if self.pos is None:
+            return
         time = self.getTime()
-        delta = time - self.lastFrameTime
         if len(self.nextPos) > 0:
             diff = min(100, time-self.lastFrameTime)
             self.moveTo(self.nextPos[0], diff)
         self.records.append(MoveRecord.MoveRecord(time, self.pos.x, self.pos.y))
         self.lastFrameTime = time
-        self.frameTimeUpdater = threading.Timer(1/10, self.updateFrameTime)
-        self.frameTimeUpdater.daemon = True
-        self.frameTimeUpdater.start()
 
     def moveTo(self, target, time):
         speed = self.getSpeed(time)
@@ -330,11 +325,12 @@ class Client:
     def hasEffect(self, *effects):
         return ConditionEffect.hasEffect(self.playerData.condition, *effects)
     
+    @hook("createSuccess")
     def onCreateSuccess(self, packet):
         self.objectId = packet.objectId
         self.lastAttackTime = 0
         self.lastFrameTime = self.getTime()
-        self.frameTimeUpdater = threading.Timer(1/10, self.updateFrameTime)
+        self.frameTimeUpdater = RepeatTimer(1/10, self.updateFrameTime)
         self.frameTimeUpdater.daemon = True
         self.frameTimeUpdater.start()
         self.records = []
@@ -343,15 +339,18 @@ class Client:
         show_packet.toggle = 1
         self.send(show_packet)
     
+    @hook("goto")
     def onGoto(self, packet):
         gotoAck_packet = PacketHelper.createPacket("GOTOACK")
         gotoAck_packet.time = self.lastFrameTime
         self.send(gotoAck_packet)
         if packet.objectId == self.objectId:
             self.pos = packet.pos.clone()
-        
+
+    @hook("mapInfo")
     def onMapInfo(self, packet):
         print("Connected to", self.nexusServer["name"], packet.name)
+        self.nextPos = []
         if self.needsNewChar:
             print("Creating new char")
             create_packet = PacketHelper.createPacket("CREATE")
@@ -366,10 +365,12 @@ class Client:
             self.send(load_packet)
         self.random.setSeed(packet.seed)
         
+    @hook("queueInformation")
     def onQueueInformation(self, packet):
         print("Client", self.alias, f"in queue at position: {packet.curPos}/{packet.maxPos}")
         self.connectCooldown = self.getTime() + 10*1000
 
+    @hook("failure")
     def onFailure(self, packet):
         if packet.errorId == 15:
             self.disconnect()
@@ -384,14 +385,16 @@ class Client:
         elif packet.errorDescription == "Account credentials not valid":
             self.stop()
         elif packet.errorDescription == "Bad message received":
-            self.stop()
+            self.disconnect()
         
+    @hook("ping")
     def onPing(self, packet):
         pong_packet = PacketHelper.createPacket("PONG")
         pong_packet.serial = packet.serial
         pong_packet.time = self.getTime()
         self.send(pong_packet)
 
+    @hook("newTick")
     def onNewTick(self, packet):
         move_packet = PacketHelper.createPacket("MOVE")
         move_packet.tickId = packet.tickId
@@ -405,6 +408,7 @@ class Client:
             if status.objectId == self.objectId:
                 self.playerData.parseStats(status.stats)
 
+    @hook("update")
     def onUpdate(self, packet):
         if self.pos is None:
             self.pos = packet.pos
@@ -415,17 +419,20 @@ class Client:
                 self.pos = obj.status.pos
                 self.playerData.parse(obj)
 
+    @hook("serverPlayerShoot")
     def onServerPlayerShoot(self, packet):
         if packet.ownerId == self.objectId:
             shootAck = PacketHelper.createPacket("SHOOTACK")
             shootAck.time = self.lastFrameTime
             self.send(shootAck)
 
+    @hook("enemyShoot")
     def onEnemyShoot(self, packet):
         shootAck = PacketHelper.createPacket("SHOOTACK")
         shootAck.time = self.lastFrameTime
         self.send(shootAck)
 
+    @hook("reconnect")
     def onReconnect(self, packet):
         if packet.host != "":
             self.internalServer["host"] = packet.host
@@ -434,9 +441,9 @@ class Client:
         self.gameId = packet.gameId
         self.key = packet.key
         self.keyTime = packet.keyTime
+        #self.disconnect()
         self.connect()
 
     def onPacket(self, packet):
-        daemon_thread = threading.Thread(target=callHooks, args=(self, packet))
-        daemon_thread.daemon = True
-        daemon_thread.start()
+        self.lastPacketTime = self.getTime()
+        callHooks(self, packet)

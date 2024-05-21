@@ -1,6 +1,6 @@
 import os
+import sys
 import importlib
-import threading
 import inspect
 from Networking.PacketHelper import isValidPacket
 
@@ -29,9 +29,25 @@ class PacketHooks:
             for func in self._funcs[packet.type]:
                 for cls in self._classes:
                     if type(cls) == findClass(func):
-                        thread = threading.Thread(target=func, args=(cls, client, packet))
-                        thread.daemon = True
-                        thread.start()
+                        if type(cls) == type(client):
+                            func(client, packet)
+                        else:
+                            func(cls, client, packet)
+
+    def resetPlugins(self):
+        #Remove all plugin hooks and classes, but keep client hooks and classes
+        new_funcs = {}
+        for packetType in self._funcs:
+            hooks = []
+            for func in self._funcs[packetType]:
+                if "Client." in str(func):
+                    hooks.append(func)
+            if len(hooks) > 0:
+                new_funcs[packetType] = hooks
+        self._funcs = new_funcs
+            
+        self._classes = [c for c in self._classes 
+                         if "Client.Client" in str(type(c))]
 
 class Plugins:
     def __init__(self):
@@ -42,6 +58,13 @@ class Plugins:
             self._plugins.append(plugin)
         else:
             print("Skipping deactivated plugin", plugin.__module__.replace("Plugins.","",1) + "." + plugin.__name__)
+
+    def reset(self):
+        for p in self._plugins:
+            if p.__module__ in sys.modules:
+                del sys.modules[p.__module__]
+            del p
+        self._plugins = []
 
     def getPlugins(self):
         return self._plugins
@@ -63,6 +86,12 @@ def plugin(*args, **kwargs):
         return pluginClass
     return addPlugin
 
+def client():
+    def addClient(clientClass):
+        packetHook.addClass(clientClass())
+        return clientClass
+    return addClient
+
 def loadPlugins():
     for file in os.listdir(path):
         if "__" not in file and file.endswith(".py"):
@@ -77,6 +106,11 @@ def loadPlugins():
         except Exception as e:
             print("Error while loading", pluginClass.__name__)
             print(e)
+
+def reloadPlugins():
+    packetHook.resetPlugins()
+    plugins.reset()
+    loadPlugins()
 
 def callHooks(client, packet):
     packetHook.callHooks(client, packet)

@@ -1,5 +1,3 @@
-import time
-
 from Networking.PacketHelper import createPacket
 from PluginManager import hook, plugin
 
@@ -23,13 +21,15 @@ class ReplyPlugin:
                 replyPacket.text = f"/tell {packet.name} My posision is {client.pos}"
             elif packet.text.lower() == "nexus":
                 client.nexus()
+            elif packet.text.lower() == "reconnect":
+                client.connect()
             elif packet.text.lower().startswith("server"):
                 client.changeServer(packet.text.split()[1])
             elif packet.text.lower() == "enter vault":
                 shouldEnter = True
                 replyPacket.text = f"/tell {packet.name} Entering vault..."
             else:
-                replyPacket.text = f"/tell {packet.name} Unknown response"
+                replyPacket.text = f"/tell {packet.name} Unknown command"
             client.send(replyPacket)
 
 #There can be multiple plugins in one file, be aware that all plugins
@@ -43,7 +43,6 @@ class PortalPlugin:
     def onPing(self, client, packet):
         global shouldEnter
         if shouldEnter and not self.vaultPortal is None:
-            shouldEnter = False
             self.enterVault(client)
     
     #To hook a packet use the hook decorator with the packet type you wish to hook
@@ -52,13 +51,16 @@ class PortalPlugin:
         for e in packet.newObjs:
             if e.objectType == 1824:
                 self.vaultPortal = e
+    
+    @hook("mapInfo")
+    def onMapInfo(self, client, packet):
+        global shouldEnter
+        shouldEnter = False
 
     def enterVault(self, client):
-        if client.pos.dist(self.vaultPortal.status.pos) < 0.5:
+        if client.pos.dist(self.vaultPortal.status.pos) < 0.25:
             usePortal = createPacket("USEPORTAL")
             usePortal.objectId = self.vaultPortal.status.objectId
             client.send(usePortal)
         else:
             client.nextPos = [self.vaultPortal.status.pos]
-            time.sleep(0.5)
-            self.enterVault(client)

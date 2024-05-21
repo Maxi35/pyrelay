@@ -5,7 +5,7 @@ except ImportError:
 import socket
 import threading
 import struct
-import sys
+import time
 
 import Crypto.RC4 as RC4
 import Constants.PacketIds as PacketId
@@ -28,6 +28,8 @@ class SocketManager:
         self.reader = Reader.Reader()
         self.incomming_decoder = RC4.RC4(RC4.INCOMING_KEY)
         self.outgoing_encoder = RC4.RC4(RC4.OUTGOING_KEY)
+        self.clientHook = None
+        self.hooks_thread = None
 
     def hook(self, packet_type, func):
         if not self.active:
@@ -40,17 +42,6 @@ class SocketManager:
             print("Invalid packet_type:", packet_type)
             return
         self.hooks[packet_type] = func
-
-    def startListener(self):
-        if not self.active:
-            print("Socket manager is not active")
-            return
-        if not self.connected:
-            print("Socket is not connected")
-            return
-        self.listen_thread = threading.Thread(target=self._listen, args=())
-        self.listen_thread.daemon = True
-        self.listen_thread.start()        
 
     def connect(self, ip, proxy):
         if not self.active:
@@ -73,7 +64,22 @@ class SocketManager:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((self.ip, PORT))
         self.connected = True
-        self.startListener()
+        self.startListeners()
+
+    def startListeners(self):
+        if not self.active:
+            print("Socket manager is not active")
+            return
+        if not self.connected:
+            print("Socket is not connected")
+            return
+        self.listen_thread = threading.Thread(target=self._listen)
+        self.listen_thread.daemon = True
+        self.listen_thread.start()
+        if self.hooks_thread is None:
+            self.hooks_thread = threading.Thread(target=self._callHooks)
+            self.hooks_thread.daemon = True
+            self.hooks_thread.start()
 
     def disconnect(self, join=True):
         if not self.active:
@@ -85,6 +91,7 @@ class SocketManager:
         self.connected = False
         self.sock.shutdown(socket.SHUT_RDWR)
         self.sock.close()
+        self.queue = []
         if join:
             self.listen_thread.join()
 
@@ -92,7 +99,7 @@ class SocketManager:
         if not self.active:
             print("Socket manager is not active")
             return
-        while 1:
+        while self.connected:
             recv = None
             try:
                 recv = self.sock.recv(HEADERSIZE)
@@ -127,44 +134,32 @@ class SocketManager:
                 packet = PacketHelper.createPacket(packet_type)
                 self.reader.reset(msg)
                 packet.read(self.reader)
-                if packet.type in self.hooks.keys():
-                    daemon_thread = threading.Thread(target=self.hooks[packet.type], args=(packet,))
-                    daemon_thread.daemon = True
-                    daemon_thread.start()
-                if "ANY" in self.hooks.keys():
-                    daemon_thread = threading.Thread(target=self.hooks["ANY"], args=(packet,))
-                    daemon_thread.daemon = True
-                    daemon_thread.start()                
+                self.queue.append(packet)
+    
+    def _callHooks(self):
+        if not self.active:
+            print("Socket manager is not active")
+            return
+        while self.active:
+            if len(self.queue) > 0:
+                packet = self.queue.pop(0)
+                if not self.clientHook is None:
+                    self.clientHook(packet)
+            else:
+                time.sleep(0.5)
 
     def sendPacket(self, packet):
         if not self.active:
             print("Socket manager is not active")
             return
         if self.connected:
-            if len(self.queue) == 0:
-                self.queue.append(packet)
-                daemon_thread = threading.Thread(target=self.emptyQueue, args=())
-                daemon_thread.daemon = True
-                daemon_thread.start()
-            else:
-                self.queue.append(packet)
+            self.writer.reset()
+            packet.write(self.writer)
+            self.writer.writeHeader(PacketId.typeToId[packet.type])
+            self.writer.buffer = self.writer.buffer[:5] + self.outgoing_encoder.process(self.writer.buffer[5:])
+            try:
+                self.sock.sendall(bytes(self.writer.buffer))
+            except OSError:#Socket is closed
+                return
         else:
-            print("Socket is not connected")
-
-    def emptyQueue(self):
-        if len(self.queue) < 1:
-            return
-        if not self.connected:
-            self.queue = []
-            return
-        packet = self.queue.pop(0)
-        self.writer.reset()
-        packet.write(self.writer)
-        self.writer.writeHeader(PacketId.typeToId[packet.type])
-        self.writer.buffer = self.writer.buffer[:5] + self.outgoing_encoder.process(self.writer.buffer[5:])
-        self.sock.sendall(bytes(self.writer.buffer))
-        if len(self.queue) > 0:
-            daemon_thread = threading.Thread(target=self.emptyQueue, args=())
-            daemon_thread.daemon = True
-            daemon_thread.start()
-            
+            print("Socket is not connected")            

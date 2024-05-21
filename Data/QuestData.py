@@ -1,4 +1,3 @@
-from Constants.StatTypes import *
 
 class QuestData:
     def __init__(self):
