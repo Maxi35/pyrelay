@@ -41,9 +41,9 @@ class MapInfoPacket(Packet):
         self.newInt = reader.readInt32()
         self.dungeonModifiers = reader.readStr().split(";")
         self.unknownShort = reader.readShort()#Always 0?
-        if reader.bytesAvailable() > 0:
+        if reader.bytesAvailable() == 8:
             self.maxRealmScore = reader.readInt32()
-            self.curRealmScore = reader.readInt32()
+            self.currRealmScore = reader.readInt32()
 
     def write(self, writer):
         writer.writeInt32(self.width)
