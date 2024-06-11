@@ -43,7 +43,7 @@ class MapInfoPacket(Packet):
         self.unknownShort = reader.readShort()#Always 0?
         if reader.bytesAvailable() == 8:
             self.maxRealmScore = reader.readInt32()
-            self.currRealmScore = reader.readInt32()
+            self.curRealmScore = reader.readInt32()
 
     def write(self, writer):
         writer.writeInt32(self.width)
