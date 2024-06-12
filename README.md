@@ -22,7 +22,7 @@ Look in `Accounts_ex.json` to see how different accounts and proxies are used.
 
 ### Plugins
 
-The folder `Plugins` is where you make the plugins the clients will use. **All plugins should be thread safe**
+The folder `Plugins` is where you make the plugins the clients will use.
 
 ### Running
 

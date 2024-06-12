@@ -17,6 +17,7 @@ class MapInfoPacket(Packet):
         self.gameOpenedTime = 0
         self.newBool = False
         self.buildVersion = ""
+        self.viewRadius = 0
         self.newInt = 0
         self.dungeonModifiers = []
         self.unknownShort = 0
@@ -38,6 +39,7 @@ class MapInfoPacket(Packet):
         self.maxPlayers = reader.readShort()
         self.gameOpenedTime = reader.readUInt32()
         self.buildVersion = reader.readStr()
+        self.viewRadius = reader.readShort()
         self.newInt = reader.readInt32()
         self.dungeonModifiers = reader.readStr().split(";")
         self.unknownShort = reader.readShort()#Always 0?
@@ -60,6 +62,7 @@ class MapInfoPacket(Packet):
         writer.writeShort(self.maxPlayers)
         writer.writeUInt32(self.gameOpenedTime)
         writer.writeStr(self.buildVersion)
+        writer.writeShort(self.viewRadius)
         writer.writeInt32(self.newInt)
         writer.writeStr(";".join(self.dungeonModifiers))
         writer.writeShort(self.unknownShort)
