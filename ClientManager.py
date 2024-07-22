@@ -8,7 +8,9 @@ class ClientManager:
         self.updateServers = False
 
     def addClient(self, accInfo):
-        if "guid" in accInfo.keys() and "password" in accInfo.keys():
+        if "guid" in accInfo.keys() and ("password" in accInfo.keys() or "secret" in accInfo.keys()):
+            if not "password" in accInfo.keys():
+                accInfo["password"] = ""
             if not "secret" in accInfo.keys():
                 accInfo["secret"] = ""
             if accInfo["guid"] == "" or (accInfo["password"] == "" and accInfo["secret"] == ""):
