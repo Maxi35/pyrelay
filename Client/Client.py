@@ -77,8 +77,10 @@ class Client:
 
         print("Getting token...")
         #Get access token
+        pwd_key = "password" if self.password != "" else "secret"
+        pwd_val = self.password if self.password != "" else self.secret
         r = requests.post(ApiPoints.VERIFY, data={"guid": self.guid,
-                                                  "password": self.password,
+                                                  pwd_key: pwd_val,
                                                   "clientToken": self.clientToken,
                                                   "game_net": "Unity", "play_platform": "Unity", "game_net_user_id": ""}, headers=ApiPoints.launcherHeaders, proxies=self.proxies)
         pattern = r"AccessToken>(.+)</AccessToken>"
