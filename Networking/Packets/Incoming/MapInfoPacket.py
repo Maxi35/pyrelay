@@ -21,6 +21,7 @@ class MapInfoPacket(Packet):
         self.newInt = 0
         self.dungeonModifiers = []
         self.unknownShort = 0
+        self.unknownBool = False
         self.maxRealmScore = 0
         self.curRealmScore = 0        
 
@@ -43,6 +44,7 @@ class MapInfoPacket(Packet):
         self.newInt = reader.readInt32()
         self.dungeonModifiers = reader.readStr().split(";")
         self.unknownShort = reader.readShort()#Always 0?
+        self.unknownBool = reader.readBool()
         if reader.bytesAvailable() > 0:
             self.maxRealmScore = reader.readInt32()
             self.curRealmScore = reader.readInt32()
@@ -66,6 +68,7 @@ class MapInfoPacket(Packet):
         writer.writeInt32(self.newInt)
         writer.writeStr(";".join(self.dungeonModifiers))
         writer.writeShort(self.unknownShort)
+        writer.writeBool(self.unknownBool)
         if self.maxRealmScore != 0 and self.curRealmScore != 0:
             writer.writeInt32(self.maxRealmScore)
             writer.writeInt32(self.curRealmScore)
