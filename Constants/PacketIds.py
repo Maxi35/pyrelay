@@ -115,7 +115,5 @@ idToType = {0: "FAILURE",
             169: "REALMSCORE",
             182: "CRUCIBLEREQUEST",
             183: "CRUCIBLERESPONSE",
-            206: "CHATHELLOMSG",
-            207: "CHATTOKENMSG",
-            208: "CHATLOGOUTMSG"}
+            200: "CREATEPARTY"}
 typeToId = {idToType[i]: i for i in idToType}
