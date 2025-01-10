@@ -12,7 +12,7 @@ class HelloPacket(Packet):
         self.playPlatform = ""
         self.platformToken = ""
         self.userToken = ""
-        self.token = "zmkTlKhfZ1lik94SQ8co0KulxBsIL1ct"
+        self.token = "XQpu8CWkMehb5rLVP3DG47FcafExRUvg"
 
     def write(self, writer):
         writer.writeInt32(self.gameId)
