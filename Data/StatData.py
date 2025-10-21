@@ -9,9 +9,9 @@ class StatData:
 
     def isStringStat(self):
         return self.statType in [StatTypes.EXPSTAT, StatTypes.NAMESTAT, StatTypes.ACCOUNTIDSTAT, StatTypes.GUILDNAMESTAT,
-                                 StatTypes.PETNAMESTAT, StatTypes.GRAVEACCOUNTID, StatTypes.OWNERACCOUNTIDSTAT,
-                                 StatTypes.ENCHANTMENTS, StatTypes.UNKNOWN121, StatTypes.UNKNOWN127, StatTypes.UNKNOWN128,
-                                 StatTypes.UNKNOWN147, StatTypes.DUSTAMOUNT, StatTypes.DUSTLIMIT]
+                                StatTypes.PETNAMESTAT, StatTypes.GRAVEACCOUNTID, StatTypes.OWNERACCOUNTIDSTAT,
+                                StatTypes.ENCHANTMENTS, StatTypes.UNKNOWN121, StatTypes.MATERIALAMOUNTSTAT, StatTypes.CRUCIBLESTAT,
+                                StatTypes.DUSTCAPSTAT, StatTypes.DUSTAMOUNTSTAT, StatTypes.MATERIALCAPSTAT, StatTypes.UNKNOWN155]
 
     def statToName(self, statType=None):
         if statType is None:

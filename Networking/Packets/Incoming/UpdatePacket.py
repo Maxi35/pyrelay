@@ -11,6 +11,7 @@ class UpdatePacket(Packet):
         self.tiles = []
         self.newObjs = []
         self.drops = []
+        self.unknownByte = -1
 
     def read(self, reader):
         self.pos.read(reader)
@@ -30,6 +31,9 @@ class UpdatePacket(Packet):
         drops_len = reader.readCompressedInt()
         for i in range(drops_len):
             self.drops.append(reader.readCompressedInt())
+        
+        if reader.bytesAvailable() > 0:
+            self.unknownByte = reader.readUnsignedByte()
 
     def write(self, writer):
         self.pos.write(writer)
@@ -45,3 +49,6 @@ class UpdatePacket(Packet):
         writer.writeCompressedInt(len(self.drops))
         for i in range(len(self.drops)):
             writer.writeCompressedInt(self.drops[i])
+        
+        if self.unknownByte != -1:
+            writer.writeUnsignedByte(self.unknownByte)

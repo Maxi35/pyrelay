@@ -6,13 +6,16 @@ class CrucibleRequestPacket(Packet):
         self.unknownShort = 0
         self.unknownInt1 = 0
         self.unknownInt2 = 0
+        self.unknownInt3 = 0
 
     def write(self, writer):
         writer.writeShort(self.unknownShort)
         writer.writeInt32(self.unknownInt1)
         writer.writeInt32(self.unknownInt2)
+        writer.writeInt32(self.unknownInt3)
 
     def read(self, reader):
         self.unknownShort = reader.readShort()
         self.unknownInt1 = reader.readInt32()
         self.unknownInt2 = reader.readInt32()
+        self.unknownInt3 = reader.readInt32()
