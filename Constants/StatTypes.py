@@ -125,7 +125,7 @@ class StatTypes:
     BACKPACK6STAT = 137
     BACKPACK7STAT = 138
     DUSTCAPSTAT = 147
-    UNKNOWN155 = 155
+    UNKNOWN155 = 155#New blood ritual thing
     
 
 def nameOf(statType):

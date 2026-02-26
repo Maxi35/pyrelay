@@ -8,6 +8,8 @@ class DeathPacket(Packet):
         self.charId = 0
         self.killedBy = ""
         self.unknownInt = 0
+        self.accountLevel = 0
+        self.accountXP = 0
         self.fameEarned = 0
         self.fameBonuses = []
         self.PCStats = ""
@@ -18,6 +20,8 @@ class DeathPacket(Packet):
         self.killedBy = reader.readStr()
         self.unknownInt = reader.readInt32()
         self.fameEarned = reader.readCompressedInt()
+        self.accountLevel = reader.readCompressedInt()
+        self.accountXP = reader.readCompressedInt()
         fameBonuses = reader.readCompressedInt()
         for i in range(fameBonuses):
             fameData = FameData()
@@ -32,6 +36,8 @@ class DeathPacket(Packet):
         writer.writeStr(self.killedBy)
         writer.writeInt32(self.unknownInt)
         writer.writeCompressedInt(self.fameEarned)
+        writer.writeCompressedInt(self.accountLevel)
+        writer.writeCompressedInt(self.accountXP)
         writer.writeCompressedInt(len(self.fameBonuses))
         for fameData in self.fameBonuses:
             fameData.write(writer)
