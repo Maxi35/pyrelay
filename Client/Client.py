@@ -382,9 +382,7 @@ class Client:
         self.keyTime = -1
         self.key = []
         self.gameId = GameId.nexus
-        if packet.errorDescription == "s.update_client":
-            self.stop()
-        elif packet.errorDescription == "Account credentials not valid":
+        if packet.errorDescription in ["s.update_client", "Account credentials not valid"]:
             self.stop()
         elif packet.errorDescription == "Bad message received":
             self.disconnect()
@@ -430,10 +428,11 @@ class Client:
 
     @hook("enemyShoot")
     def onEnemyShoot(self, packet):
-        shootAck = PacketHelper.createPacket("SHOOTACK")
-        shootAck.time = self.lastFrameTime
-        self.send(shootAck)
-
+        enemyShootAck = PacketHelper.createPacket("ENEMYSHOOTACK")
+        enemyShootAck.time = self.lastFrameTime
+        enemyShootAck.count = min(1, packet.numShots)
+        self.send(enemyShootAck)
+        
     @hook("reconnect")
     def onReconnect(self, packet):
         if packet.host != "":
