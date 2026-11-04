@@ -9,7 +9,7 @@ class StatData:
 
     def isStringStat(self):
         return self.statType in [StatTypes.EXPSTAT, StatTypes.NAMESTAT, StatTypes.ACCOUNTIDSTAT, StatTypes.GUILDNAMESTAT,
-                                StatTypes.PETNAMESTAT, StatTypes.GRAVEACCOUNTID, StatTypes.OWNERACCOUNTIDSTAT,
+                                StatTypes.PETNAMESTAT, StatTypes.GRAVEACCOUNTID, StatTypes.OWNERACCOUNTIDSTAT, StatTypes.UNKNOWN78,
                                 StatTypes.ENCHANTMENTS, StatTypes.UNKNOWN121, StatTypes.MATERIALAMOUNTSTAT, StatTypes.CRUCIBLESTAT,
                                 StatTypes.DUSTCAPSTAT, StatTypes.DUSTAMOUNTSTAT, StatTypes.MATERIALCAPSTAT, StatTypes.UNKNOWN155]
 
